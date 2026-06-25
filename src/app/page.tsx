@@ -326,7 +326,7 @@ export default function Home() {
             <span className="stat-highlight">我在丹麦证明了方法。现在转移给你。</span>&rdquo;
           </blockquote>
           <div className="flex items-center justify-center gap-4 text-sm">
-            <div className="h-12 w-12 rounded-full bg-gradient-to-br from-bhai-red to-[#7F1D1D] flex items-center justify-center text-white font-bold">
+            <div className="h-12 w-12 rounded-full bg-gradient-to-br from-bhai-red to-[#663008] flex items-center justify-center text-white font-bold">
               B
             </div>
             <div className="text-left">

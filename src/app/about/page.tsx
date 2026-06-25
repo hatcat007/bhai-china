@@ -46,7 +46,7 @@ export default function AboutPage() {
             <div className="lg:col-span-5">
               <div className="rounded-2xl border border-[#2A2A2A] bg-bhai-card p-8 red-glow">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-bhai-red to-[#7F1D1D] flex items-center justify-center text-white text-2xl font-bold shrink-0">
+                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-bhai-red to-[#663008] flex items-center justify-center text-white text-2xl font-bold shrink-0">
                     陆
                   </div>
                   <div>

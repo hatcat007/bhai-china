@@ -9,18 +9,18 @@
   --color-background: #000000;
   --color-foreground: #FFFFFF;
   --color-muted: #A1A1A1;
-  --color-accent: #DC2626;
+  --color-accent: #E56910;
   --color-border: #333333;
   --color-input: #333333;
-  --color-ring: #DC2626;
+  --color-ring: #E56910;
 
   /* BHAI Landing Page Colors */
   --color-bhai-bg: #0A0A0A;
   --color-bhai-surface: #111111;
   --color-bhai-card: #1A1A1A;
   --color-bhai-border: #2A2A2A;
-  --color-bhai-red: #DC2626;
-  --color-bhai-red-hover: #EF4444;
+  --color-bhai-red: #E56910;
+  --color-bhai-red-hover: #F38B3F;
   --color-bhai-text: #F8F7F4;
   --color-bhai-muted: #9CA3AF;
   --color-bhai-dim: #6B7280;
@@ -31,7 +31,7 @@
   --color-secondary: #333333;
   --color-secondary-foreground: #FFFFFF;
 
-  --color-destructive: #DC2626;
+  --color-destructive: #E56910;
   --color-destructive-foreground: #FFFFFF;
 
   --color-muted-foreground: #A1A1A1;
@@ -62,13 +62,13 @@
   --secondary-foreground: 0 0% 100%;
   --muted: 0 0% 63%;
   --muted-foreground: 0 0% 63%;
-  --accent: 0 100% 50%;
+  --accent: 24 88% 48%;
   --accent-foreground: 0 0% 100%;
-  --destructive: 0 72% 51%;
+  --destructive: 24 88% 48%;
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 20%;
   --input: 0 0% 20%;
-  --ring: 0 72% 51%;
+  --ring: 24 88% 48%;
   --radius: 0.5rem;
 }
 
@@ -89,17 +89,17 @@
   background: linear-gradient(180deg, #111111 0%, #0A0A0A 100%);
 }
 .red-glow {
-  box-shadow: 0 0 60px rgba(220, 38, 38, 0.15), 0 0 120px rgba(220, 38, 38, 0.05);
+  box-shadow: 0 0 60px rgba(229, 105, 16, 0.15), 0 0 120px rgba(229, 105, 16, 0.05);
 }
 .card-hover {
   transition: all 0.3s ease;
 }
 .card-hover:hover {
-  border-color: #DC2626;
+  border-color: #E56910;
   transform: translateY(-2px);
 }
 .stat-highlight {
-  background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  background: linear-gradient(135deg, #E56910 0%, #A04A0B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -107,15 +107,15 @@
 .scroll-line {
   width: 1px;
   height: 60px;
-  background: linear-gradient(180deg, #DC2626 0%, transparent 100%);
+  background: linear-gradient(180deg, #E56910 0%, transparent 100%);
 }
 .cta-primary {
-  background: #DC2626;
+  background: #E56910;
   transition: all 0.3s ease;
 }
 .cta-primary:hover {
-  background: #EF4444;
-  box-shadow: 0 0 30px rgba(220, 38, 38, 0.4);
+  background: #F38B3F;
+  box-shadow: 0 0 30px rgba(229, 105, 16, 0.4);
   transform: translateY(-1px);
 }
 @keyframes ticker {
@@ -125,11 +125,11 @@
 .ticker-wrap { overflow: hidden; }
 .ticker { display: flex; animation: ticker 30s linear infinite; }
 .timeline-dot {
-  width: 12px; height: 12px; border-radius: 50%; background: #DC2626; position: relative;
+  width: 12px; height: 12px; border-radius: 50%; background: #E56910; position: relative;
 }
 .timeline-dot::after {
   content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-  width: 1px; height: 60px; background: linear-gradient(180deg, #DC2626 0%, transparent 100%);
+  width: 1px; height: 60px; background: linear-gradient(180deg, #E56910 0%, transparent 100%);
 }
 .timeline-dot:last-child::after { display: none; }
 
@@ -180,12 +180,12 @@
 /* Glow line separator */
 .glow-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #DC2626 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, #E56910 50%, transparent 100%);
 }
 
-/* Subtle red border glow on focus for inputs */
+/* Subtle accent border glow on focus for inputs */
 .input-focus:focus {
   outline: none;
-  border-color: #DC2626;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+  border-color: #E56910;
+  box-shadow: 0 0 0 3px rgba(229, 105, 16, 0.15);
 }
