@@ -1,0 +1,814 @@
+     1→---
+     2→title: Better Human AI
+     3→type: company
+     4→created: 2026-05-28
+     5→key_people: [BusterML]
+     6→aliases: [Better Human AI, BHAI, bhAI, betterhumanai.dk]
+     7→tags: [company, ai-agents, eu, supplemental-income, governance]
+     8→---
+     9→
+    10→# Better Human AI (betterhumanai.dk)
+    11→
+    12→> **Status:** Active — supplemental income venture
+    13→> **Founded:** ~2026
+    14→> **Founder:** Buster ML Larsen (solo)
+    15→> **Location:** China (founder), sells to EU CEOs
+    16→> **Website:** betterhumanai.dk | buster.betterhumanai.dk
+    17→> **Repo:** BHAI_BUSTER1 (Next.js monorepo)
+    18→> **Hosting:** Vercel (AI Studio)
+    19→
+    20→## Compiled Truth
+    21→
+    22→Better Human AI helps companies (primarily EU) deploy AI agents at scale with structure, governance, and compliance — so humans stay in control while AI does the grunt work. Supplemental income for Buster — not full-time, given his førtidspension status.
+    23→
+    24→**Mission (Danish):** "At blive verdens mest kendte og bedste kontrolcenter for autonome AI-arbejdsstyrker styret af en menneskelig leder eller et lille menneskeligt team."
+    25→
+    26→**Mission (English):** "To become the world's most recognized and best control center for autonomous AI workforces, led by a human leader or a small human team."
+    27→
+    28→**Tagline:** "Buster ved roret. Drevet af AI." / "Buster at the wheel. Driven by AI."
+    29→
+    30→**Voice rule:** Always "Jeg"/"I" — never "vi"/"we" except when grouping customer + Buster jointly.
+    31→
+    32→[Source: User, 2026-05-28; company overview ingested 2026-05-27]
+    33→
+    34→----|---------|--------|
+    35→| `/` | Homepage — hero, stats, method (3-step), for/not-for-you, cases grid, FAQ, CTA | Live (i18n: da/en/zh) |
+    36→| `/about` | About Buster — bio, photo, areas of expertise, contact | Live |
+    37→| `/analyze-form` | Business analysis intake form — 10-section questionnaire feeding into Claude Managed Agent | Live |
+    38→| `/blog` | Blog index (1 post: agentic AI workflow guide) | Live |
+    39→| `/blog/[slug]` | Blog posts | Live |
+    40→| `/cases` | Case studies index | **Hidden** — returns 404 |
+    41→| `/cases/400-timer` | 400 hours/month saved — Zendesk + data transfer + CRM | **Hidden** (notFound()) |
+    42→| `/cases/bureau-tilbud` | Bureau/legal services — proposal time 2d→2.5h, +60% proposals | **Hidden** |
+    43→| `/cases/ehandel-kundeservice` | E-commerce CS — 69% autonomous, <2min avg, CSAT 4.1→4.6 | **Hidden** |
+    44→| `/cases/logistik-fragtdokumenter` | Logistics — 8.4%→0.9% error, ~3.1M DKK/yr savings | **Hidden** |
+    45→| `/compare` | Comparison: "Europe vs. Offshore" providers | Live |
+    46→| `/compliance` | GDPR + EU AI Act compliance overview | Live |
+    47→| `/compliance-check` | Subscription compliance monitoring (1,500 DKK/mo) | Live |
+    48→| `/ebook` | Lead magnet ebook — "No Bullshit AI" / "AI Uden Bullshit" (3 variants) | Live |
+    49→| `/faq` | FAQ page (15 questions) | Live |
+    50→| `/glossary` | AI glossary (10 terms, SEO) | Live |
+    51→| `/undersogelser` | Survey/study index (12 reports) | Live |
+    52→| `/undersogelser/[slug]` | Individual study page | Live |
+    53→| `/landing/compliance-hook` | Landing: "Your AI Agent Doesn't Know GDPR" | Live |
+    54→| `/landing/control-center` | Landing: "Stop Buying AI Agents. Start Building an AI Workforce." | Live |
+    55→| `/landing/speed-play` | Landing: "14 Days to Your First AI Workflow in Production." | Live |
+    56→| `/admin/submissions` | HTTP Basic Auth protected admin — view form submissions, re-trigger agents | Live |
+    57→| `/admin/submissions/[id]` | Submission detail — view analysis, status, re-trigger button | Live |
+    58→
+    59→### Old Homepage Archive
+    60→
+    61→The repo contains `/app/[locale]/old-home/page.tsx` — an archived version of the homepage using simpler components and older top-level translation keys. Currently unused; the active `page.tsx` at root `/app/[locale]/page.tsx` wins in the router. The old version had no pricing section, case studies grid, or guarantee banner.
+    62→
+    63→### Analyze Form → Claude Managed Agent Pipeline
+    64→
+    65→A central feature: a **10-section business analysis questionnaire** that:
+    66→
+    67→1. Submits form data to `POST /api/analyze-form`
+    68→2. Persists to Postgres `submissions` table (Drizzle schema)
+    69→3. Sends notification email to analyze@betterhumanai.dk via Resend
+    70→4. Triggers a **Claude Managed Agent** via signed webhook (`POST {AGENT_WEBHOOK_URL}` with `X-Buster-Signature: sha256=<hmac>`)
+    71→5. Agent analyzes the business and POSTs result back to `/api/analysis-callback`
+    72→6. Callback verified via **Standard Webhooks** spec (webhook-id, webhook-timestamp, webhook-signature headers, HMAC-SHA256 with `ANTHROPIC_WEBHOOK_SECRET`)
+    73→7. Stores analysis (markdown, summary, estimated savings hours, recommended agents) to DB
+    74→8. Emails analysis to analyze@betterhumanai.dk
+    75→
+    76→**Two separate secrets:** `AGENT_WEBHOOK_SECRET` (Buster generates — signs outbound triggers) vs `ANTHROPIC_WEBHOOK_SECRET` (Anthropic generates — signs callbacks). Split intentionally.
+    77→
+    78→**Agent system prompt (Claude Managed Agent):** Buster ML persona — Danish-direct, no fluff, produce 600-1200 word markdown analysis covering the most expensive hour, 2-3 concrete agent proposals, risk notes, 4-8 week pilot plan. [Source: README.md in BHAI_BUSTER1 repo]
+    79→
+    80→### Admin UI
+    81→
+    82→Located at `/admin/submissions` — HTTP Basic Auth (ADMIN_USERNAME / ADMIN_PASSWORD env vars). Features:
+    83→- List all submissions with status (queued, analyzing, done, error, skipped)
+    84→- Detail page per submission
+    85→- Re-trigger button for failed/skipped analyses (`POST /api/submissions/:id/retrigger`)
+    86→
+    87→### Health & Monitoring
+    88→
+    89→- PostHog captures every form submission (`analysis_form_received` event) and AI analysis completion (`analysis_completed`)
+    90→- LLM analytics tracing via PostHog `$ai_span` and `$ai_generation` events with trace_id tied to submission_id
+    91→- Resend for email delivery tracking
+    92→
+    93→---
+    94→
+    95→## Public Homepage Content (buster.betterhumanai.dk)
+    96→
+    97→All homepage copy is i18n (English shown here; Danish and Chinese variants exist).
+    98→
+    99→### Brand & Identity
+   100→
+   101→- **Logo/Name:** BETTER HUMAN<span style="color:#DC2626"> AI</span> — red accent on "AI"
+   102→- **Website:** buster.betterhumanai.dk
+   103→- **Booking:** cal.eu/betterhumanai/20min — "Book 20 min free" (no pitch, no commitments, 20 minutes)
+   104→- **Contact:** buster@betterhumanai.dk
+   105→- **LinkedIn:** linkedin.com/in/bustermlarsen/
+   106→- **Primary CTA color:** #DC2626 (red)
+   107→- **Schema.org JSON-LD:** Self-described as "Solo founder & AI systems architect", knows about AI orchestration, autonomous AI agents, EU AI Act compliance, GDPR-compliant AI systems, AI workforce management, agentic workflows, human-in-the-loop AI, AI deployment safeguards
+   108→[Source: page.tsx Schema.org JSON-LD, 2026-06-02]
+   109→
+   110→### Hero Section
+   111→
+   112→**Tagline:** "Stop talking about AI. Start using it."
+   113→**Subtitle:** "I build autonomous AI systems running in production — not PowerPoints collecting dust."
+   114→
+   115→**Trust badges (hero):** GDPR Compliant · EU AI Act Ready · Full Audit Trail
+   116→**Hero disclaimer:** "NO PITCH · NO COMMITMENTS · 20 MINUTES"
+   117→
+   118→**Stats carousel** (auto-rotating every 3.5s):
+   119→- 10+ Companies deployed
+   120→- 1000+ Tool integrations
+   121→- 14 Days to production
+   122→- 66% Avg. AI cost reduction
+   123→
+   124→**Call to action:** "Book 20 min free →" / "See how it works"
+   125→
+   126→### About Buster (homepage)
+   127→
+   128→**Heading:** "One person at the helm."
+   129→- 5 years running a media and digital marketing company with big clients in Denmark — funnels, flows, marketing, sales
+   130→- Saw what AI agents could actually do in production — not demos, real autonomous systems
+   131→- Founded Better Human AI in 2025 because the gap between "AI talk" and "AI that works" was too big
+   132→- Codes every single day, builds every system himself
+   133→- Only takes projects where AI genuinely makes sense and delivers measurable ROI
+   134→
+   135→**Badges:** GDPR Compliant · EU AI Act Ready · Full Audit Trail
+   136→**Image:** Profile photo from Vercel Blob (betterhumanai_buster_profile_01.webp)
+   137→
+   138→### Problems Section
+   139→
+   140→**Heading:** "You're using AI. But it's not working."
+   141→**Stats hook:** "88% of companies use AI. Most are stuck in pilots."
+   142→Three problems:
+   143→1. **Invisible AI Spend** — "Your team uses ChatGPT, Copilot, Jasper, and 5 other tools. Nobody tracks the cost. Nobody checks the output." Average hidden spend: **23,000 DKK/month**
+   144→2. **Systems That Don't Talk** — "Eight different AI tools. None share context. No brand voice. No decision rules. Every agent starts from zero, every time."
+   145→3. **Compliance Deadline** — "GDPR and the EU AI Act are not optional. Deadline for high-risk systems: August 2026. Zero documentation means zero compliance."
+   146→
+   147→### Solution / The BHAI Method
+   148→
+   149→**Badge:** "Kontrolcenteret"
+   150→**Heading:** "The BHAI Method"
+   151→**Subtitle:** "Build the Context. Deploy the Agents. Stay at the Wheel."
+   152→Four pillars:
+   153→1. Complete context package: brand voice, decision rules, org structure
+   154→2. Purpose-built agents in defined roles with budgets and boundaries
+   155→3. Human-in-the-loop with full audit trail from day one
+   156→4. AI Act-compliant and GDPR-ready from the start
+   157→
+   158→Includes **AnimatedDashboard** — a terminal-like UI simulating 6 agents in real-time: Email Agent, Report Agent, Support Agent, Invoice Agent, Content Agent, Compliance Agent
+   159→
+   160→### The BHAI Method (3-step)
+   161→
+   162→**Label:** "THE BHAI METHOD"
+   163→**Tagline:** "One person at the helm, powered by AI. No bullshit."
+   164→1. **Build the Context** — Context package: brand voice, decision rules, org structure, budgets, escalation policies. "Without it, agents are just expensive autocomplete."
+   165→2. **Deploy the Agents** — Purpose-built agents in defined roles — content, research, support, compliance. Each has a budget, a manager, clear boundaries. Connected to 1,000+ integrations.
+   166→3. **Stay at the Wheel** — Human-in-the-loop. Review, approve, steer through one control center. Agents execute autonomously within the structure you designed. Full audit trail from day one.
+   167→
+   168→### For You / Not For You
+   169→
+   170→**This is for you if:**
+   171→1. You're spending 20,000+ DKK/month on AI tools with no visibility
+   172→2. Your team wastes hours on repetitive tasks between systems
+   173→3. You need AI that's GDPR-compliant and EU AI Act-ready
+   174→4. You want measurable ROI, not another tool to manage
+   175→5. You're ready to deploy in weeks, not months
+   176→
+   177→**This is NOT for you if:**
+   178→1. You're looking for a quick ChatGPT wrapper
+   179→2. You want AI without human oversight or audit trails
+   180→3. You're not willing to document your business rules
+   181→4. You expect AI to work perfectly with zero input from you
+   182→
+   183→### Homepage Case Studies (3 featured)
+   184→
+   185→All cases anonymized, protected to "protect our clients' competitive advantage":
+   186→
+   187→**1. Manufacturing — Industrial Company (45 employees, B2B, Northern Jutland)**
+   188→- Response time: 4 hours → **35 min**
+   189→- AI spend/month: 12,000 DKK → **4,200 DKK**
+   190→- Proposals/week: **3x more**
+   191→- Quote: "I knew my team was using AI. I just didn't know what it was saying on our behalf. Now I do." — CEO
+   192→- Before/After flow: Manual email sorting (2h/day) → Email Agent sorts in real-time; Copy-paste to CRM → Auto-sync to CRM; Manual proposal drafting → AI drafts instantly; Wait for approval 1-2 days → Human approval via control center
+   193→
+   194→**2. Agency — Digital Marketing Agency (22 employees, Copenhagen)**
+   195→- AI tool spend: 28,000 DKK → **9,500 DKK**
+   196→- Quality incidents: 3-4/mo → **0**
+   197→- Content output: **+40%**
+   198→- Quote: "We were spending more on AI tools than on our junior designer. Buster made that visible in week one." — CEO
+   199→- Before/After: 8 AI tools no oversight → Unified control center; Inconsistent brand voice → Brand voice enforced; Hidden spend 28K/mo → Spend cut to 9.5K; Quality incidents monthly → Zero incidents
+   200→
+   201→**3. Consulting — ESG Consulting Firm (67 employees, Aarhus)**
+   202→- Report time: 40 hours → **12 hours**
+   203→- Quarterly capacity: 18 reports → **31 reports**
+   204→- Hiring saved: **1.2M DKK/yr**
+   205→- Quote: "I was about to hire two more analysts. Instead, I spent a fraction on a system that does the repetitive work." — Managing Director
+   206→- Before/After: 40 hours per ESG report → 12 hours; Manual data collection → AI data aggregation; Hiring 2 more analysts → Saved 1.2M DKK in hiring; 18 reports/quarter max → 31 reports/quarter
+   207→
+   208→### Testimonials
+   209→
+   210→Three client quotes, identities protected:
+   211→1. **CEO, IT Solutions Company · 38 employees**: "We were spending 23,000 DKK/month on AI tools nobody was tracking. Buster showed me the actual number in our first call. That conversation alone was worth more than most consulting engagements I've paid for."
+   212→2. **CEO, Consulting Group · 29 employees**: "I thought AI agents were just chatbots with better marketing. Then Buster showed me agents that run my weekly reporting, update our CRM, and draft client proposals — all with my approval before anything goes out."
+   213→3. **Managing Partner, Advisory Firm · 51 employees**: "We grew 40% last year without adding headcount. The AI workforce handles research, first-draft content, and lead qualification. My team focuses on what humans are actually good at."
+   214→
+   215→### 14-Day Timeline
+   216→
+   217→| Days | Phase | Description |
+   218→|------|-------|-------------|
+   219→| 1-3 | Context Deep-Dive | Audit current AI usage, map tools, document brand voice, decision rules, org structure — full context package |
+   220→| 4-7 | Build & Configure | Deploy control center, set up agents for highest-impact workflows, connect tools, budget limits, approval gates, audit trail |
+   221→| 8-10 | Test in Production | Agents run real tasks with human approval. Fine-tune voice, speed, accuracy |
+   222→| 11-14 | Handover & Autonomy | Full documentation, team training, governance playbook. AI workforce runs autonomously — you stay at the wheel |
+   223→
+   224→### Guarantee
+   225→
+   226→**Risk-Free Guarantee:** "14 days to production — or you don't pay. No asterisks. No exit clauses. If your first autonomous workflow isn't running in production within 14 days, you owe nothing."
+   227→Plus: "Full GDPR audit trail from day one — something offshore providers can't guarantee."
+   228→
+   229→### Scarcity
+   230→
+   231→**Nav bar banner:** "Taking 3–4 clients per month — {spots} spots open this month" (current: 2 spots) — red dot with pulse animation, on every page
+   232→
+   233→### Newsletter
+   234→
+   235→**Heading:** "AI agents in Europe — no fluff."
+   236→**Promise:** Weekly insights on GDPR-compliant AI deployment, EU AI Act updates, and practical automation strategies for European businesses. No hype. No spam. One email per week.
+   237→**API:** POST /api/newsletter
+   238→
+   239→### Final CTA
+   240→
+   241→Heading: "What happens in 24 months if you wait?"
+   242→Two outcomes: "Those using AI agents as a workforce." vs "Those trying to compete with those who do."
+   243→CTA: "Book a (completely non-binding) conversation →"
+   244→
+   245→### Studies Slider
+   246→
+   247→Top of homepage (above hero): auto-rotating banner referencing 12 curated studies/research reports from McKinsey, Deloitte, BCG, PwC, Accenture, and CBS Copenhagen Business School — covering state of AI, gen AI, AI value gap, superagency, EU AI Act compliance, organizational AI, AI trust, jobs barometer, smart manufacturing, tech vision, AI mindset, and AI survey.
+   248→
+   249→### Pricing Section (homepage)
+   250→
+   251→Three tiers, one-time setup + monthly operations retainer (5K-25K DKK/mo), ROI within 3-6 months:
+   252→
+   253→| Tier | Setup (DKK) | Features |
+   254→|------|-------------|----------|
+   255→| **Starter** | 35K | Context package + 2 agents, control center, AI Act compliance baseline, 14-day implementation |
+   256→| **Growth** | 150K *(Most Popular)* | Everything in Starter, up to 8 specialized agents, multi-department deployment, advanced governance & budgets, ongoing optimization |
+   257→| **Enterprise** | 750K+ | Everything in Growth, unlimited agents, custom integrations, 16-week strategic rollout, dedicated support & SLA |
+   258→
+   259→**Retainer:** 5K-25K DKK/month for ongoing support: agent monitoring & refinement, new workflow deployment, priority support & SLA, compliance documentation updates, governance playbook updates, quarterly performance review
+   260→
+   261→### Service Pricing (beyond setup)
+   262→
+   263→| Service | Price | Notes |
+   264→|---------|-------|-------|
+   265→| **AI Audit** (one-time) | 25,000–50,000 DKK | 7-day diagnostic: GDPR gap analysis, EU AI Act readiness score (0-100), AI spend audit, automation opportunity map with ROI ranking. Delivered in 7 days with 30-min readout call. "The audit pays for itself" — most companies find 15,000–30,000 DKK in hidden AI spend. Compliance gap prevents fines starting at 10M EUR. |
+   266→| **Compliance Monitoring** (subscription) | 1,500 DKK/month | Monthly compliance scan, EU AI Act readiness score with trend tracking, GDPR processing register maintenance, quarterly risk assessment, policy update alerts (AI Act, GDPR, NIS2), compliance documentation templates, priority support. No setup fee, cancel anytime. |
+   267→
+   268→[Source: audit/page.tsx, compliance-check/page.tsx code analysis, 2026-06-02]
+   269→
+   270→### FAQ (Homepage Version)
+   271→
+   272→1. **Will AI agents replace my employees?** — No. They free employees from repetitive tasks. One client cancelled 2 open positions because existing team could handle the workload.
+   273→2. **We already use ChatGPT and Copilot — why do I need this?** — Standalone tools without shared structure. "Difference between 8 people each using their own calculator vs. having an actual accounting system."
+   274→3. **Is it GDPR-compliant and ready for the EU AI Act?** — Yes. Full audit trail, data minimization, privacy-by-design. AI Act deadline August 2026.
+   275→4. **What if AI doesn't make sense for my business?** — "Then I will tell you directly. I only take projects where AI genuinely makes sense and delivers measurable ROI."
+   276→5. **How fast will I see ROI?** — Typically 3-6 months. First measurable impact within 8 weeks. First autonomous workflow runs in production within 14 days.
+   277→
+   278→### Footer Links
+   279→
+   280→© 2026 BetterHumanAI. All rights reserved.
+   281→About · FAQ · Glossary · Compliance · Studies · Blog · Ebook · Compare · Audit · Compliance · LinkedIn
+   282→
+   283→---
+   284→## Landing Pages & Marketing Sites
+   285→
+   286→All sites use the same CTA framework: "Book 20 min free →" (cal.eu/betterhumanai/20min) — with "no pitch, no commitments" disclaimer. Trust badges (GDPR Compliant · EU AI Act Ready · Full Audit Trail) appear on every page.
+   287→
+   288→### About Page
+   289→
+   290→**URL:** `/about` — Founder credibility page.
+   291→
+   292→**Headline:** "There is far too much talk about AI — and far too few actually making it work in practice."
+   293→
+   294→**Key messaging:**
+   295→- "I code every single day. It keeps my hands dirty and my intuition sharp."
+   296→- Built Betterhuman_Corp as "an AI control center that turns AI agents into a manageable workforce — not just another layer of hype"
+   297→- Areas of expertise: AI orchestration, deployment safeguards, GDPR & EU AI Act, agentic workflows, system integration (Slack, HubSpot, Salesforce, Zendesk, Jira, Notion, Google Workspace + custom APIs), 10 documented production cases
+   298→
+   299→**CTA:** "Book 20 min free" — "No pitch · No commitments"
+   300→
+   301→### Compare Page
+   302→
+   303→**URL:** `/compare` — "AI Agents in Europe vs. Offshore Providers"
+   304→
+   305→Directly attacks offshore AI agencies on compliance, data residency, hidden costs. Comparison dimensions:
+   306→
+   307→| Dimension | Offshore Weakness | BetterHumanAI Strength |
+   308→|-----------|-------------------|------------------------|
+   309→| Data Residency | US/Australia/undefined | Danish data processing, full GDPR |
+   310→| GDPR Compliance | Not addressed | Privacy-by-design, DPIA, audit trail |
+   311→| EU AI Act | Unaware/unprepared | Built for Art. 25-30 |
+   312→| Time to Production | 30 days (strategy decks) | 14 days (autonomous workflow) |
+   313→| Timezone & Support | 8-10h gap | Copenhagen, same timezone |
+   314→| Hidden Costs | Extra fees for compliance | Transparent pricing |
+   315→
+   316→**Bottom line:** "The EU AI Act deadline is August 2026. Is your current AI setup compliant? Most are not."
+   317→
+   318→### Compliance Pages
+   319→
+   320→Two distinct offerings:
+   321→
+   322→**1. `/compliance` — Compliance Overview:**
+   323→- "Is Betterhuman_Corp ready for GDPR and EU AI Act?" — Yes, from day one
+   324→- EU AI Act (deadline Aug 2026): 5 features — Human-in-the-loop approval, Full audit trail, Risk documentation, Error/alert handling, Transparency towards users
+   325→- GDPR: 4 articles covered — Art. 25 (privacy by design), Art. 30 (processing register), Art. 28 (DPA), Art. 17 (right to erasure)
+   326→- OECD AI Principles alignment
+   327→
+   328→**2. `/compliance-check` — Compliance Monitoring (subscription):**
+   329→- "AI Compliance Monitoring. Stay compliant while you grow."
+   330→- 1,500 DKK/month — monthly compliance scan, trend tracking, alerts, templates, priority support
+   331→- "EU AI Act requires continuous compliance — not a one-time checkbox"
+   332→
+   333→### Targeted Landing Pages
+   334→
+   335→Three short-form landing pages for specific angles:
+   336→
+   337→**1. `/landing/compliance-hook`** — "Your AI Agent Doesn't Know GDPR."
+   338→- Direct urgency angle: "Most AI automation agencies deploy fast and worry about compliance later. We build AI agents that are GDPR-compliant and EU AI Act-ready from day one."
+   339→- Trust signals: ✓ GDPR Compliant · ✓ EU AI Act Ready · ✓ Danish Data Processing
+   340→
+   341→**2. `/landing/control-center`** — "Stop Buying AI Agents. Start Building an AI Workforce."
+   342→- Positioning: "Individual agents break. A control center with goals, budgets, and accountability scales."
+   343→- Primary CTA: "Download free ebook →" (lead gen funnel to /ebook)
+   344→- Trust signals: ✓ Goals & budgets per agent · ✓ Full audit trail · ✓ EU AI Act compliant
+   345→
+   346→**3. `/landing/speed-play`** — "14 Days to Your First AI Workflow in Production."
+   347→- Positioning: "Not 30 days. Not a strategy deck. A working autonomous system in your business in 14 days."
+   348→- Trust signals: ✓ 14-day delivery guarantee · ✓ Full compliance docs · ✓ Human approval gates
+   349→
+   350→### Ebook / Lead Magnet
+   351→
+   352→**URL:** `/ebook` — Free PDF download in exchange for contact info.
+   353→
+   354→**Title:** "No Bullshit AI" (EN) / "AI uden bullshit" (DA) / "拒绝废话的 AI" (ZH)
+   355→
+   356→**Three audience variants:**
+   357→| Variant | Audience | Tone |
+   358→|---------|----------|------|
+   359→| Executives | 50+ orgs, GM/VP/CXO | Strategic, ROI-focused |
+   360→| Founders | Solo operators, small teams | Inspirational, practical |
+   361→| Sceptics | 10–50 employee SMBs | Down-to-earth, no-nonsense |
+   362→
+   363→**Content:** ~11 chapters following a case study (Lars — 12-person agency, 8%→22% margin lift, 40→90 monthly deliverables). Real P&L numbers. 2-week starting plan.
+   364→
+   365→**Lead capture:** Name, email, phone, company, version selection. Tracked with PostHog.
+   366→
+   367→### Glossary (SEO)
+   368→
+   369→**URL:** `/glossary` — "AI Glossary without bullshit." 10 terms defined:
+   370→- AI agent, AI control center, AI context layer, Agentic workflow, Human-in-the-loop (HITL), Audit trail, Approval gate, AI orchestration, SLA (AI context), Deployment safeguard
+   371→
+   372→Uses `DefinedTermSet` schema.org JSON-LD. Interlinks to compliance/FAQ pages.
+   373→
+   374→[Source: Code analysis of about/page.tsx, compare/page.tsx, compliance/*, landing/*, ebook, glossary, 2026-06-02]
+   375→
+   376→---
+   377→
+   378→## FAQ (Full Page — 15 Questions)
+   379→
+   380→Dedicated `/faq` page with hardcoded Q&A arrays across all 3 locales (same content, translated):
+   381→
+   382→1. **Do AI agents replace employees?** — No — they free people from repetitive tasks
+   383→2. **We already have ChatGPT/Copilot — why a control center?** — Standalone vs structured system with roles/budgets/audit
+   384→3. **GDPR and EU AI Act compliance?** — Yes — audit trail, data minimization, privacy-by-design; Aug 2026 deadline
+   385→4. **Cost to get started?** — Depends on scope; book 20 min free
+   386→5. **What if AI doesn't fit my company?** — Buster says no directly — only takes projects with real ROI
+   387→6. **What is Betterhuman_Corp?** — AI control center managing agents as controllable workforce
+   388→7. **What is Buster LM?** — BHAI's own model fine-tuned for Danish business logic
+   389→8. **What is an AI agent vs ChatGPT?** — Agent reacts autonomously; ChatGPT requires prompts
+   390→9. **Timeline from first talk to production?** — 14 days for first workflow
+   391→10. **Types of companies you work with?** — SMEs to enterprise across industries
+   392→11. **How is data handled?** — Danish data processing, no training on customer data
+   393→12. **Difference from a regular consultant?** — Buster codes himself; delivers working systems
+   394→13. **Industry-specific solutions?** — Tailored per company, not off-the-shelf
+   395→14. **Pricing model?** — Project-based with clear ROI targets
+   396→15. **First step?** — Book a free 20-min call
+   397→
+   398→[Source: faq/page.tsx + components/faq.tsx + messages/en.json, 2026-06-02]
+   399→
+   400→---
+   401→
+   402→## Blog (1 Post)
+   403→
+   404→**Slug:** `agentiske-ai-arbejdsgange-virksomheder-2026`
+   405→**Author:** "Buster, Better Human AI"
+   406→**Date:** April 2026
+   407→
+   408→**Title:**
+   409→- DA: "De bedste agentiske AI-arbejdsgange til virksomheder i 2026: En praktisk guide til virksomhedsledere"
+   410→- EN: "The Best Agentic AI Workflows for Business in 2026: A Practical Guide for Enterprise Leaders"
+   411→- ZH: "2026年企业最佳智能体AI工作流程：企业领导者实用指南"
+   412→
+   413→**Content:** Comprehensive guide covering agentic AI workflow definition, use cases in customer service/procurement/marketing/finance/IT, governance frameworks, human-in-the-loop, ROI data (66.8% average time savings, 79% of businesses moving to implementation by early 2026), failure modes when agents lack boundaries.
+   414→
+   415→**Positioning:** Buster as practitioner-builder who codes daily and delivers working systems, not just analysis. Single authoritative comprehensive post.
+   416→
+   417→[Source: blog-data-{en,zh}.tsx, blog/[slug]/page.tsx, 2026-06-02]
+   418→
+   419→---
+   420→
+   421→## Research Studies (12 curated)
+   422→
+   423→Referenced in Studies Slider on homepage + dedicated `/undersogelser` pages. All have locale-aware content with key takeaways, detailed JSX content with `<FactTooltip>` citations, sources, and a branded "BetterHuman AI Angle" callout box:
+   424→
+   425→| Study | Source | Key Finding |
+   426→|-------|--------|-------------|
+   427→| State of AI 2025 | McKinsey QuantumBlack, Jan 2025 | 88% use AI, but most stuck in pilots |
+   428→| State of GenAI 2025 | Deloitte, Jan 2025 | >2/3 scale under 30% of AI experiments |
+   429→| AI Value Gap 2025 | BCG, Sep 2025 | Only 5% get real value at scale |
+   430→| Superagency 2025 | McKinsey, Jan 2025 | Only 1% of leaders call AI efforts 'mature' |
+   431→| EU AI Act Compliance 2025 | Deloitte, Jan 2025 | AI Act requires 'AI Literacy' from Feb 2025 |
+   432→| State of Organizations 2026 | McKinsey, Feb 2026 | AI-enabled orgs |
+   433→| State of AI Trust 2026 | McKinsey, Mar 2026 | Governance gaps in AI trust |
+   434→| AI Jobs Barometer 2025 | PwC, 2025 | AI employees have 56% wage premium |
+   435→| Smart Manufacturing 2025 | Deloitte, 2025 | 80% of manufacturers invest in agentic AI |
+   436→| Tech Vision 2025 | Accenture, 2025 | AI moves from tool to autonomous co-player |
+   437→| AI Mindset 2026 | CBS (Ringberg & Jacobsen), Mar 2026 | AI tools not neutral — significant mindset gap |
+   438→| AI Survey 2026 | CBS (Ringberg & Jacobsen), Mar 2026 | 84% of top leaders lack AI strategy |
+   439→
+   440→[Source: studies-data-{en,zh}.tsx, undersogelser/[slug]/page.tsx, 2026-06-02]
+   441→
+   442→---
+   443→
+   444→## Case Studies (4 — email-gated behind notFound())
+   445→
+   446→The case studies are the strongest sales material — all 4 hidden behind `notFound()` and email-gated. Full content present in code with JSON-LD Article structured data:
+   447→
+   448→**Gate mechanism:** Email capture at `/cases` → submitted to `/api/unlock` (Resend-backed) → localStorage key `bh_cases_unlocked` → PostHog tracking (`cases_unlock_submitted`, `case_clicked`, `booking_cta_clicked`). Optional newsletter opt-in. Cases blurred with lock overlay until unlocked.
+   449→
+   450→**Anonymization:** All client names anonymized by active choice — "AI stack is a strategic advantage." Numbers documented via before/after measurements in client systems.
+   451→
+   452→### 1. E-handel Kundeservice (E-commerce, 80 employees)
+   453→- **Problem:** High CS ticket volume, slow response times
+   454→- **Result:** 69% autonomous resolution, <2 min avg response, CSAT 4.1→4.6
+   455→- **Savings:** ~3.1M DKK/year
+   456→
+   457→### 2. Bureau Tilbud (Digital Agency, 25 employees)
+   458→- **Problem:** Manual proposal drafting bottleneck
+   459→- **Result:** 2 days→2.5h proposal time, 22%→31% hit rate, +60% more proposals
+   460→- **Savings:** ~4.8M DKK extra won deals/year
+   461→
+   462→### 3. 400 Timer (Mid-sized, Zendesk + data transfer)
+   463→- **Problem:** 400 hrs/month on manual data transfer, Zendesk sorting, draft standard responses. 12% tagging error rate.
+   464→- **Result:** 400 h/mo saved, 34% error reduction, tagging errors 12%→1.8%, response time 4hrs→8min
+   465→- **Savings:** ~2.1M DKK/year (ROI-positive first month)
+   466→- **Approach:** 6-week shadowing phase, human-in-the-loop, no autonomous customer-facing sends
+   467→
+   468→### 4. Logistik Fragtdokumenter (Logistics & 3PL, 140 employees)
+   469→- **Problem:** High error rate in freight documentation processing
+   470→- **Result:** 8.4%→0.9% error rate, -78% credit notes
+   471→- **Savings:** ~3.1M DKK/year
+   472→
+   473→[Source: Code analysis of cases/* pages + cases-gate.tsx, 2026-06-02]
+   474→
+   475→---
+   476→
+   477→## Brand Position & Messaging Analysis
+   478→
+   479→### Core Brand Identity
+   480→
+   481→| Attribute | Detail |
+   482→|-----------|--------|
+   483→| **Product name** | Betterhuman_Corp (NEVER "multica" in customer-facing material) |
+   484→| **What it is** | AI workforce control plane — manages agents with goals, budgets, roles, audit trails, approval gates. Not a chatbot, not an agent framework. An organizational OS for AI agents. |
+   485→| **Who runs it** | Buster LM — solo founder who codes every system himself |
+   486→| **Tagline** | "One person at the helm, powered by AI. No bullshit." |
+   487→| **Hero** | "Stop talking about AI. Start using it." |
+   488→| **Core differentiator** | European compliance (GDPR + EU AI Act) baked in from day one, not retrofitted |
+   489→| **Delivery promise** | 14 days to first autonomous workflow in production — not a strategy deck |
+   490→| **Target** | EU companies (DK/Scandinavia first), 10–500 employees, C-level with budget authority |
+   491→| **Tone** | Direct, anti-bullshit, anti-PowerPoint, practitioner credibility. "One person at the helm." |
+   492→
+   493→### Sales Funnel
+   494→
+   495→1. **Ebook download** (free) → contact info captured
+   496→2. **20-min free call** (cal.eu/betterhumanai/20min) → qualification
+   497→3. **Analysis form** → 10-section questionnaire, Claude Managed Agent analyzes business
+   498→4. **Agent proposal** → analysis-callback delivers markdown assessment with 2-3 concrete agent proposals, risk notes, 4-8 week pilot plan, estimated savings
+   499→5. **Onboarding** → 14-day timeline to production
+   500→
+   501→**Secondary paths:**
+   502→- Email-gated case studies → email capture → demo booking
+   503→- Compliance audit (25-50K DKK) → qualification → potential onboarding
+   504→- Compliance monitoring subscription (1.5K DKK/mo) → recurring revenue
+   505→
+   506→### Core Messaging Themes
+   507→
+   508→| Theme | Used Where | Why It Works |
+   509→|-------|-----------|-------------|
+   510→| "No pitch. No commitments." | Every CTA | Lowers barrier to first contact |
+   511→| "14 days to production" | Home, Compare, Speed-play | Concrete promise vs "strategy deck" competitors |
+   512→| "GDPR + AI Act ready" | Every page | EU regulatory deadline Aug 2026 creates urgency |
+   513→| "I code every day" | About, Home | Solo founder credibility — practitioner, not salesperson |
+   514→| "One person at the helm" | Home, About, Ebook | Honest about solo operation — builds trust |
+   515→| "Your AI agent doesn't know GDPR" | Compliance-hook | Fear + differentiation |
+   516→| "Invisible AI spend: 23,000 DKK/mo" | Home, Audit | Pain point quantification |
+   517→| "Stop buying agents. Build a workforce." | Control-center landing | Category reframe |
+   518→| "Europe vs. Offshore" | Compare | Direct competitive attack |
+   519→| "Full audit trail from day one" | Every page | Regulatory feature, trust signal |
+   520→| "Average AI cost reduction: 66%" | Home, Stats | ROI quantification |
+   521→
+   522→### i18n Strategy
+   523→
+   524→Three complete locales (da/en/zh) — 563+ lines of translations each. Danish homepage also has unique stats header with "40%" (Danish businesses using AI). Chinese for broader audience. English as default/fallback.
+   525→
+   526→Danish tone is informal/direct: "Ingen bullshit" — matches the brand voice.
+   527→
+   528→[Source: Comprehensive code analysis of all 80+ source files in BHAI_BUSTER1 repo, 2026-06-02]
+   529→
+   530→The homepage includes JSON-LD for the Organization and the founder:
+   531→
+   532→- **Organization**: @id buster.betterhumanai.dk/#org, name BetterHumanAI, areaServed DK, hasOfferCatalog "Betterhuman_Corp" described as "AI workforce control plane — autonome AI-agenter i produktion med fuld audit trail og EU AI Act compliance"
+   533→- **Founder (Person)**: @id buster.betterhumanai.dk/#buster, jobTitle "Solo founder & AI systems architect", knowsAbout includes human-in-the-loop AI and AI deployment safeguards in addition to the core AI orchestration/agent skills
+   534→[Source: page.tsx lines 105-163, 2026-06-02]
+   535→
+   536→---
+   537→
+   538→## Command Center (Outbound Sales Automation)
+   539→
+   540→Behind the public website, BHAI_BUSTER1 contains a full **outbound sales automation engine** — the "Command Center". This is the operational core that automates lead outreach via email and LinkedIn.
+   541→
+   542→### Database Schema (Postgres via Drizzle)
+   543→
+   544→| Table | Purpose |
+   545→|-------|---------|
+   546→| `submissions` | Business analysis form submissions + Claude agent results |
+   547→| `leads` | Outreach prospects — imported from CSV, enriched with research |
+   548→| `flows` | Outreach campaign definitions (email_funnel, linkedin_content) |
+   549→| `flow_steps` | Individual steps within a flow (email, linkedin_connect, research, image_generation, approval) |
+   550→| `lead_flows` | Enrollment — which lead is in which flow, pipeline status |
+   551→| `email_queue` | Scheduled/drafted emails with delivery tracking (opens, clicks, replies) |
+   552→| `linkedin_queue` | Scheduled LinkedIn actions (connection requests, messages, comments) |
+   553→| `linkedin_posts` | LinkedIn content posts with scheduling |
+   554→| `generated_images` | AI-generated images (via Higgsfield) with prompt tracking |
+   555→| `agent_logs` | Execution audit log — research, write_email, generate_image, send_email |
+   556→| `agent_configs` | Agent definitions — system prompt, SOUL.MD, AGENTS.MD, approval mode, tools |
+   557→| `model_configs` | LLM model configurations — provider, reasoning effort, cost tracking |
+   558→| `agent_skills` | Per-flow agent skill content |
+   559→| `lead_messages` | Chat messages between lead and agents |
+   560→| `email_settings` | Key-value settings (signature_html, etc.) |
+   561→| `persona_guides` | Brand voice / company DNA documents |
+   562→| `avatar_sessions` | Interactive persona guide building sessions |
+   563→| `avatar_messages` | Chat messages from avatar builder |
+   564→
+   565→### Default Agents (7)
+   566→
+   567→Defined in `lib/default-agents.ts`, each with SLUG, system prompt, SOUL.MD and AGENTS.MD:
+   568→
+   569→| Agent | Role | Model | Approval |
+   570→|-------|------|-------|----------|
+   571→| **CEO Agent** (`ceo`) | Orchestrator — assigns tasks, creates agents, monitors pipeline | claude-opus-4 | ask_first |
+   572→| **Viktor** (`viktor`) | Email copywriter — ultra-personal outreach in Buster's voice | claude-opus-4 | ask_first |
+   573→| **Resend Mailer** (`resend`) | Email delivery via Resend API — tracks opens, clicks, bounces | n/a (API only) | always_approve |
+   574→| **Higgsfield** (`higgsfield`) | Image generation — vintage 35mm film style, Buster ML character | higgsfield-api | ask_first |
+   575→| **Zernio** (`zernio`) | LinkedIn outreach — connections, DMs, comments, posts | n/a (API only) | ask_first |
+   576→| **Web Scraper** (`scraper`) | Lead research — company news, LinkedIn activity, pain points | claude-sonnet-4 | always_approve |
+   577→| **Buster (Review)** (`buster`) | Human-in-the-loop approval gate — reviews all outbound | manual | never_approve |
+   578→
+   579→### Pipeline Engine (`lib/pipeline.ts`)
+   580→
+   581→Shared utilities for executing agent pipelines:
+   582→- Fetches persona guides from DB (brand voice)
+   583→- Fetches email signatures from email_settings
+   584→- Gets lead + active flow + flow steps in one query
+   585→- Updates pipeline status (idle, researching, generating_copy, etc.)
+   586→- Builds template examples for agents as style reference
+   587→
+   588→### Composio Integration (`lib/composio.ts`)
+   589→
+   590→MCP tool integration via Composio API. Curated toolkit categories:
+   591→- **Email & Calendar:** Gmail, Outlook, Google Calendar
+   592→- **CRM & Sales:** HubSpot, Salesforce, Pipedrive
+   593→- **Social & Outreach:** LinkedIn, X/Twitter, Instagram
+   594→- **Dev & Hosting:** GitHub, Vercel, Notion
+   595→- **Communication:** Slack, Discord, Telegram
+   596→- **Analytics:** Google Analytics, PostHog, Airtable
+   597→- **Storage:** Google Drive, Dropbox, Google Sheets
+   598→- **Automation:** Zapier, Stripe, SendGrid
+   599→
+   600→### Email Outreach Formula
+   601→
+   602→Defined in Viktor's AGENTS.MD — a 3-touch sequence:
+   603→1. **Email 1 (The Observation):** Genuine observation about their company, plant "trapped talent" concept, no CTA
+   604→2. **Email 2 (The Proof):** Reference email 1, one data point ($327K avg or 37+ analyses), include Higgsfield image, soft CTA
+   605→3. **Email 3 (The Ask):** Clear CTA: free analysis form, "no hard feelings" close
+   606→
+   607→### Lead Funnel
+   608→
+   609→Leads imported from CSV → researched by Web Scraper → enrolled in flows → emails drafted by Viktor → images generated by Higgsfield → sent via Resend → tracked for opens/clicks/replies. LinkedIn outreach via Zernio parallel track. All outbound requires human (Buster) approval before sending.
+   610→
+   611→---
+   612→
+   613→## What BHAI sells
+   614→
+   615→**Product:** BetterHuman_Corp — a **control plane / control center** for autonomous AI workforces. Not a chatbot, not an agent framework. An organizational operating system for AI agents.
+   616→
+   617→**Core capabilities:**
+   618→- Org chart with hierarchies and reporting lines (humans + agents)
+   619→- Goal alignment — every task traces to the mission
+   620→- Heartbeats — agents wake on schedule and act autonomously
+   621→- Per-agent budgets with auto-pause when caps hit
+   622→- Multi-company — one installation, many tenants
+   623→- Full audit trail and governance
+   624→- Human-in-the-loop approval gates
+   625→- Polymorphic assignees (issues assigned to humans or agents)
+   626→
+   627→**Forked from:** multica (upstream open-source codebase). NEVER call BetterHuman_Corp "multica" in customer-facing material. Older Notion notes saying "Paperclip" are wrong — Buster confirmed the fork is from multica.
+   628→
+   629→**Architecture:** Go backend (Chi router, sqlc, gorilla/websocket) + Next.js frontend monorepo (pnpm + Turborepo) with Electron desktop app.
+   630→
+   631→**Pre-built AI department templates:**
+   632→| Template | Agents | Roles |
+   633→|---|---|---|
+   634→| Content Team | 5 | Strategist, writer, newsletter, ad copy, reviewer |
+   635→| Research & Sales | 4 | Research, lead scoring, outreach, CRM-sync |
+   636→| Drift & Support | 3 | Customer service, reporting, quality |
+   637→
+   638→**Strategic phasing (16-week plan):**
+   639→- Weeks 1–3: Fork & rebrand multica → BetterHuman_Corp; CI/CD; 5 differentiators
+   640→- Weeks 4–8: MVP (onboarding wizard, 3 templates, AI Act compliance module). **Target: payable customers by week 8**
+   641→- Weeks 9–16: Multi-tenant SaaS readiness, billing, monitoring, security audit. **Target: 3 paying customers by month 4**
+   642→
+   643→---
+   644→
+   645→## Problem it solves
+   646→
+   647→Companies are adopting AI tools ad-hoc (ChatGPT, Copilot, single-agent tools) — fragmented, ungoverned, no cross-team coordination.
+   648→
+   649→**Customer pain points:**
+   650→- Scaling without hiring (can't find/afford more people)
+   651→- No governance over AI usage (who built what agent? what data does it touch?)
+   652→- Content capacity (need more output without burning out the team)
+   653→- Invisible AI cost (everyone has their own subscriptions, no oversight)
+   654→- AI Act compliance deadline **August 2026** — must have audit trails, transparency, risk management
+   655→
+   656→**Value proposition:**
+   657→- Pre-built AI departments delivered as a managed service
+   658→- Compliance-ready from day one (AI Act + GDPR)
+   659→- Trusted local advisor — Danish context, Danish business culture
+   660→- 50–75% cheaper than equivalent human staffing
+   661→- Documented productivity gain: 30–61%
+   662→
+   663→---
+   664→
+   665→## Case Studies (4 documented, all hidden behind notFound())
+   666→
+   667→All case detail pages exist but are gated — public index returns 404. Full content present in code with Schema.org JSON-LD and FAQ structured data:
+   668→
+   669→### 1. 400 timer/måned (400 hours/month)
+   670→- **Company profile:** Mid-sized company, Zendesk + data transfer + CRM
+   671→- **Problem:** 400 hrs/month on manual data transfer, Zendesk sorting, draft standard responses. 12% tagging error rate.
+   672→- **Solution:** 3 AI agents in orchestration — data transfer agent, Zendesk sorting agent, draft response agent
+   673→- **Results:** 400 hrs/month freed, 34% error reduction, tagging errors 12%→1.8%, response time 4hrs→8min, 2.1M DKK/year savings, ROI-positive first month, 3 months to production
+   674→- **Approach:** 6-week shadowing phase, human-in-the-loop, no autonomous customer-facing sends
+   675→
+   676→### 2. Bureau tilbud (Professional services / legal)
+   677→- **Status:** Hidden behind notFound()
+   678→
+   679→### 3. E-handel kundeservice (E-commerce customer service)
+   680→- **Status:** Hidden behind notFound()
+   681→
+   682→### 4. Logistik fragtdokumenter (Logistics freight documents)
+   683→- **Status:** Hidden behind notFound()
+   684→
+   685→---
+   686→
+   687→## Pricing (DKK)
+   688→
+   689→| Tier | Agents | Setup | Annual ops | Best for |
+   690→|---|---|---|---|---|
+   691→| Starter | 2–3 | 35,000–100,000 | 100,000–200,000 | Small teams testing agents |
+   692→| Growth | 4–6 + approval flows + compliance | 100,000–250,000 | 200,000–500,000 | Growing teams needing structure |
+   693→| Enterprise | Full workforce + dedicated oversight | 250,000–750,000 | 500,000–1,200,000 | Companies scaling agent workforce |
+   694→
+   695→**Principle:** always cheaper than equivalent human staffing (50–75% saving).
+   696→
+   697→---
+   698→
+   699→## ICP (Ideal Customer Profile)
+   700→
+   701→**Buyer persona:** CEOs, founders, owners, directors — C-level with **budget authority**. The person who can write a check without asking permission.
+   702→
+   703→**Company size:** 0–250 employees. **Sweet spot: 10–100.**
+   704→
+   705→**Geography:** Denmark / Scandinavia first, then EU. Denmark has the EU's highest generative-AI adoption (48.4%) — natural beachhead.
+   706→
+   707→**Signs they're ready:**
+   708→- Already using ChatGPT, Copilot, or other AI tools individually
+   709→- Frustrated by fragmentation — "we need structure"
+   710→- Worried about AI governance & compliance (AI Act deadline creates urgency)
+   711→- Trying to scale output without hiring more people
+   712→- Lead behavior: books a 20-min demo, downloads "No Bullshit AI" ebook, engages on LinkedIn
+   713→
+   714→**Three audience segments (ebook variants):**
+   715→| Segment | Sweet spot | Tone |
+   716→|---|---|---|
+   717→| C-suite / executives | 50+ employees, GM/VP/CXO | Strategic, ROI-focused |
+   718→| Founders & solopreneurs | Solo operators, small teams | Inspirational, practical |
+   719→| Skeptics / SMV | 10–50 employees | Down-to-earth, no-nonsense |
+   720→
+   721→---
+   722→
+   723→## Disqualifiers (weak-fit signals)
+   724→
+   725→- **No budget authority** — if they can't approve 35k+ DKK, they're not the buyer
+   726→- **No existing AI tool usage** — not even ChatGPT — they're too early
+   727→- **Below 10 employees** — setup cost doesn't justify for a 1-person operation (except solopreneur segment for ebooks/content, not product)
+   728→- **Non-EU** — compliance positioning and local-trust advantage don't travel
+   729→- **250+ employees** — product built for 2–10 person AI-native teams (enterprise tier is aspirational)
+   730→- **Hiring-heavy growth strategy** — if their answer to every problem is "hire more people," they won't see the value
+   731→- **Skeptical of AI entirely** — the "AI is a fad" crowd — too much education needed
+   732→- **Looking for a chatbot / "better ChatGPT"** — they're in the wrong category; BHAI is a control plane, not a chat tool
+   733→
+   734→---
+   735→
+   736→## Strong positive signals
+   737→
+   738→- CEO or founder directly initiating contact
+   739→- Already spending on fragmented AI tools and frustrated by lack of coordination
+   740→- Brings up AI Act compliance when you talk — they know the deadline is coming
+   741→- Danish / Scandinavian company — Buster's home market, strongest trust advantage
+   742→- 10–100 employees, growing, says "we can't hire fast enough" or "we need more output"
+   743→- Language signals: "Vi har brug for struktur" / "We need structure and governance"
+   744→- Books a demo after downloading an ebook
+   745→- Asks about audit trails, compliance documentation, or security
+   746→- Has a clear pain point that maps to one of the three department templates (content, sales/research, support)
+   747→
+   748→---
+   749→
+   750→## Market position
+   751→
+   752→- Primary market: Denmark / Scandinavia, expanding to EU
+   753→- First-mover window: 12–18 months
+   754→- Global AI agents market: ~USD 10.9B, 40–50% CAGR
+   755→- AI Act compliance deadline **August 2026** — used as sales driver and differentiator
+   756→- Differentiators vs. upstream multica: Danish UI, AI Act compliance dashboard, onboarding wizard, managed-service layer, pre-built templates
+   757→
+   758→---
+   759→
+   760→## Compliance posture
+   761→
+   762→- **AI Act:** transparency, human oversight, audit trails, risk management, auto-generated documentation
+   763→- **GDPR:** data processor agreements, retention policies, no training on customer data without consent
+   764→- Compliance is positioned as a **differentiator and sales driver**, not overhead
+   765→- August 2026 deadline creates urgency for EU companies
+   766→
+   767→---
+   768→
+   769→## Lead-gen funnel
+   770→
+   771→1. **Lead magnet:** Free ebook "AI Uden Bullshit" / "No Bullshit AI" (3 variants) at betterhumanai.dk
+   772→2. **Demo booking:** cal.eu/betterhumanai/20min — "Book 20 min with Buster"
+   773→3. **LinkedIn cadence:** 3 posts/week, English, themes: AI leadership, control & accountability, AI transformation for SMBs
+   774→4. **LinkedIn outreach:** Runs via AGENT_BUSTER_LINKEDIN on BetterHuman_Corp Autopilot. Daily at 12:00 China time.
+   775→
+   776→---
+   777→
+   778→## State
+   779→
+   780→- **Role:** Solo founder
+   781→- **Team:** 1 (Buster)
+   782→- **Stage:** Early (supplemental income)
+   783→- **HQ:** China (remote, sells to EU)
+   784→- **Status:** Active
+   785→- **First-mover window:** 12–18 months
+   786→
+   787→---
+   788→
+   789→## Timeline
+   790→
+   791→- **2026-04-18** | Case study "400 timer" dated [from FAQ structured data]
+   792→- **2026-05-27** | Company overview ingested to brain from Notion workspace context
+   793→- **2026-05-28** | Buster describes mission [Source: User]
+   794→- **2026-05-28** | Company page created in brain [Source: Agent]
+   795→- **2026-05-31** | Extended with full ICP, disqualifiers, positive signals, and product detail [Source: Agent]
+   796→- **2026-06-02** | BHAI_BUSTER1 repo analyzed — public website (Next.js at buster.betterhumanai.dk) and Command Center (lead outreach automation engine with 7 agents, full DB schema, pipeline engine) documented to brain [Source: Code analysis of BHAI_BUSTER1 repo]
+   797→- **2026-06-02** | Public homepage content documented: hero messaging, 3 case studies (mfg/agency/consulting), 3 testimonials, pricing tiers (Starter 35K/Growth 150K/Enterprise 750K+), FAQ, 14-day timeline, scarcity (2 spots open), guarantee, newsletter, studies slider (12 McKinsey/Deloitte/BCG/PwC/Accenture/CBS reports), final CTA [Source: page.tsx + messages/en.json code analysis]
+   798→- **2026-06-02** | Complete repo analysis completed: all landing pages (about, compare, compliance, compliance-check, audit), 3 targeted landing pages (compliance-hook, control-center, speed-play), ebook (3 variants), glossary (10 terms), FAQ (15 questions), blog (1 post), 12 research studies, 4 email-gated case studies (with specific metrics: 69% autonomous CS, 60% more proposals, 400h/month saved, 8.4%→0.9% error), admin panel, HMAC webhook security, email format templates. Full brand positioning analysis + sales funnel documented. 80+ source files analyzed. [Source: Comprehensive code analysis of BHAI_BUSTER1 repo, 2026-06-02]
+   799→- **2026-06-02** | PGLite WASM crash fixed (stale postmaster.pid from corrupted PGLite database). Database reinitialized, all 106 migrations applied (0→111), brain pages re-imported from filesystem (11 pages). gbrain 0.42.1.0 running on Linux x86_64. [Source: Terminal operations, 2026-06-02]
+   800→
+   801→## Open Threads
+   802→
+   803→- How does Buster find and close EU CEO clients?
+   804→- What's the actual conversion rate from ebook download → demo → paid?
+   805→- Any exits/churns yet?
+   806→- When will the 4 case studies go public (currently hidden behind notFound())?
+   807→- Is the Command Center actively running or still in development?
+   808→- What's the relationship between the Claude Managed Agent pipeline and the Command Center agents — are they the same system or separate?
+   809→
+   810→## Back-Links
+   811→
+   812→- **2026-05-28** | Referenced in [people/busterml.md](../people/busterml.md) — Buster's role
+   813→- **2026-05-28** | Referenced in [USER.md](../USER.md) — company description
+   814→

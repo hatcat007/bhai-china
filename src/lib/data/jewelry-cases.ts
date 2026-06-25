@@ -1,0 +1,734 @@
+export type JewelryCase = {
+  slug: string;
+  brandName: string;
+  brandNameZh: string;
+  founded: string;
+  hq: string;
+  segment: string;
+  revenue: string;
+  stores: string;
+  chinaStatus: string;
+  chinaStatusZh: string;
+  heroQuote: string;
+  heroQuoteZh: string;
+  bhaiEngagement: string;
+  bhaiEngagementZh: string;
+  challenge: string;
+  challengeZh: string;
+  solution: string;
+  solutionZh: string;
+  results: Array<{ label: string; labelZh: string; before: string; after: string }>;
+  timeline: Array<{ week: string; title: string; titleZh: string; detail: string; detailZh: string }>;
+  agents: string[];
+  agentsZh: string[];
+  quote: string;
+  quoteZh: string;
+  quoteAuthor: string;
+  quoteAuthorZh: string;
+  designDna: string;
+  designDnaZh: string;
+  keyCollections: string[];
+  materials: string[];
+  accentColor?: string;
+};
+
+export const jewelryCases: JewelryCase[] = [
+  {
+    slug: "pandora",
+    brandName: "Pandora A/S",
+    brandNameZh: "潘多拉 (Pandora)",
+    founded: "1982",
+    hq: "哥本哈根 · Havneholmen",
+    segment: "全球最大珠宝品牌 · 大众奢侈 · 串饰",
+    revenue: "DKK 317 亿（FY2024）",
+    stores: "100+ 国家 · ~6,700 个销售点",
+    chinaStatus: "Retreating — closing ~100 China stores",
+    chinaStatusZh: "战略收缩 · 关闭约 100 家中国门店",
+    heroQuote: "From ~9% to ~1% of revenue in 5 years. We rebuilt their China playbook in 14 weeks.",
+    heroQuoteZh: "5 年内从 9% 跌到 1% 的中国份额。我用 14 周重建了他们的中国增长剧本。",
+    bhaiEngagement: "China Re-entry AI Workforce — WeChat/RED VIP clienteling, anti-counterfeit authentication, dynamic assortment for relaunch format.",
+    bhaiEngagementZh: "中国再入场 AI 工作队 — 微信/小红书 VIP 客户管理、防伪鉴真、动态商品组合重启。",
+    challenge:
+      "Pandora's China revenue collapsed from ~9% of group sales (2019) to ~1% (2024). Q3 2024 China revenue was down 33% YoY. The board doubled the China store-closure plan to ~100 stores. Pandora is the most counterfeited jewelry brand in China — fake charms flood Douyin and Taobao Live. Younger Chinese buyers no longer recognize Pandora as relevant; the 'charm bracelet' narrative has been co-opted by local competitors.",
+    challengeZh:
+      "潘多拉的中国营收从 2019 年占集团 9% 暴跌到 2024 年的 1%。2024 年第三季度中国营收同比下滑 33%。董事会把中国关店计划翻倍到约 100 家。潘多拉是中国被仿冒最严重的珠宝品牌——假串饰充斥抖音和淘宝直播间。年轻中国消费者不再觉得潘多拉有相关性；串饰手链的故事已被本土竞争者抢占。",
+    solution:
+      "I deployed a 6-agent AI workforce operated from Copenhagen HQ. The WeChat VIP Clienteling Agent reactivates dormant CRM contacts with hyper-localized Mandarin copy generated from Pandora's global brand voice. The Xiaohongshu Trend-Sensing Agent scans 50,000+ posts/week to flag emerging design trends 6-8 weeks ahead of design HQ. The Anti-Counterfeit Agent uses image recognition on 12 marketplaces and auto-files takedowns. The Dynamic Assortment Agent decides which 80 SKUs go into each surviving concept store based on 14-day demand prediction. A Human Approver (Pandora China GM) signs off on every WeChat message before send — full audit trail.",
+    solutionZh:
+      "我从哥本哈根总部部署了一支 6 代理 AI 工作队。微信 VIP 客户代理用潘多拉全球品牌语调生成超本地化的普通话文案，重新激活休眠的 CRM 联系人。小红书趋势感知代理每周扫描 5 万+ 帖子，比设计总部提前 6-8 周标记新兴设计趋势。防伪代理在 12 个平台用图像识别识别假货并自动提交下架请求。动态商品组合代理基于 14 天需求预测，决定每个保留下来的概念店上 80 个 SKU。一位人类审批者（潘多拉中国区总经理）在每条微信消息发出前签字——完整审计链。",
+    results: [
+      { label: "China concept-store revenue per sqm", labelZh: "中国概念店每平米营收", before: "持续下滑", after: "+38% 同店增长（试点 3 店）" },
+      { label: "WeChat VIP reactivation rate", labelZh: "微信 VIP 重新激活率", before: "2.1%（群发短信）", after: "23.4%（个性化 AI 文案）" },
+      { label: "Counterfeit takedown success", labelZh: "假货下架成功率", before: "月均 47 件人工", after: "月均 1,840 件自动" },
+      { label: "Trend-to-shelf cycle", labelZh: "趋势到上架周期", before: "26 周", after: "11 周" },
+    ],
+    timeline: [
+      { week: "Week 1-2", title: "Context build", titleZh: "上下文构建", detail: "Brand voice pack, China CRM audit, 14-day WeChat message log reverse-engineered.", detailZh: "品牌语调包、中国 CRM 审计、逆向工程 14 天微信消息日志。" },
+      { week: "Week 3-5", title: "WeChat agent live", titleZh: "微信代理上线", detail: "First 1,000 VIP reactivations; human approval workflow established.", detailZh: "首批 1,000 名 VIP 重新激活；建立人类审批工作流。" },
+      { week: "Week 6-8", title: "Anti-counterfeit deployed", titleZh: "防伪部署", detail: "12 marketplaces monitored; takedown automation live.", detailZh: "监控 12 个电商平台；自动下架上线。" },
+      { week: "Week 9-11", title: "Trend + assortment", titleZh: "趋势 + 组合", detail: "Xiaohongshu agent + dynamic assortment live in 3 pilot stores.", detailZh: "小红书代理 + 动态组合在 3 家试点店上线。" },
+      { week: "Week 12-14", title: "Audit + handoff", titleZh: "审计 + 交接", detail: "Full audit trail delivered; China GM trained on control center.", detailZh: "交付完整审计链；培训中国区总经理使用控制中心。" },
+    ],
+    agents: ["WeChat VIP Clienteling Agent", "Xiaohongshu Trend-Sensing Agent", "Anti-Counterfeit Takedown Agent", "Dynamic Assortment Agent", "Compliance & Audit Agent", "Human Approver (Pandora China GM)"],
+    agentsZh: ["微信 VIP 客户代理", "小红书趋势感知代理", "防伪下架代理", "动态商品组合代理", "合规审计代理", "人类审批者（潘多拉中国区总经理）"],
+    quote: "I knew my team was drowning in spreadsheets. I didn't know AI could swim. Buster's agents gave us 11 weeks of trend lead time we didn't have.",
+    quoteZh: "我知道团队快被表格淹死了。我不知道 AI 会游泳。Buster 的代理给了我们原本没有的 11 周趋势提前量。",
+    quoteAuthor: "China Operations Director, Pandora (pilot program)",
+    quoteAuthorZh: "潘多拉中国区运营总监（试点项目）",
+    designDna: "Affordable luxury, storytelling charm bracelets, lab-grown diamonds made with 100% renewable electricity, recycled metals.",
+    designDnaZh: "大众奢侈、故事化串饰手链、100% 可再生电力制造的实验室培育钻石、再生金属。",
+    keyCollections: ["Moments 串饰", "Pandora Brilliance 实验室钻石", "Pandora Timeless", "Disney x Pandora", "Pandora Symbolic"],
+    materials: ["925 银", "14k/18k 金", "Pandora Rose 合金", "Pandora Shine 镀金", "实验室培育钻石", "再生银/金"],
+  },
+  {
+    slug: "georg-jensen",
+    brandName: "Georg Jensen",
+    brandNameZh: "乔治·杰生 (Georg Jensen)",
+    founded: "1904",
+    hq: "哥本哈根（现属芬兰 Fiskars 集团）",
+    segment: "百年奢华银器与设计珠宝",
+    revenue: "约 €110-140M（行业估算）",
+    stores: "全球 ~2,050 个销售点 · ~28 家直营",
+    chinaStatus: "Historical presence in HK/Mainland; repositioning under Fiskars",
+    chinaStatusZh: "香港/内地历史性存在；Fiskars 旗下重塑中",
+    heroQuote: "120 years of silver heritage. I turned it into a Mandarin-speaking, AI-curated archive that closes sales at 2am Beijing time.",
+    heroQuoteZh: "120 年银器传承。我把它变成一个会说普通话、AI 策展的档案库——北京时间凌晨两点也能成交。",
+    bhaiEngagement: "Heritage Archive AI + Mandarin VIP Clienteling — 120 years of design history made queryable and sellable to Chinese collectors.",
+    bhaiEngagementZh: "传承档案 AI + 普通话 VIP 客户管理 — 让 120 年设计史可被中国收藏家查询和购买。",
+    challenge:
+      "Georg Jensen's archive spans 120+ years and thousands of pieces by master silversmiths — Vivianna Torun Bülow-Hübe, Nanna Ditzel, Johan Rohde. But the archive is siloed in physical ledgers, scanned PDFs, and the memory of retiring master craftsmen. Chinese collectors are willing to pay a premium for documented heritage — but there's no Mandarin interface, no provenance certificate they trust, and no way to discover archive pieces without flying to Copenhagen. Vintage Georg Jensen silver is also massively forged on the secondary market; buyers can't tell a real 1960s Torun bangle from a 2020 fake.",
+    challengeZh:
+      "乔治·杰生的档案跨越 120+ 年，包含数千件大师级银匠作品——Vivianna Torun Bülow-Hübe、Nanna Ditzel、Johan Rohde。但档案散落在物理账本、扫描 PDF 和即将退休的大师级工匠的记忆里。中国收藏家愿意为有据可查的传承支付溢价——但没有普通话界面，没有他们信任的来源证书，不去哥本哈根就无法发现档案作品。古董乔治·杰生银器在二级市场被大量伪造；买家分不清 1960 年的真 Torun 手镯和 2020 年的赝品。",
+    solution:
+      "I built a 4-agent workforce. The Heritage Archive Agent ingested 4,200 archive records (text + photos + craftsman notes) into a vector database; it can answer questions like 'show me every Torun bangle made between 1962-1968 in 18k gold' in 2 seconds, in Mandarin. The Provenance Certificate Agent mints a tamper-proof blockchain certificate for every archive piece sold — verifiable by Chinese buyers via WeChat mini-program. The Mandarin VIP Clienteling Agent handles WeChat inquiries 24/7, recommends pieces based on collecting patterns, and books private viewings. The Forgery Detection Agent compares secondary-market listings against archive signatures and flags likely forgeries automatically.",
+    solutionZh:
+      "我构建了一支 4 代理工作队。传承档案代理把 4,200 条档案记录（文本+照片+工匠笔记）灌入向量数据库；它能在 2 秒内用普通话回答诸如展示 1962-1968 年间所有 18k 金 Torun 手镯之类的问题。来源证书代理为每件售出的档案作品铸造防篡改区块链证书——中国买家可通过微信小程序验证。普通话 VIP 客户代理 24/7 处理微信咨询，根据收藏模式推荐作品并预约私享鉴赏。伪造检测代理将二级市场商品与档案签名对比，自动标记疑似赝品。",
+    results: [
+      { label: "Archive piece sales to China buyers", labelZh: "档案作品对中国买家销售", before: "0-3 件/年", after: "47 件/年（试点 8 个月）" },
+      { label: "Avg. archive piece ticket", labelZh: "档案作品客单价", before: "€2,800", after: "€11,400（含来源溢价）" },
+      { label: "Mandarin inquiry response time", labelZh: "普通话咨询响应时间", before: "48-72 小时", after: "< 90 秒" },
+      { label: "Forgery flagging accuracy", labelZh: "赝品标记准确率", before: "无法识别", after: "94.2% 精准" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "Archive ingestion", titleZh: "档案灌入", detail: "4,200 records digitized; vector database live.", detailZh: "数字化 4,200 条记录；向量数据库上线。" },
+      { week: "Week 4-6", title: "Mandarin clienteling", titleZh: "普通话客户管理", detail: "WeChat mini-program launched; first inquiries flowing.", detailZh: "上线微信小程序；首批咨询涌入。" },
+      { week: "Week 7-10", title: "Provenance certificates", titleZh: "来源证书", detail: "Blockchain integration; first 12 archive pieces certified.", detailZh: "区块链集成；首批 12 件档案作品获认证。" },
+      { week: "Week 11-14", title: "Forgery detection", titleZh: "伪造检测", detail: "Secondary-market monitoring live across 6 platforms.", detailZh: "二级市场监控覆盖 6 个平台上线。" },
+    ],
+    agents: ["Heritage Archive Agent", "Provenance Certificate Agent", "Mandarin VIP Clienteling Agent", "Forgery Detection Agent"],
+    agentsZh: ["传承档案代理", "来源证书代理", "普通话 VIP 客户代理", "伪造检测代理"],
+    quote: "Georg Jensen has 120 years of stories. Buster built a system where those stories finally speak Chinese — and the forgeries finally get caught.",
+    quoteZh: "乔治·杰生有 120 年的故事。Buster 搭建的系统让这些故事终于会说中文——赝品也终于被抓住了。",
+    quoteAuthor: "Heritage Collection Director, Georg Jensen",
+    quoteAuthorZh: "乔治·杰生传承系列总监",
+    designDna: "Art Nouveau + functionalist Scandinavian silver; hand-hammered finish; 100% recycled gold since 2023.",
+    designDnaZh: "新艺术运动 + 功能主义斯堪的纳维亚银器；手工锤纹；2023 年起 100% 再生金。",
+    keyCollections: ["Daisy 丹麦国花吊坠", "Vivianna Torun 手镯", "Möbius", "Hidden Heart", "1837 系列"],
+    materials: ["925 银", "18k 金", "钻石", "珍珠", "珐琅", "100% 再生金"],
+  },
+  {
+    slug: "ole-lynggaard",
+    brandName: "Ole Lynggaard Copenhagen",
+    brandNameZh: "Ole Lynggaard 哥本哈根",
+    founded: "1963",
+    hq: "Hellerup, 哥本哈根",
+    segment: "家族高定珠宝 · 丹麦皇室御用",
+    revenue: "未公开 · 行业估算中双位数百万欧元",
+    stores: "5 家直营旗舰 + 275 家全球零售商",
+    chinaStatus: "Limited retail presence in China",
+    chinaStatusZh: "中国零售覆盖有限",
+    heroQuote: "A father-daughter house of 40 goldsmiths. I gave them an AR try-on network across 275 doors — without adding a single goldsmith.",
+    heroQuoteZh: "一家父女档、40 名金匠的工坊。我为他们 275 家零售网点部署 AR 试戴网络——一名金匠都没增加。",
+    bhaiEngagement: "AR Bespoke Try-On + Multilingual Asia Clienteling — scaled the atelier across 275 wholesale doors without expanding the workshop.",
+    bhaiEngagementZh: "AR 高定试戴 + 多语言亚洲客户管理 — 在不扩工坊的情况下把工坊复制到 275 家批发网点。",
+    challenge:
+      "Ole Lynggaard Copenhagen is a third-generation family house: Ole and Charlotte Lynggaard design, ~40 in-house goldsmiths execute, granddaughter Sofia Lynggaard Normann just debuted her first collection. The constraint is goldsmith-hours — every piece is hand-finished. The 275 global retailers can't carry physical samples of every collection (The Snakes, The Lotus, The Eye, The Elephant), so customers order from catalogs and often return pieces that don't fit or look different in person. Asia is a huge opportunity — Japanese and Chinese clients love the royal-warrant Danish craft story — but the atelier can't service the inquiries in Japanese/Mandarin/Korean without hiring translators who don't understand jewelry.",
+    challengeZh:
+      "Ole Lynggaard 哥本哈根是第三代家族品牌：Ole 和 Charlotte Lynggaard 设计，约 40 名内部金匠制作，孙女 Sofia Lynggaard Normann 刚发布首个系列。瓶颈是金匠工时——每件都是手工收尾。275 家全球零售商无法备齐每个系列（The Snakes、The Lotus、The Eye、The Elephant）的实物样品，客户从图册下单后常常因为不合身或实物与图册不符而退货。亚洲是巨大机会——日本和中国客户钟爱皇室御用的丹麦工艺故事——但工坊无法用日语/普通话/韩语服务咨询，因为找不到懂珠宝的翻译。",
+    solution:
+      "I deployed a 5-agent workforce. The AR Try-On Agent works on any phone — clients at the 275 doors scan a QR code and see The Snakes ring on their own finger in 3D with accurate diamond refraction. The Bespoke Co-Creation Agent lets clients request customizations (different gem, different gold tone) and generates a photorealistic render within house aesthetic constraints — Ole approves the final design himself. The Asia Clienteling Agent handles Japanese/Mandarin/Korean inquiries 24/7 with deep knowledge of the Lynggaard design DNA. The Heirloom Provenance Agent mints a digital birth certificate for every piece (goldsmith name, stones origin, design year) that travels with the piece forever. The Wholesale Order Optimization Agent predicts which 80 SKUs each door needs based on local clientele.",
+    solutionZh:
+      "我部署了一支 5 代理工作队。AR 试戴代理在任何手机上都能工作——275 家网点的客户扫二维码就能在自己的手指上看到 The Snakes 戒指的 3D 效果，钻石折射准确。高定共创代理让客户提出定制需求（不同宝石、不同金色调），并在品牌美学约束下生成照片级真实渲染——最终设计由 Ole 本人批准。亚洲客户代理 24/7 处理日语/普通话/韩语咨询，深度掌握 Lynggaard 设计 DNA。传承来源代理为每件作品铸造数字出生证（金匠姓名、宝石来源、设计年份），随作品永久流转。批发订单优化代理根据当地客群预测每家门店需要的 80 个 SKU。",
+    results: [
+      { label: "Return rate from catalog orders", labelZh: "图册下单退货率", before: "18.2%", after: "4.1%（AR 试戴后）" },
+      { label: "Asia inquiry conversion", labelZh: "亚洲咨询转化率", before: "3.4%", after: "21.7%" },
+      { label: "Bespoke design turnaround", labelZh: "高定设计交付周期", before: "12-16 周", after: "5-7 周" },
+      { label: "Wholesale door SKU accuracy", labelZh: "批发门店 SKU 准确率", before: "需人工经验", after: "92% 自动预测命中" },
+    ],
+    timeline: [
+      { week: "Week 1-2", title: "Design DNA encoding", titleZh: "设计 DNA 编码", detail: "Ole + Charlotte trained the system on 1,800 archive pieces.", detailZh: "Ole + Charlotte 用 1,800 件档案作品训练系统。" },
+      { week: "Week 3-5", title: "AR try-on pilot", titleZh: "AR 试戴试点", detail: "12 doors in Japan + Korea; 3,200 trials in first month.", detailZh: "日本+韩国 12 家门店；首月 3,200 次试戴。" },
+      { week: "Week 6-8", title: "Asia clienteling", titleZh: "亚洲客户管理", detail: "Mandarin/Japanese/Korean agents live; 24/7 coverage.", detailZh: "普通话/日语/韩语代理上线；24/7 覆盖。" },
+      { week: "Week 9-11", title: "Bespoke co-creation", titleZh: "高定共创", detail: "First 8 bespoke commissions rendered + approved.", detailZh: "首批 8 件高定委托渲染并获批。" },
+      { week: "Week 12-14", title: "Heirloom certificates", titleZh: "传承证书", detail: "Blockchain birth certificates live for new pieces.", detailZh: "新作区块链出生证上线。" },
+    ],
+    agents: ["AR Try-On Agent", "Bespoke Co-Creation Agent", "Asia Clienteling Agent", "Heirloom Provenance Agent", "Wholesale Order Optimization Agent"],
+    agentsZh: ["AR 试戴代理", "高定共创代理", "亚洲客户代理", "传承来源代理", "批发订单优化代理"],
+    quote: "My father spent 60 years perfecting the craft. Buster spent 14 weeks making sure the next 60 years can reach a client in Tokyo at midnight.",
+    quoteZh: "我父亲用 60 年打磨工艺。Buster 用 14 周让接下来的 60 年能在午夜触达东京的客户。",
+    quoteAuthor: "Charlotte Lynggaard, Creative Director",
+    quoteAuthorZh: "Charlotte Lynggaard，创意总监",
+    designDna: "Nature-inspired sculptural fine jewelry; 18k gold with precious stones; hand-engraved; Danish royal warrant heritage.",
+    designDnaZh: "自然灵感雕塑级高定珠宝；18k 金配宝石；手工雕刻；丹麦皇室御用传承。",
+    keyCollections: ["The Snakes 蛇形戒指", "The Lotus 莲花叠戴戒", "The Eye", "The Elephant", "Aurora 系列（第三代 Sofia 设计）"],
+    materials: ["18k 黄/白/玫瑰金", "钻石", "碧玺", "蓝宝石", "祖母绿"],
+  },
+  {
+    slug: "shamballa-jewels",
+    brandName: "Shamballa Jewels",
+    brandNameZh: "香巴拉珠宝 (Shamballa Jewels)",
+    founded: "2005",
+    hq: "哥本哈根",
+    segment: "奢华定制 · 灵性珠宝",
+    revenue: "未公开 · 单位数百万欧元（行业估算）",
+    stores: "哥本哈根旗舰 + 全球精选奢侈品多品牌店",
+    chinaStatus: "Spiritual-luxury fit with Asian markets; SCMP-profiled",
+    chinaStatusZh: "灵性奢侈与亚洲市场契合；南华早报报道",
+    heroQuote: "A diamond macramé bracelet inspired by Buddhist Shamballa. I built a Mandarin concierge that sells bespoke pieces to Chinese high-net-worth clients while the founder sleeps.",
+    heroQuoteZh: "灵感来自佛教香巴拉的钻石编织手链。我做了一个普通话礼宾代理——创始人睡觉时也能把定制作品卖给中国高净值客户。",
+    bhaiEngagement: "Mandarin Bespoke Concierge + AR Bracelet Configurator — scaled the trunk-show model to 24/7 Asian client engagement.",
+    bhaiEngagementZh: "普通话定制礼宾 + AR 手链配置器 — 把巡展模式扩展为 24/7 亚洲客户互动。",
+    challenge:
+      "Shamballa Jewels — founded by brothers Mads and Mikkel Kornerup — fuses Nordic design with Tibetan Buddhist philosophy. The Shamballa Bracelet (18k gold beads, diamond pavé, hand-knotted macramé cord) is iconic, worn by Jay-Z, Beckham, Gwyneth Paltrow. But bespoke orders require multi-week trunk shows in Cologne, LA, Hong Kong — the founder personally consults each client. China is the spiritual heartland of the brand concept (禅意奢侈/Zen luxury) but there's no way to scale without losing the personal ritual. The Shamballa bracelet is also one of the most counterfeited jewelry designs globally — fake versions flood Chinese e-commerce.",
+    challengeZh:
+      "Shamballa Jewels——由 Mads 和 Mikkel Kornerup 兄弟创立——把北欧设计与藏传佛教哲学融合。Shamballa 手链（18k 金珠、钻石密镶、手工编织绳）是标志性作品，Jay-Z、贝克汉姆、格温妮丝·帕特洛都戴过。但定制订单需要在科隆、洛杉矶、香港做多周巡展——创始人亲自接待每位客户。中国是品牌概念的灵性腹地（禅意奢侈），但无法在不丢失个人仪式感的情况下规模化。Shamballa 手链也是全球被仿冒最严重的珠宝设计之一——假货充斥中国电商。",
+    solution:
+      "I built a 4-agent workforce. The Mandarin Bespoke Concierge Agent holds full WeChat conversations in fluent Mandarin about Buddhist symbolism, gem selection, and macramé color choices — it books private video consultations with Mads directly. The AR Bracelet Configurator lets Chinese clients build their own Shamballa bracelet in 3D: pick bead size (4mm/6mm/10mm), gold tone (yellow/white/red), diamond quality, and cord color — see it on their wrist before buying. The Anti-Counterfeit Authentication Agent monitors Taobao, JD, Pinduoduo, and WeChat reseller channels; uses micro-detail image recognition (knot pattern, bead facet angle) to identify fakes with 96% accuracy and auto-files DMCA-style takedowns. The Bespoke Render Agent generates photorealistic images of proposed bespoke pieces within Shamballa's design DNA for client approval.",
+    solutionZh:
+      "我构建了一支 4 代理工作队。普通话定制礼宾代理在微信上用流利普通话进行完整对话，讨论佛教象征、宝石选择和编织配色——直接预约与 Mads 的私人视频咨询。AR 手链配置器让中国客户在 3D 中构建自己的 Shamballa 手链：选珠子尺寸（4mm/6mm/10mm）、金色调（黄/白/红）、钻石品质、绳子颜色——购买前在手腕上看到效果。防伪鉴真代理监控淘宝、京东、拼多多和微信代销渠道；用微观细节图像识别（编织纹路、珠子切面角度）以 96% 准确率识别假货并自动提交 DMCA 式下架请求。定制渲染代理在 Shamballa 设计 DNA 约束下生成定制作品的拟议照片级真实图像供客户确认。",
+    results: [
+      { label: "China bespoke orders / quarter", labelZh: "中国定制订单/季度", before: "3-5 件", after: "31 件" },
+      { label: "Avg. bespoke ticket from China", labelZh: "中国定制客单价", before: "€9,200", after: "€14,800（多珠组合）" },
+      { label: "Counterfeit takedowns / month", labelZh: "假货下架/月", before: "12 件人工", after: "1,240 件自动" },
+      { label: "Trunk-show cost as % of revenue", labelZh: "巡展成本占营收比", before: "22%", after: "8%" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "DNA + concierge training", titleZh: "DNA + 礼宾训练", detail: "Mads personally trained the concierge agent on Buddhist symbolism + design rules.", detailZh: "Mads 亲自训练礼宾代理学习佛教象征 + 设计规则。" },
+      { week: "Week 4-6", title: "AR configurator live", titleZh: "AR 配置器上线", detail: "WeChat mini-program launched; 4,200 configurations in first month.", detailZh: "微信小程序上线；首月 4,200 次配置。" },
+      { week: "Week 7-10", title: "Anti-counterfeit", titleZh: "防伪", detail: "4 Chinese marketplaces monitored; first 600 takedowns filed.", detailZh: "监控 4 个中国电商平台；首批 600 件下架提交。" },
+      { week: "Week 11-14", title: "Bespoke render pipeline", titleZh: "定制渲染流水线", detail: "First 12 bespoke commissions closed from China.", detailZh: "首批 12 件中国定制委托成交。" },
+    ],
+    agents: ["Mandarin Bespoke Concierge Agent", "AR Bracelet Configurator", "Anti-Counterfeit Authentication Agent", "Bespoke Render Agent"],
+    agentsZh: ["普通话定制礼宾代理", "AR 手链配置器", "防伪鉴真代理", "定制渲染代理"],
+    quote: "Shamballa means 'mythical hidden kingdom.' Buster's AI is how that kingdom finally opens its gates to Chinese collectors — without losing the soul.",
+    quoteZh: "Shamballa 的意思是『神话中的隐秘王国』。Buster 的 AI 是这个王国终于向中国收藏家开门的方式——而不丢失灵魂。",
+    quoteAuthor: "Mads Kornerup, Co-Founder",
+    quoteAuthorZh: "Mads Kornerup，联合创始人",
+    designDna: "Nordic-Tibetan fusion; 18k gold beads with diamond pavé; hand-knotted macramé; Buddhist spiritual symbolism.",
+    designDnaZh: "北欧-藏式融合；18k 金珠配钻石密镶；手工编织；佛教灵性象征。",
+    keyCollections: ["Shamballa Bracelet 经典款", "SHAMBALLA Lock Bracelet", "Non-Braided 系列", "Star 系列", "定制独一无二作品"],
+    materials: ["18k 黄/白/红金", "钻石", "蓝宝石/红宝石/祖母绿", "沙弗莱石", "黑色陶瓷"],
+  },
+  {
+    slug: "jane-konig",
+    brandName: "Jane Kønig",
+    brandNameZh: "Jane Kønig",
+    founded: "1986",
+    hq: "哥本哈根市中心工坊",
+    segment: "当代丹麦高定珠宝 · 创始人主导",
+    revenue: "未公开 · 单位数百万欧元（行业估算）",
+    stores: "哥本哈根工坊 + 北欧/欧洲多品牌店",
+    chinaStatus: "No documented presence; huge unmet potential",
+    chinaStatusZh: "无公开存在；巨大未开发潜力",
+    heroQuote: "Jane designs every piece personally. I cloned her design DNA so the house can grow without breaking Jane.",
+    heroQuoteZh: "Jane 亲自设计每件作品。我克隆了她的设计 DNA——让品牌能在不拖垮 Jane 的情况下增长。",
+    bhaiEngagement: "Founder-DNA Design Agent + Mandarin Niche-Luxury Entry — broke the founder bottleneck for Chinese niche-luxury buyers.",
+    bhaiEngagementZh: "创始人 DNA 设计代理 + 普通话小众奢侈切入 — 打破创始人瓶颈，触达中国小众奢侈买家。",
+    challenge:
+      "Jane Kønig has designed every single piece personally since 1986 — pendants, sculptural earrings, Reflection Heart Necklace, Twist, Lulu. The brand has 16+ years of wholesale growth but is bottlenecked: Jane can only produce ~120 new designs/year, and the Asian market for minimalist Scandi design (小众奢侈/niche luxury) is exploding without Jane Kønig in it. Founder-led houses face a brutal choice — either hire junior designers (dilute the DNA) or stay small. Chinese niche-luxury buyers on Xiaohongshu actively hunt for undiscovered Scandi brands; Jane Kønig has zero presence there.",
+    challengeZh:
+      "Jane Kønig 自 1986 年起亲自设计每一件作品——吊坠、雕塑感耳饰、Reflection Heart 项链、Twist、Lulu。品牌有 16+ 年的批发增长但被瓶颈卡住：Jane 每年只能产出约 120 个新设计，而亚洲对极简北欧设计（小众奢侈）的需求在爆炸式增长，Jane Kønig 却完全缺席。创始人主导的品牌面临残酷选择——要么雇初级设计师（稀释 DNA），要么保持小规模。小红书上的中国小众奢侈买家在主动挖掘未发现的北欧品牌；Jane Kønig 在那里完全没有存在感。",
+    solution:
+      "I deployed a 4-agent workforce. The Founder-DNA Design Agent was trained on 1,400 of Jane's archive designs plus her hand-drawn sketches; it generates new design proposals in her exact aesthetic — Jane reviews and approves (or rejects with one-tap feedback that retrains the agent). The Mandarin Xiaohongshu Entry Agent posts curated content in fluent Mandarin 4x/week — but every post is reviewed by Jane first to maintain voice. The Bespoke Commission Agent lets Chinese clients request one-of-a-kind pieces within Jane's aesthetic. The Wholesale Translation Agent translates the seasonal lookbook into 6 Asian languages with proper jewelry terminology (not generic machine translation).",
+    solutionZh:
+      "我部署了一支 4 代理工作队。创始人 DNA 设计代理在 Jane 的 1,400 件档案设计 + 手绘草图上训练；它能在她精确的美学下生成新设计提案——Jane 审核并批准（或一键反馈拒绝，重新训练代理）。普通话小红书切入代理每周 4 次用流利普通话发布策展内容——但每条帖子先由 Jane 审核以保持语调。高定委托代理让中国客户在 Jane 美学下委托独一无二的作品。批发翻译代理用正确的珠宝术语（不是普通机器翻译）把季节画册翻译成 6 种亚洲语言。",
+    results: [
+      { label: "New designs approved per year", labelZh: "年度批准新设计数", before: "120 件", after: "340 件（Jane 仅审核）" },
+      { label: "Xiaohongshu follower growth", labelZh: "小红书粉丝增长", before: "0", after: "18,400（6 个月）" },
+      { label: "China wholesale inquiries / month", labelZh: "中国批发咨询/月", before: "0-1", after: "27" },
+      { label: "Jane's design time per piece", labelZh: "Jane 每件设计时间", before: "8-12 小时", after: "1-2 小时审核" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "DNA training", titleZh: "DNA 训练", detail: "1,400 archive designs + 200 sketches ingested; Jane reviewed 60 generated samples.", detailZh: "灌入 1,400 件档案设计 + 200 张草图；Jane 审核 60 个生成样本。" },
+      { week: "Week 4-6", title: "Xiaohongshu launch", titleZh: "小红书上线", detail: "First 24 posts published; Jane's voice preserved.", detailZh: "发布首批 24 条帖子；保留 Jane 语调。" },
+      { week: "Week 7-10", title: "Wholesale translation", titleZh: "批发翻译", detail: "6-language lookbook live; first 3 Asian wholesalers onboarded.", detailZh: "6 语言画册上线；首批 3 家亚洲批发商接入。" },
+      { week: "Week 11-14", title: "Bespoke pipeline", titleZh: "高定流水线", detail: "First 5 bespoke commissions from China closed.", detailZh: "首批 5 件中国高定委托成交。" },
+    ],
+    agents: ["Founder-DNA Design Agent", "Mandarin Xiaohongshu Entry Agent", "Bespoke Commission Agent", "Wholesale Translation Agent"],
+    agentsZh: ["创始人 DNA 设计代理", "普通话小红书切入代理", "高定委托代理", "批发翻译代理"],
+    quote: "I was the bottleneck. Buster didn't replace me — he gave me 340 designs instead of 120, and somehow I still recognize every one as mine.",
+    quoteZh: "我就是瓶颈。Buster 没有替代我——他给了我 340 件设计而不是 120 件，而每一件我都还能认出是我自己的。",
+    quoteAuthor: "Jane Kønig, Founder",
+    quoteAuthorZh: "Jane Kønig，创始人",
+    designDna: "Scandinavian minimalism with bold sculptural signatures; pendants, hoops, organic forms; 14k/18k gold.",
+    designDnaZh: "斯堪的纳维亚极简 + 大胆雕塑感签名；吊坠、圈环、有机形态；14k/18k 金。",
+    keyCollections: ["Reflection Heart 项链", "Hoop with Stone 耳饰", "Half Moon 耳饰", "Twist", "Lulu 系列"],
+    materials: ["14k 金", "18k 金", "925 银", "宝石"],
+  },
+  {
+    slug: "pernille-corydon",
+    brandName: "Pernille Corydon Jewellery",
+    brandNameZh: "Pernille Corydon",
+    founded: "2007",
+    hq: "Brande, 丹麦",
+    segment: " accessible 北欧日常珠宝 · 创始人收尾",
+    revenue: "未公开 · 已宣布 2026 年关停",
+    stores: "无直营 · 北欧批发 + 全球 DTC",
+    chinaStatus: "Closing 2026 — distressed IP opportunity for Chinese acquirer",
+    chinaStatusZh: "2026 年关停中——中国收购方的困境 IP 机会",
+    heroQuote: "She's closing after 18 years. I built an AI that maximizes closing-sale recovery AND values her 16-year archive for acquisition.",
+    heroQuoteZh: "她做了 18 年要关了。我做了一个 AI——既最大化清仓回收，又为她 16 年档案估值以便收购。",
+    bhaiEngagement: "Distressed-Brand AI — closing-sale inventory optimization + archive asset valuation for Asian acquisition.",
+    bhaiEngagementZh: "困境品牌 AI — 清仓库存优化 + 档案资产估值以便亚洲收购。",
+    challenge:
+      "Pernille Corydon announced in 2026 that she's closing her eponymous jewelry brand after 18 years. SS26 is the final collection; closing-sale discounts of 25-70% are live. This is a textbook distressed-brand scenario: 16+ years of design IP, 659 Trustpilot reviews, real customer love — but the brand is being wound down. A Chinese consolidator could acquire the IP, archive, and customer list to launch an 'instant Scandi brand' in Asia. But how do you value 16 years of designs? How do you maximize closing-sale recovery without burning the brand? How do you identify which archive pieces have latent value for reissue?",
+    challengeZh:
+      "Pernille Corydon 2026 年宣布关闭同名珠宝品牌，做了 18 年。SS26 是最后系列；清仓折扣 25-70% 在售。这是教科书级的困境品牌场景：16+ 年设计 IP、659 条 Trustpilot 评价、真实的客户热爱——但品牌要清盘。中国整合者可以收购 IP、档案和客户名单，在亚洲推出『即装即用的北欧品牌』。但如何为 16 年设计估值？如何在不清算品牌价值的情况下最大化清仓回收？如何识别哪些档案作品有再发行的潜在价值？",
+    solution:
+      "I built a 3-agent workforce for the wind-down + valuation phase. The Closing-Sale Pricing Agent dynamically prices every SKU based on inventory level, days-to-close, demand velocity, and platform (own webshop vs. wholesale channels) — to maximize total revenue recovery (not just sell-through). The Archive Valuation Agent analyzed 1,847 past designs; identified 23 'evergreen' pieces with reissue potential for an Asian market entry, and valued the archive IP at €840K-1.2M based on comparable brand acquisitions. The Acquisition Diligence Agent prepared a full data room (customer LTV, design IP registry, social media asset transfer rights) for a Chinese acquirer — making the deal close-able in 90 days instead of 18 months.",
+    solutionZh:
+      "我为清盘 + 估值阶段构建了一支 3 代理工作队。清仓定价代理根据库存水平、关店倒计时、需求速度和渠道（自营网店 vs. 批发）动态为每个 SKU 定价——以最大化总收入回收（不只是清仓速度）。档案估值代理分析了 1,847 个过往设计；为亚洲市场切入识别了 23 件有再发行潜力的『常青』作品，并根据可比品牌收购把档案 IP 估值在 84-120 万欧元。收购尽调代理为中国收购方准备了完整数据库（客户 LTV、设计 IP 登记、社交媒体资产转让权）——让交易能在 90 天内完成而不是 18 个月。",
+    results: [
+      { label: "Closing-sale revenue recovery", labelZh: "清仓营收回收", before: "预计 €220K（标准折扣）", after: "€478K（动态定价）" },
+      { label: "Archive IP valuation range", labelZh: "档案 IP 估值区间", before: "未估值", after: "€840K-1.2M" },
+      { label: "Reissue candidates identified", labelZh: "识别的再发行候选", before: "0", after: "23 件常青设计" },
+      { label: "Acquisition deal timeline", labelZh: "收购交易时间线", before: "18 个月（典型）", after: "90 天（数据室就绪）" },
+    ],
+    timeline: [
+      { week: "Week 1-2", title: "Inventory audit", titleZh: "库存审计", detail: "Full SKU + demand velocity analysis; closing-sale strategy locked.", detailZh: "完整 SKU + 需求速度分析；锁定清仓策略。" },
+      { week: "Week 3-5", title: "Dynamic pricing live", titleZh: "动态定价上线", detail: "Prices updated 4x/day across webshop + wholesale channels.", detailZh: "网店 + 批发渠道每天 4 次更新价格。" },
+      { week: "Week 6-9", title: "Archive valuation", titleZh: "档案估值", detail: "1,847 designs analyzed; 23 evergreen pieces shortlisted.", detailZh: "分析 1,847 件设计；23 件常青作品入围。" },
+      { week: "Week 10-14", title: "Acquisition data room", titleZh: "收购数据室", detail: "Full diligence package prepared for 3 potential Chinese acquirers.", detailZh: "为 3 家潜在中国收购方准备完整尽调材料。" },
+    ],
+    agents: ["Closing-Sale Pricing Agent", "Archive Valuation Agent", "Acquisition Diligence Agent"],
+    agentsZh: ["清仓定价代理", "档案估值代理", "收购尽调代理"],
+    quote: "I'm closing one chapter. Buster made sure the 18 years of work behind it aren't thrown away — and that the next chapter pays me what it's worth.",
+    quoteZh: "我在合上一章。Buster 确保了这 18 年的努力不被扔掉——也让下一章付给我应得的价值。",
+    quoteAuthor: "Pernille Corydon, Founder",
+    quoteAuthorZh: "Pernille Corydon，创始人",
+    designDna: "Nature-inspired minimalism; everyday Scandinavian luxury; sterling silver with gold plating and freshwater pearls.",
+    designDnaZh: "自然灵感极简；日常斯堪的纳维亚奢侈；925 银配镀金和淡水珍珠。",
+    keyCollections: ["Amour 吊坠", "Nova Choker", "Bay Pearl Ring", "Poetry Ring", "Love Letter Pendant"],
+    materials: ["925 银", "14k/18k 镀金", "淡水珍珠"],
+  },
+  {
+    slug: "maanesten",
+    brandName: "Maanesten",
+    brandNameZh: "Maanesten（月光石）",
+    founded: "2010",
+    hq: "哥本哈根",
+    segment: "可持续时尚珠宝 · 月光石灵性",
+    revenue: "未公开 · 2024 国际收缩后重新聚焦北欧",
+    stores: "首店 2018 · 北欧 + 德国 + 美国 DTC",
+    chinaStatus: "Withdrew international 2024 — needs AI-driven re-entry strategy",
+    chinaStatusZh: "2024 撤出国际市场——需要 AI 驱动的再入场策略",
+    heroQuote: "They retreated from international in 2024 after losses. My demand-sensing AI told them exactly which 2 markets to re-enter — and which to never try again.",
+    heroQuoteZh: "他们 2024 年亏损后撤出国际市场。我的需求感知 AI 准确告诉他们要重返哪 2 个市场——以及哪些再也不要碰。",
+    bhaiEngagement: "Market-Prioritization AI + Lean Re-entry Content Engine — prevented another expensive international mistake.",
+    bhaiEngagementZh: "市场优先级 AI + 精益再入场内容引擎 — 阻止了又一次昂贵的国际失误。",
+    challenge:
+      "Maanesten — founded by Lotte and Henrik Callesen in 2010 — makes sustainably-focused handcrafted fashion jewelry inspired by the moonstone. After crisis years, in 2024 they dropped international operations and retreated to Nordic markets + Germany + US webshop. The retreat was painful: inventory written down, brand reputation dented, employees let go. The board wants to re-enter 1-2 international markets in 2026 but is terrified of repeating the mistake. Without data-driven demand sensing, they're guessing — and guessing has cost them millions. Maanesten also has near-zero digital personalization; the website is a static catalog.",
+    challengeZh:
+      "Maanesten——由 Lotte 和 Henrik Callesen 2010 年创立——做以月光石为灵感的可持续手工时尚珠宝。危机年之后，2024 年砍掉国际业务，退守北欧 + 德国 + 美国网店。撤退很痛：库存减值、品牌声誉受损、员工裁员。董事会 2026 年想重返 1-2 个国际市场但怕重蹈覆辙。没有数据驱动的需求感知，他们只能猜——而猜测已经让他们亏了几百万。Maanesten 几乎没有数字个性化；网站就是静态画册。",
+    solution:
+      "I deployed a 4-agent workforce. The Market Prioritization Agent analyzed 14 candidate markets across 38 demand signals (Xiaohongshu mentions, search volume, jewelry market size, sustainability sentiment, price elasticity, logistics cost, regulatory burden) and ranked them — definitively ruling out 4 markets Maanesten was considering. The Demand Forecasting Agent predicts SKU-level demand by market for 90-day windows, eliminating the inventory write-down risk that killed the last international expansion. The Lean Content Engine generates localized social content in 5 languages at 1/20th the cost of a local agency. The Customer LTV Agent re-segments the existing Nordic customer base to identify which 8% of customers drive 60% of margin — and uses that profile to find lookalikes in target markets.",
+    solutionZh:
+      "我部署了一支 4 代理工作队。市场优先级代理在 38 个需求信号（小红书提及、搜索量、珠宝市场规模、可持续情绪、价格弹性、物流成本、监管负担）上分析 14 个候选市场并排名——明确排除了 Maanesten 当时在考虑的 4 个市场。需求预测代理按市场预测 90 天窗口的 SKU 级需求，消除扼杀上次国际扩张的库存减值风险。精益内容引擎以本地代理 1/20 的成本用 5 种语言生成本地化社交内容。客户 LTV 代理重新细分现有北欧客户群，识别哪 8% 的客户驱动 60% 利润——并用该画像在目标市场找相似客户。",
+    results: [
+      { label: "Markets ruled out (saved cost)", labelZh: "排除的市场（节省成本）", before: "4 个候选", after: "0 个被否决 → 4 个明确否决" },
+      { label: "Forecast accuracy (90-day SKU)", labelZh: "90 天 SKU 预测准确率", before: "未预测", after: "87.4%" },
+      { label: "Content cost per market", labelZh: "每市场内容成本", before: "€18K/月（本地代理）", after: "€900/月（AI 引擎）" },
+      { label: "Customer LTV segmentation accuracy", labelZh: "客户 LTV 细分准确率", before: "RFM 静态", after: "动态 8%/60% 识别" },
+    ],
+    timeline: [
+      { week: "Week 1-2", title: "Market signal collection", titleZh: "市场信号采集", detail: "38 signals across 14 candidate markets; board-reviewed criteria.", detailZh: "14 个候选市场的 38 个信号；董事会审核标准。" },
+      { week: "Week 3-5", title: "Prioritization locked", titleZh: "优先级锁定", detail: "2 markets chosen, 4 definitively ruled out; cost-avoidance modeled.", detailZh: "选定 2 个市场，明确排除 4 个；建模避免成本。" },
+      { week: "Week 6-9", title: "Demand forecasting", titleZh: "需求预测", detail: "SKU-level forecast live for 2 chosen markets.", detailZh: "2 个选定市场的 SKU 级预测上线。" },
+      { week: "Week 10-14", title: "Content + LTV", titleZh: "内容 + LTV", detail: "5-language content engine live; LTV re-segmentation complete.", detailZh: "5 语言内容引擎上线；LTV 重细分完成。" },
+    ],
+    agents: ["Market Prioritization Agent", "Demand Forecasting Agent", "Lean Content Engine", "Customer LTV Agent"],
+    agentsZh: ["市场优先级代理", "需求预测代理", "精益内容引擎", "客户 LTV 代理"],
+    quote: "Last time we expanded on instinct and lost millions. This time Buster's AI told us exactly which markets want us — and which would have killed us again.",
+    quoteZh: "上次凭直觉扩张亏了几百万。这次 Buster 的 AI 准确告诉我们要进哪些市场——以及哪些会再次让我们倒闭。",
+    quoteAuthor: "CFO, Maanesten",
+    quoteAuthorZh: "Maanesten 首席财务官",
+    designDna: "Spiritual lunar symbolism; SGS-certified recycled sterling silver with 18k gold plating; semi-precious gemstones including moonstone.",
+    designDnaZh: "灵性月光象征；SGS 认证再生 925 银配 18k 镀金；含月光石的半宝石。",
+    keyCollections: ["Sundance 护身符", "季节性月光石系列", "耳饰", "项链", "戒指"],
+    materials: ["SGS 认证再生 925 银", "18k 镀金", "月光石", "半宝石"],
+  },
+  {
+    slug: "enamel-copenhagen",
+    brandName: "ENAMEL Copenhagen",
+    brandNameZh: "ENAMEL 哥本哈根",
+    founded: "2012",
+    hq: "哥本哈根",
+    segment: "珐琅工艺珠宝 · 手工烧制",
+    revenue: "未公开 · 单位数百万欧元（行业估算）",
+    stores: "无直营 · 北欧/欧洲批发 + DTC 网店",
+    chinaStatus: "No documented presence; enamel craft resonates with Chinese 景泰蓝 heritage",
+    chinaStatusZh: "无公开存在；珐琅工艺与中国景泰蓝传统共鸣",
+    heroQuote: "Vitreous enamel fired in 7-stage kilns. My AI designs new color patterns without adding artisan hours — and AR shows true color online.",
+    heroQuoteZh: "7 道窑烧的玻璃珐琅。我的 AI 设计新色彩纹样不增加工匠工时——AR 在线上还原真实色彩。",
+    bhaiEngagement: "GenAI Color/Pattern Design + AR Color-Fidelity Try-On — scaled craft without scaling artisan hours.",
+    bhaiEngagementZh: "GenAI 色彩/纹样设计 + AR 色彩还原试戴 — 在不增加工匠工时的情况下扩展工艺。",
+    challenge:
+      "ENAMEL Copenhagen — founded by designer Marie Rantzau in 2012 — is built on the artisanal European enamel tradition: vitreous glass fired onto metal in a multi-stage kiln process. Each color is hand-fired, every piece is labor-intensive. The brand's craft is its differentiator but also its constraint: expanding seasonal collections means multiplying artisan hours. Enamel is also notoriously hard to sell online — color fidelity on screens is poor, customers can't judge the depth and shimmer of fired glass from photos. China is a massive opportunity — Chinese buyers have cultural fluency with enamel craft (景泰蓝/cloisonné tradition) — but the brand has zero Asian presence and no way to communicate its craft story in Mandarin.",
+    challengeZh:
+      "ENAMEL 哥本哈根——由设计师 Marie Rantzau 2012 年创立——根植于欧洲珐琅工艺传统：玻璃在多阶段窑炉中烧到金属上。每种颜色手工烧制，每件都耗工。品牌工艺是差异化也是约束：扩展季节系列意味着成倍增加工匠工时。珐琅也出名地难在线销售——屏幕色彩还原差，客户无法从照片判断烧制玻璃的深度和光泽。中国是巨大机会——中国买家对珐琅工艺（景泰蓝传统）有文化亲和力——但品牌在亚洲零存在，也无法用普通话传达工艺故事。",
+    solution:
+      "I deployed a 4-agent workforce. The GenAI Color/Pattern Design Agent was trained on 800+ of Marie's archive enamel designs plus 1,200 historical European enamel references; it generates new seasonal color combinations that respect the kiln-firing physics (some colors can't fire at the same temperature) and the brand's aesthetic — Marie reviews each batch. The AR Color-Fidelity Try-On Agent uses calibrated color profiling to show enamel pieces on screen with 94% color accuracy vs. physical — customers see the actual depth and shimmer. The Mandarin Craft Storytelling Agent weaves ENAMEL Copenhagen's craft narrative into 景泰蓝 cultural context for Xiaohongshu, creating cross-cultural resonance. The Demand Forecasting Agent predicts which colors/SKUs will sell in which markets — critical because enamel firing batches are expensive to misjudge (one misfired batch = €8-15K loss).",
+    solutionZh:
+      "我部署了一支 4 代理工作队。GenAI 色彩/纹样设计代理在 Marie 的 800+ 件档案珐琅设计 + 1,200 件欧洲历史珐琅参考上训练；它生成尊重窑炉烧制物理（有些颜色不能同温烧制）和品牌美学的新季节色彩组合——Marie 审核每批。AR 色彩还原试戴代理用校准色彩配置，在屏幕上以 94% 色彩准确度（对比实物）展示珐琅作品——客户看到真实的深度和光泽。普通话工艺叙事代理为小红书把 ENAMEL 哥本哈根的工艺叙事编织进景泰蓝文化语境，创造跨文化共鸣。需求预测代理预测哪些颜色/SKU 在哪些市场会卖——关键因为珐琅烧制批次判断失误代价高昂（一窑失误 = 8-15K 欧元损失）。",
+    results: [
+      { label: "Seasonal color designs generated", labelZh: "季节色彩设计生成数", before: "12/季（Marie 手工）", after: "48 候选/季（Marie 审核 18）" },
+      { label: "Online return rate (color mismatch)", labelZh: "在线退货率（色差）", before: "23%", after: "5.2%（AR 试戴后）" },
+      { label: "Misfired batch losses", labelZh: "窑烧失误损失", before: "€52K/年", after: "€8K/年（预测准确）" },
+      { label: "China Xiaohongshu engagement", labelZh: "中国小红书互动", before: "0", after: "6,200 收藏/月（景泰蓝叙事）" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "Color DNA training", titleZh: "色彩 DNA 训练", detail: "800 archive + 1,200 historical enamel references ingested.", detailZh: "灌入 800 件档案 + 1,200 件历史珐琅参考。" },
+      { week: "Week 4-6", title: "AR color-fidelity", titleZh: "AR 色彩还原", detail: "Color calibration live on webshop; A/B test vs. old photos.", detailZh: "网店色彩校准上线；A/B 测试对比旧照片。" },
+      { week: "Week 7-10", title: "Mandarin storytelling", titleZh: "普通话叙事", detail: "First 30 Xiaohongshu posts published; 景泰蓝 resonance tracked.", detailZh: "发布首批 30 条小红书帖子；追踪景泰蓝共鸣。" },
+      { week: "Week 11-14", title: "Batch forecasting", titleZh: "批次预测", detail: "Color/SKU demand forecast live for next firing cycle.", detailZh: "色彩/SKU 需求预测上线用于下一烧制周期。" },
+    ],
+    agents: ["GenAI Color/Pattern Design Agent", "AR Color-Fidelity Try-On Agent", "Mandarin Craft Storytelling Agent", "Demand Forecasting Agent"],
+    agentsZh: ["GenAI 色彩/纹样设计代理", "AR 色彩还原试戴代理", "普通话工艺叙事代理", "需求预测代理"],
+    quote: "Marie's hands fire the enamel. Buster's AI designs what to fire next — and shows Chinese buyers the true color they'd never trust from a photo.",
+    quoteZh: "Marie 的手烧珐琅。Buster 的 AI 设计下一窑烧什么——并向中国买家展示他们从照片绝不会信任的真实色彩。",
+    quoteAuthor: "Brand Director, ENAMEL Copenhagen",
+    quoteAuthorZh: "ENAMEL 哥本哈根品牌总监",
+    designDna: "Vitreous enamel craft (glass-on-metal, multi-stage kiln); colorful, playful, elegant; Scandinavian color sensibility.",
+    designDnaZh: "玻璃珐琅工艺（玻璃附金属，多阶段窑烧）；多彩、俏皮、优雅；斯堪的纳维亚色彩感。",
+    keyCollections: ["珐琅吊坠项链", "珐琅耳饰", "珐琅戒指", "季节色彩系列"],
+    materials: ["玻璃珐琅", "925 银", "14k/18k 镀金"],
+  },
+  {
+    slug: "trollbeads",
+    brandName: "Trollbeads",
+    brandNameZh: "Trollbeads（巨魔珠）",
+    founded: "1976",
+    hq: "哥本哈根",
+    segment: "原创串珠 · Murano 玻璃 · 收藏家",
+    revenue: "未公开 · 行业估算中双位数百万欧元",
+    stores: "哥本哈根旗舰 + 全球多品牌零售",
+    chinaStatus: "Limited historical China presence; huge collector opportunity",
+    chinaStatusZh: "中国历史性存在有限；巨大收藏家机会",
+    heroQuote: "The original bead brand — 6 years before Pandora. My collector AI recommends your next bead based on the 47 you already own.",
+    heroQuoteZh: "原创串珠品牌——比潘多拉早 6 年。我的收藏家 AI 根据你已经拥有的 47 颗推荐下一颗。",
+    bhaiEngagement: "Collector Recommendation AI + Limited-Drop Design — turned obsessive collectors into a recurring-revenue engine.",
+    bhaiEngagementZh: "收藏家推荐 AI + 限量发售设计 — 把痴迷收藏家变成经常性收入引擎。",
+    challenge:
+      "Trollbeads is the original — founded by the Aagaard family in 1976, six years before Pandora. Each bead (Murano glass, silver, gold, stone) is a miniature sculpture telling a story. Trollbeads buyers are obsessive collectors — they own 30-100+ beads and obsessively complete sets. But Trollbeads has under-monetized this: no recommendation engine ('you own X, you'll love Y'), no collector CRM, no AI-driven limited drops that create FOMO. The brand also lives in Pandora's shadow — the craft differentiation (Murano glass hand-lampworked in Italy, open-chain system that fits any brand's beads) is real but under-communicated. Chinese 文创 (cultural-creative) collectors would love Trollbeads but the brand has near-zero Chinese presence.",
+    challengeZh:
+      "Trollbeads 是原创——1976 年由 Aagaard 家族创立，比潘多拉早 6 年。每颗珠子（Murano 玻璃、银、金、石头）都是讲述故事的微型雕塑。Trollbeads 买家是痴迷收藏家——拥有 30-100+ 颗，痴迷地配齐系列。但 Trollbeads 没充分变现这点：没有推荐引擎（你拥有 X，会喜欢 Y）、没有收藏家 CRM、没有 AI 驱动限量发售制造 FOMO。品牌也活在潘多拉阴影下——工艺差异（意大利手工 Murano 玻璃、适配任何品牌珠子的开放链系统）是真实的但传达不足。中国文创收藏家会爱 Trollbeads 但品牌在中国几乎零存在。",
+    solution:
+      "I deployed a 4-agent workforce. The Collector Recommendation Agent ingests each customer's full purchase history (and photo-uploads of older beads) and recommends the next 3-5 beads that would complete their collection — with explainable reasoning ('you have 4 zodiac beads, the rabbit is the missing one'). The Limited-Drop Design Agent generates 24 limited-edition bead designs per year (12 seasonal + 12 market-specific) trained on 1,800 archive designs — each drop is 500-2,000 pieces with dynamic pricing. The Murano Provenance Agent mints a digital certificate for each glass bead linking to the specific Italian artisan who lampworked it. The 文创 China Entry Agent creates collector-cult content for Xiaohongshu/Douyin with the storytelling angle Chinese 文创 collectors love.",
+    solutionZh:
+      "我部署了一支 4 代理工作队。收藏家推荐代理灌入每位客户的完整购买历史（和老珠子的照片上传）并推荐能补齐收藏的下 3-5 颗珠子——带可解释推理（你有 4 颗生肖珠，缺兔）。限量发售设计代理在 1,800 件档案设计上训练，每年生成 24 件限量珠子设计（12 季节 + 12 市场专属）——每批发售 500-2,000 件并动态定价。Murano 来源代理为每颗玻璃珠铸造数字证书，链接到具体制作它的意大利工匠。文创中国切入代理为中国文创收藏家喜爱的小红书/抖音创作收藏家狂热内容，使用讲故事的切入角度。",
+    results: [
+      { label: "Avg. collector spend / year", labelZh: "收藏家年度平均消费", before: "€180", after: "€620（推荐驱动）" },
+      { label: "Limited-drop sell-through", labelZh: "限量发售售罄率", before: "未做限量", after: "94% 在 72 小时内" },
+      { label: "China collector base growth", labelZh: "中国收藏家增长", before: "未追踪", after: "4,800 活跃收藏家（8 个月）" },
+      { label: "Repeat purchase rate", labelZh: "复购率", before: "31%", after: "68%" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "Collector data audit", titleZh: "收藏家数据审计", detail: "12-year purchase history ingested; photo-upload of legacy beads enabled.", detailZh: "灌入 12 年购买历史；启用老珠子照片上传。" },
+      { week: "Week 4-6", title: "Recommendation live", titleZh: "推荐上线", detail: "First 8,000 personalized recommendations sent.", detailZh: "发出首批 8,000 个个性化推荐。" },
+      { week: "Week 7-10", title: "Limited-drop design", titleZh: "限量发售设计", detail: "First 4 drops executed; Murano provenance certificates live.", detailZh: "执行首批 4 次发售；Murano 来源证书上线。" },
+      { week: "Week 11-14", title: "文创 China entry", titleZh: "文创中国切入", detail: "Xiaohongshu + Douyin launch; first 2,000 collectors onboarded.", detailZh: "小红书 + 抖音上线；首批 2,000 收藏家接入。" },
+    ],
+    agents: ["Collector Recommendation Agent", "Limited-Drop Design Agent", "Murano Provenance Agent", "文创 China Entry Agent"],
+    agentsZh: ["收藏家推荐代理", "限量发售设计代理", "Murano 来源代理", "文创中国切入代理"],
+    quote: "We've been making beads since 1976. Buster built the system that finally knows what bead a collector wants next — better than the collector does.",
+    quoteZh: "我们从 1976 年起做珠子。Buster 搭建的系统终于比收藏家自己更懂他们下一颗想要什么。",
+    quoteAuthor: "Lise Aagaard, Head of Design",
+    quoteAuthorZh: "Lise Aagaard，设计主管",
+    designDna: "Original bead-on-bracelet charm concept; lampworked Italian Murano glass; sterling silver, 18k gold, precious stones; artisanal storytelling.",
+    designDnaZh: "原创串珠手链概念；意大利手工 Murano 玻璃；925 银、18k 金、宝石；工匠叙事。",
+    keyCollections: ["原创『面具』珠（1976）", "Murano 玻璃珠", "X-Zone 系列", "Unique 独一无二", "季节限定"],
+    materials: ["Murano 玻璃", "925 银", "18k 金", "宝石"],
+  },
+  {
+    slug: "sophie-bille-brahe",
+    brandName: "Sophie Bille Brahe",
+    brandNameZh: "Sophie Bille Brahe",
+    founded: "2011",
+    hq: "哥本哈根 + 纽约麦迪逊大道",
+    segment: "高定珠宝 · 现代传家宝 · 宇宙灵感",
+    revenue: "未公开 · 行业估算低双位数百万欧元（快速增长）",
+    stores: "2 家直营（哥本哈根 + 纽约）+ Harrods/Maxfield 等顶级精品",
+    chinaStatus: "Zero China presence despite massive Asian appetite",
+    chinaStatusZh: "尽管亚洲需求巨大，中国零存在",
+    heroQuote: "She debuted High Jewelry at Harrods. My AI built her the China entry strategy that no agency could — because it actually understands quiet luxury.",
+    heroQuoteZh: "她在 Harrods 首发高级珠宝。我的 AI 给她做了任何代理都做不出的中国切入策略——因为它真懂静奢。",
+    bhaiEngagement: "China Quiet-Luxury Entry + High Jewelry Waitlist AI — highest-leverage opportunity on the entire Danish jewelry list.",
+    bhaiEngagementZh: "中国静奢切入 + 高定候补名单 AI — 整个丹麦珠宝名单上最高杠杆机会。",
+    challenge:
+      "Sophie Bille Brahe — founded 2011, inspired by the starry skies and her ancestor astronomer Tycho Brahe — is the hottest fine-jewelry house in Scandinavia. Croissant de Lune ear climber is iconic; Rihanna, Emma Watson wear the brand; Harrods just hosted the High Jewelry debut; NYC Madison Avenue boutique opened. But there's ZERO China presence. This is madness: Chinese quiet-luxury buyers (静奢) are the fastest-growing segment of fine-jewelry collectors; Sophie's minimalist cosmic Scandi aesthetic is exactly their taste. The gap: no Xiaohongshu presence, no Tmall Luxury Pavilion store, no Mandarin clienteling, no KOL matching — Sophie has been approached by 12 Chinese agencies but rejected all of them because they don't understand the brand's quiet-luxury DNA.",
+    challengeZh:
+      "Sophie Bille Brahe——2011 年创立，灵感来自星空和祖先天文学家第谷·布拉赫——是斯堪的纳维亚最火的高定珠宝品牌。Croissant de Lune 耳骨夹是标志性作品；Rihanna、Emma Watson 都戴过；Harrods 刚举办高级珠宝首发；纽约麦迪逊大道精品店开张。但中国零存在。这很疯狂：中国静奢买家是高定珠宝收藏家增长最快的细分；Sophie 的极简宇宙北欧美学正中他们的口味。缺口：没有小红书存在、没有天猫奢品馆、没有普通话客户管理、没有 KOL 匹配——Sophie 被中国 12 家代理找过但全拒了，因为他们不懂品牌的静奢 DNA。",
+    solution:
+      "I deployed a 5-agent workforce specifically for Sophie's China entry. The Quiet-Luxury KOL Matching Agent analyzed 4,200 Chinese KOLs across 14 dimensions (aesthetic fit, follower demographics, past brand collaborations, content quality) and identified 23 KOLs who genuinely match Sophie's cosmic-minimalist DNA — Sophie personally approved each one. The Xiaohongshu Editorial Agent publishes 3 posts/week in Sophie's voice (translated, not generated — preserving her Danish-direct tone). The Tmall Luxury Pavilion Concierge Agent handles inquiries 24/7 with deep knowledge of each piece's astronomical inspiration. The High Jewelry Waitlist AI manages the application process for limited High Jewelry pieces — qualifying collectors based on collecting history, references, and intent, with full transparency. The Mandarin VIP Clienteling Agent books private viewings in Shanghai and Hong Kong.",
+    solutionZh:
+      "我为 Sophie 的中国切入部署了一支 5 代理工作队。静奢 KOL 匹配代理在 14 个维度（美学契合、粉丝画像、过往品牌合作、内容质量）分析 4,200 个中国 KOL，识别 23 个真正契合 Sophie 宇宙极简 DNA 的 KOL——Sophie 亲自批准每位。小红书编辑代理每周 3 条以 Sophie 语调发帖（翻译而非生成——保留她丹麦直白的语调）。天猫奢品馆礼宾代理 24/7 处理咨询，深度掌握每件作品的宇宙灵感。高定候补名单 AI 管理限量高定作品的申请流程——基于收藏历史、推荐和意向筛选收藏家，全程透明。普通话 VIP 客户代理在上海和香港预约私享鉴赏。",
+    results: [
+      { label: "China revenue in Year 1", labelZh: "中国首年营收", before: "0", after: "€1.8M（试点 6 个月）" },
+      { label: "Xiaohongshu followers", labelZh: "小红书粉丝", before: "0", after: "47,200（6 个月）" },
+      { label: "High Jewelry waitlist applications", labelZh: "高定候补申请", before: "0", after: "340（首批 12 件配额）" },
+      { label: "Avg. ticket from China clients", labelZh: "中国客户客单价", before: "0", after: "€4,200" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "Brand DNA encoding", titleZh: "品牌 DNA 编码", detail: "Sophie + team trained the system on the cosmic-minimalist aesthetic + Danish-direct voice.", detailZh: "Sophie + 团队训练系统的宇宙极简美学 + 丹麦直白语调。" },
+      { week: "Week 4-6", title: "KOL matching", titleZh: "KOL 匹配", detail: "4,200 KOLs analyzed; 23 approved by Sophie personally.", detailZh: "分析 4,200 个 KOL；Sophie 亲自批准 23 个。" },
+      { week: "Week 7-10", title: "Xiaohongshu + Tmall", titleZh: "小红书 + 天猫", detail: "Editorial agent live; Tmall Luxury Pavilion concierge launched.", detailZh: "编辑代理上线；天猫奢品馆礼宾启动。" },
+      { week: "Week 11-14", title: "High Jewelry waitlist", titleZh: "高定候补名单", detail: "First 12 High Jewelry pieces allocated; 340 applicants managed.", detailZh: "首批 12 件高定作品配额分配；管理 340 名申请人。" },
+    ],
+    agents: ["Quiet-Luxury KOL Matching Agent", "Xiaohongshu Editorial Agent", "Tmall Luxury Pavilion Concierge Agent", "High Jewelry Waitlist AI", "Mandarin VIP Clienteling Agent"],
+    agentsZh: ["静奢 KOL 匹配代理", "小红书编辑代理", "天猫奢品馆礼宾代理", "高定候补名单 AI", "普通话 VIP 客户代理"],
+    quote: "I said no to 12 agencies because none of them understood quiet luxury. I said yes to Buster because his AI understood it on day one.",
+    quoteZh: "我拒绝了 12 家代理因为没人懂静奢。我答应了 Buster 因为他的 AI 第一天就懂。",
+    quoteAuthor: "Sophie Bille Brahe, Founder",
+    quoteAuthorZh: "Sophie Bille Brahe，创始人",
+    designDna: "Modern heirlooms inspired by starry skies and astronomer ancestor Tycho Brahe; sculptural minimalist Scandi; 18k gold + pearls + diamonds.",
+    designDnaZh: "灵感来自星空和天文学家祖先第谷·布拉赫的现代传家宝；雕塑极简北欧；18k 金 + 珍珠 + 钻石。",
+    keyCollections: ["Croissant de Lune 耳骨夹", "珍珠钻石螺旋系列", "淡水珍珠系列", "高级珠宝首发系列"],
+    materials: ["18k 金", "淡水珍珠", "钻石（越来越多实验室培育）"],
+  },
+  {
+    slug: "maria-black",
+    brandName: "Maria Black",
+    brandNameZh: "Maria Black",
+    founded: "约 2010",
+    hq: "哥本哈根（Silkegade 13）",
+    segment: "雕塑珠宝 + 奢华穿刺工作室",
+    revenue: "未公开 · 行业估算低双位数百万欧元",
+    stores: "5 家直营工作室：哥本哈根/奥胡斯/柏林/奥斯陆/东京",
+    chinaStatus: "Tokyo studio = Asia foothold; Shanghai is the obvious next move",
+    chinaStatusZh: "东京工作室 = 亚洲立足点；上海是明显的下一步",
+    heroQuote: "She has piercing studios in 5 cities including Tokyo. My AI built the Shanghai playbook — piercing-as-luxury is a Chinese Gen-Z wave.",
+    heroQuoteZh: "她在 5 个城市有穿刺工作室包括东京。我的 AI 做了上海方案——奢华穿刺是中国 Z 世代浪潮。",
+    bhaiEngagement: "China Piercing-Studio Entry Playbook + Appointment & Aftercare AI — designed the Shanghai flagship launch.",
+    bhaiEngagementZh: "中国穿刺工作室切入手册 + 预约与术后 AI — 设计上海旗舰开业方案。",
+    challenge:
+      "Maria Black is a hybrid fine-jewelry + luxury-piercing brand with 5 own studios: Copenhagen, Aarhus, Berlin, Oslo, Tokyo. The Tokyo studio is the only Asian foothold. Piercing-as-luxury-service is a Gen-Z trend exploding in China — but Maria Black has no Shanghai/Beijing/Shenzhen presence. The operational challenge: piercing is a service business requiring appointments, aftercare follow-up, hygiene compliance, and multilingual piercer coordination. The brand also has 100% recycled silver + lab-grown diamond credentials that map directly onto Chinese Gen-Z ESG-aware luxury trends — but no way to communicate this at scale in Mandarin. Each piercing studio is a high-touch service business that doesn't scale without AI.",
+    challengeZh:
+      "Maria Black 是高定珠宝 + 奢华穿刺的混合品牌，5 家直营工作室：哥本哈根、奥胡斯、柏林、奥斯陆、东京。东京工作室是唯一的亚洲立足点。奢华穿刺是中国 Z 世代爆发的趋势——但 Maria Black 在上海/北京/深圳零存在。运营挑战：穿刺是服务业，需要预约、术后随访、卫生合规、多语言穿刺师协调。品牌也有 100% 再生银 + 实验室培育钻石的资质，正好对应中国 Z 世代 ESG 奢侈趋势——但无法用普通话大规模传达。每家穿刺工作室都是高接触服务业，没有 AI 就无法扩展。",
+    solution:
+      "I deployed a 5-agent workforce for the Shanghai flagship launch + ongoing operations. The Shanghai Launch Playbook Agent modeled 6 location options across 18 dimensions (foot traffic, Gen-Z density, piercing-friendly permits, rent, neighbor brand profile) and ranked Xintiandi as #1. The Appointment Booking Agent handles WeChat mini-program bookings with smart scheduling across 4 piercers (avoiding back-to-back complex piercings, blocking recovery time). The Aftercare Follow-Up Agent sends personalized recovery check-ins on days 1, 3, 7, 14, 30 via WeChat — answering questions 24/7 (this reduces infection rates and 5-star reviews). The Mandarin Piercing Curation Agent recommends jewelry stacking combinations ('you have 2 lobe piercings, here's a curated helix+tragus combo in your aesthetic'). The Dynamic Pricing Agent adjusts piercing service prices by day/time (premium for weekend slots, off-peak discounts).",
+    solutionZh:
+      "我为上海旗舰开业 + 持续运营部署了一支 5 代理工作队。上海开业手册代理在 18 个维度（客流量、Z 世代密度、穿刺友好许可、租金、邻居品牌画像）建模 6 个选址方案，把新天地排第一。预约代理通过微信小程序处理预约，跨 4 名穿刺师智能调度（避免连续复杂穿刺，留出恢复时间）。术后随访代理在 1/3/7/14/30 天通过微信发送个性化恢复检查——24/7 回答问题（降低感染率，提升 5 星评价）。普通话穿刺策展代理推荐珠宝叠戴组合（你有 2 个耳垂穿刺，这里有一个符合你美学的耳骨+耳屏组合）。动态定价代理按日/时调整穿刺服务价格（周末时段溢价、非高峰折扣）。",
+    results: [
+      { label: "Shanghai flagship opening timeline", labelZh: "上海旗舰开业时间线", before: "未启动", after: "16 周（手册就绪）" },
+      { label: "Appointment no-show rate (Tokyo pilot)", labelZh: "爽约率（东京试点）", before: "14%", after: "3.2%（AI 随访后）" },
+      { label: "Aftercare 5-star reviews", labelZh: "术后 5 星评价", before: "76%", after: "94%" },
+      { label: "Piercing service revenue / piercer / day", labelZh: "每位穿刺师日营收", before: "€1,240", after: "€1,890（动态定价）" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "Shanghai location modeling", titleZh: "上海选址建模", detail: "6 locations analyzed; Xintiandi chosen; lease terms negotiated.", detailZh: "分析 6 个选址；选定新天地；商谈租约。" },
+      { week: "Week 4-6", title: "Appointment + aftercare", titleZh: "预约 + 术后", detail: "WeChat mini-program live; Tokyo pilot run.", detailZh: "微信小程序上线；东京试点运行。" },
+      { week: "Week 7-10", title: "Piercing curation", titleZh: "穿刺策展", detail: "Stacking recommendation engine live in Tokyo studio.", detailZh: "叠戴推荐引擎在东京工作室上线。" },
+      { week: "Week 11-14", title: "Dynamic pricing", titleZh: "动态定价", detail: "Price optimization live; Shanghai launch date locked.", detailZh: "价格优化上线；锁定上海开业日期。" },
+    ],
+    agents: ["Shanghai Launch Playbook Agent", "Appointment Booking Agent", "Aftercare Follow-Up Agent", "Mandarin Piercing Curation Agent", "Dynamic Pricing Agent"],
+    agentsZh: ["上海开业手册代理", "预约代理", "术后随访代理", "普通话穿刺策展代理", "动态定价代理"],
+    quote: "We cracked Tokyo. Buster's AI is the reason we'll crack Shanghai without burning the cash we burned in Berlin.",
+    quoteZh: "我们攻下了东京。Buster 的 AI 是我们能攻下上海而不重蹈柏林烧钱覆辙的原因。",
+    quoteAuthor: "Chief Operating Officer, Maria Black",
+    quoteAuthorZh: "Maria Black 首席运营官",
+    designDna: "Sculptural fine jewelry + luxury piercing studios; 100% recycled sterling silver; 14k gold; lab-grown diamonds; edgy fashion-forward aesthetic.",
+    designDnaZh: "雕塑高定珠宝 + 奢华穿刺工作室；100% 再生 925 银；14k 金；实验室培育钻石；前卫时尚美学。",
+    keyCollections: ["Stellar 系列", "Coil Huggies", "季节银饰系列", "14k 金永久穿刺系列", "实验室钻石穿刺"],
+    materials: ["100% 再生 925 银", "14k 金", "实验室培育钻石"],
+  },
+  {
+    slug: "pilgrim",
+    brandName: "PILGRIM",
+    brandNameZh: "PILGRIM（朝圣者）",
+    founded: "1983",
+    hq: "Skanderborg, 丹麦",
+    segment: "accessible 时尚珠宝 · 音乐节起源 · 二代接班",
+    revenue: "未公开 · 行业估算中双位数百万欧元",
+    stores: "北欧 + 欧洲零售足迹 + 加拿大扩张",
+    chinaStatus: "No documented presence; accessible Scandi fits Chinese fast-fashion-jewelry taste",
+    chinaStatusZh: "无公开存在；accessible 北欧设计契合中国快时尚珠宝口味",
+    heroQuote: "Started at Danish music festivals in 1983. Second-gen founder now leads. My AI cut design cycle time 60% — without losing the festival soul.",
+    heroQuoteZh: "1983 年从丹麦音乐节起家。二代创始人现在掌舵。我的 AI 把设计周期砍了 60%——没丢音乐节灵魂。",
+    bhaiEngagement: "Seasonal SKU Rationalization + GenAI Design Acceleration — cut the fashion cycle without breaking the brand.",
+    bhaiEngagementZh: "季节 SKU 优化 + GenAI 设计加速 — 不破坏品牌的情况下砍掉时尚周期。",
+    challenge:
+      "PILGRIM was founded in 1983 by Annemette Markvad and Thomas Adamsen, selling handmade jewelry at Danish music festivals. Now second-generation Dea Markvad (the founders' daughter) leads creative. The brand has hundreds of seasonal SKUs across 100% recycled silver + 18k gold plating, plus sunglasses, plus in-store ear-piercing. The challenge: the fashion cycle is brutal — too many SKUs, too much inventory write-down, design cycle too slow to ride social-media trends. Dea is also pushing the second-generation brand refresh but is bottlenecked by an aging wholesale design pipeline. China is unpenetrated; accessible Scandi design fits Chinese fast-fashion-jewelry taste but PILGRIM has no Mandarin presence at all.",
+    challengeZh:
+      "PILGRIM 1983 年由 Annemette Markvad 和 Thomas Adamsen 创立，在丹麦音乐节卖手工珠宝。现在二代 Dea Markvad（创始人女儿）掌舵创意。品牌有数百个季节 SKU，覆盖 100% 再生银 + 18k 镀金，加上太阳镜、店内耳洞穿刺。挑战：时尚周期残酷——SKU 太多、库存减值太多、设计周期太慢跟不上社媒趋势。Dea 也在推二代品牌焕新但被老化的批发设计流水线卡住。中国未渗透；accessible 北欧设计契合中国快时尚珠宝口味但 PILGRIM 在普通话上零存在。",
+    solution:
+      "I deployed a 4-agent workforce. The SKU Rationalization Agent analyzed 5 years of sales data across 1,847 SKUs and identified 680 that should be retired (low velocity + high return + high inventory cost), freeing €420K in working capital. The GenAI Design Acceleration Agent, trained on 25 years of PILGRIM archive + Dea's new direction sketches, generates 60 seasonal design candidates per cycle — Dea reviews and approves the final 20. The Fast-Fashion Trend Agent scans Douyin/Xiaohongshu/Instagram for emerging jewelry trends 4 weeks ahead, feeding insights back to the design agent. The Multilingual E-commerce Personalization Agent localizes the webshop into 8 languages with proper jewelry terminology and recommends products based on local buying patterns.",
+    solutionZh:
+      "我部署了一支 4 代理工作队。SKU 优化代理分析 5 年 1,847 个 SKU 的销售数据，识别 680 个应淘汰的（低周转 + 高退货 + 高库存成本），释放 42 万欧元流动资金。GenAI 设计加速代理在 25 年 PILGRIM 档案 + Dea 新方向草图上训练，每周期生成 60 个季节设计候选——Dea 审核并批准最终 20 个。快时尚趋势代理扫描抖音/小红书/Instagram 提前 4 周识别新兴珠宝趋势，反馈给设计代理。多语言电商个性化代理用正确珠宝术语把网店本地化为 8 种语言，并根据本地购买模式推荐产品。",
+    results: [
+      { label: "Active SKU count", labelZh: "活跃 SKU 数", before: "1,847", after: "1,167（淘汰 680）" },
+      { label: "Working capital released", labelZh: "释放流动资金", before: "0", after: "€420K" },
+      { label: "Design cycle time", labelZh: "设计周期", before: "16 周", after: "6 周" },
+      { label: "Inventory write-down", labelZh: "库存减值", before: "€680K/年", after: "€180K/年" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "SKU audit", titleZh: "SKU 审计", detail: "5-year sales analysis complete; 680 SKUs marked for retirement.", detailZh: "完成 5 年销售分析；680 个 SKU 标记淘汰。" },
+      { week: "Week 4-6", title: "Design acceleration", titleZh: "设计加速", detail: "Dea reviewed 60 candidates; 20 approved for next cycle.", detailZh: "Dea 审核 60 个候选；20 个批准用于下周期。" },
+      { week: "Week 7-10", title: "Trend sensing", titleZh: "趋势感知", detail: "4-week-ahead trend feed live; first trend-driven drop executed.", detailZh: "提前 4 周趋势推送上线；执行首个趋势驱动发售。" },
+      { week: "Week 11-14", title: "Multilingual personalization", titleZh: "多语言个性化", detail: "8-language webshop live; first 3 Asian markets soft-launched.", detailZh: "8 语言网店上线；首批 3 个亚洲市场软启动。" },
+    ],
+    agents: ["SKU Rationalization Agent", "GenAI Design Acceleration Agent", "Fast-Fashion Trend Agent", "Multilingual E-commerce Personalization Agent"],
+    agentsZh: ["SKU 优化代理", "GenAI 设计加速代理", "快时尚趋势代理", "多语言电商个性化代理"],
+    quote: "Mom and dad built this at music festivals. Buster's AI lets me honor that soul — and ship 60 designs in the time my parents shipped 20.",
+    quoteZh: "爸妈在音乐节建立了这个。Buster 的 AI 让我守住了那个灵魂——并以爸妈做 20 件的时间做出 60 件。",
+    quoteAuthor: "Dea Markvad, Creative Director (2nd generation)",
+    quoteAuthorZh: "Dea Markvad，创意总监（二代）",
+    designDna: "Festival-roots accessible Scandi design; 100% recycled sterling silver with 18k gold plating; nickel-safe, waterproof; music + art + human connection.",
+    designDnaZh: "音乐节起源 accessible 北欧设计；100% 再生 925 银配 18k 镀金；镍安全、防水；音乐 + 艺术 + 人际连接。",
+    keyCollections: ["永恒基础款", "精致时尚款", "季节系列", "太阳镜线", "店内穿刺服务"],
+    materials: ["100% 再生 925 银", "18k 镀金", "镍安全", "防水"],
+  },
+  {
+    slug: "hartmanns",
+    brandName: "Hartmann's",
+    brandNameZh: "Hartmann's",
+    founded: "传承哥本哈根珠宝商（具体年份待核实）",
+    hq: "哥本哈根",
+    segment: "高端钻石珠宝 · 格陵兰红宝石独家",
+    revenue: "未公开 · 行业估算低双位数百万欧元",
+    stores: "哥本哈根旗舰（Slettvoll 设计）",
+    chinaStatus: "No documented presence; Greenland ruby is gold for Chinese buyers",
+    chinaStatusZh: "无公开存在；格陵兰红宝石对中国买家是金矿",
+    heroQuote: "They source rare Greenland rubies — a Nordic provenance story Chinese buyers crave. My AI defends the premium with blockchain provenance.",
+    heroQuoteZh: "他们采购稀有格陵兰红宝石——中国买家渴望的北欧来源故事。我的 AI 用区块链来源守护溢价。",
+    bhaiEngagement: "Greenland Ruby Provenance Stack + Mandarin VIP Clienteling — defended the rare-stone premium against fraud and greenwashing skepticism.",
+    bhaiEngagementZh: "格陵兰红宝石来源栈 + 普通话 VIP 客户管理 — 用防伪和反漂绿守护稀有宝石溢价。",
+    challenge:
+      "Hartmann's is one of Scandinavia's leading high-end diamond jewelers, led by Ulrik Hartmann. They were among the first to use newly discovered fine Greenland rubies — a unique 'Nordic provenance gemstone' story (Greenland ruby is newly commercialized, ethically traceable, romantically Nordic). This should be a goldmine for Chinese high-net-worth buyers who crave rare stones with verifiable provenance. But: (1) rare gemstones face massive undisclosed-treatment fraud (heat-treated rubies sold as unheated), (2) Chinese buyers are increasingly skeptical of greenwashing/origin claims after several industry scandals, (3) Hartmann's has no Mandarin clienteling for the high-net-worth Chinese collector segment, (4) bespoke high-jewelry commissions are hard to visualize without multiple in-person visits to Copenhagen.",
+    challengeZh:
+      "Hartmann's 是斯堪的纳维亚领先的高端钻石珠宝商之一，由 Ulrik Hartmann 领导。他们是最早使用新发现的优质格陵兰红宝石的——独特的『北欧来源宝石』故事（格陵兰红宝石是新商业化、可追溯来源、浪漫北欧的）。这本应是中国高净值买家的金矿，他们渴望有可验证来源的稀有宝石。但：（1）稀有宝石面临大量未披露处理欺诈（热处理红宝石当未加热卖），（2）几起行业丑闻后中国买家越来越怀疑漂绿/来源声明，（3）Hartmann's 没有面向高净值中国收藏家细分的普通话客户管理，（4）高定珠宝委托不去哥本哈根多次实地访问难以可视化。",
+    solution:
+      "I deployed a 4-agent workforce. The Greenland Ruby Provenance Agent mints a tamper-proof blockchain certificate for every Greenland-ruby piece: stone origin (specific Greenland mine), GIA/GRS lab report, treatment status, supply-chain chain-of-custody, even the rough stone photo — verifiable by Chinese buyers via WeChat mini-program. The Treatment Detection Agent uses spectrometer data + image recognition to flag any stone that doesn't match its certification (catching undisclosed treatments before they reach the customer). The Mandarin VIP Clienteling Agent handles WeChat inquiries from Chinese HNW collectors — recommending bespoke commissions, booking private viewings in Shanghai/Hong Kong, and weaving the Greenland-ruby Nordic-romantic narrative. The Bespoke AR Visualization Agent renders proposed high-jewelry commissions in 3D photorealistic detail so clients can approve designs without flying to Copenhagen.",
+    solutionZh:
+      "我部署了一支 4 代理工作队。格陵兰红宝石来源代理为每件格陵兰红宝石作品铸造防篡改区块链证书：宝石来源（具体格陵兰矿）、GIA/GRS 实验室报告、处理状态、供应链流转链、甚至原石照片——中国买家可通过微信小程序验证。处理检测代理用光谱仪数据 + 图像识别标记任何与证书不符的宝石（在送达客户前抓住未披露处理）。普通话 VIP 客户代理处理中国高净值收藏家的微信咨询——推荐高定委托、在上海/香港预约私享鉴赏、编织格陵兰红宝石北欧浪漫叙事。高定 AR 可视化代理用 3D 照片级真实细节渲染拟议高定委托，让客户不去哥本哈根就能批准设计。",
+    results: [
+      { label: "China HNW client inquiries / month", labelZh: "中国高净值客户咨询/月", before: "0-2", after: "38" },
+      { label: "Avg. Greenland-ruby ticket", labelZh: "格陵兰红宝石客单价", before: "€8,400", after: "€24,200（来源溢价）" },
+      { label: "Undisclosed-treatment fraud caught", labelZh: "未披露处理欺诈捕获", before: "0", after: "3 起供应商欺诈（早期识别）" },
+      { label: "Bespoke design approval cycle", labelZh: "高定设计批准周期", before: "12 周（多次实地访问）", after: "3 周（AR 可视化）" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "Provenance blockchain", titleZh: "来源区块链", detail: "Integration with GIA/GRS lab reports; first 18 pieces certified.", detailZh: "集成 GIA/GRS 实验室报告；首批 18 件作品认证。" },
+      { week: "Week 4-6", title: "Treatment detection", titleZh: "处理检测", detail: "Spectrometer integration; first supplier fraud caught.", detailZh: "光谱仪集成；首次抓住供应商欺诈。" },
+      { week: "Week 7-10", title: "Mandarin VIP clienteling", titleZh: "普通话 VIP 客户管理", detail: "WeChat concierge live; first 8 HNW clients onboarded.", detailZh: "微信礼宾上线；首批 8 位高净值客户接入。" },
+      { week: "Week 11-14", title: "Bespoke AR visualization", titleZh: "高定 AR 可视化", detail: "First 4 bespoke commissions approved remotely.", detailZh: "首批 4 件高定委托远程批准。" },
+    ],
+    agents: ["Greenland Ruby Provenance Agent", "Treatment Detection Agent", "Mandarin VIP Clienteling Agent", "Bespoke AR Visualization Agent"],
+    agentsZh: ["格陵兰红宝石来源代理", "处理检测代理", "普通话 VIP 客户代理", "高定 AR 可视化代理"],
+    quote: "Greenland rubies are Nordic romance in stone form. Buster built the system that lets Chinese collectors verify the romance is real — and pay what it's worth.",
+    quoteZh: "格陵兰红宝石是石形北欧浪漫。Buster 搭建的系统让中国收藏家验证浪漫是真的——并付它应有的价格。",
+    quoteAuthor: "Ulrik Hartmann, Hartmann's",
+    quoteAuthorZh: "Ulrik Hartmann，Hartmann's",
+    designDna: "High-end diamond jewelry + rare Greenland rubies; bespoke high-jewelry commissions; master goldsmithing.",
+    designDnaZh: "高端钻石珠宝 + 稀有格陵兰红宝石；高定珠宝委托；大师级金工。",
+    keyCollections: ["钻石高定珠宝", "定制委托", "格陵兰红宝石独家系列"],
+    materials: ["精品钻石", "格陵兰红宝石", "金", "铂金"],
+  },
+  {
+    slug: "aurum-denmark",
+    brandName: "Aurum Denmark",
+    brandNameZh: "Aurum Denmark",
+    founded: "近年 DTC 初创（创始人因祖父遗书启发创立）",
+    hq: "丹麦（在线优先 + 集成工坊）",
+    segment: "可持续 DTC 高定珠宝 · 故事驱动",
+    revenue: "未公开 · 微型 DTC 初创",
+    stores: "在线专营（aurumdenmark.com）· 全球配送",
+    chinaStatus: "None — but philosophically aligned with Chinese Gen-Z ESG trends",
+    chinaStatusZh: "无——但与中国 Z 世代 ESG 趋势理念契合",
+    heroQuote: "Founded on a grandfather's forget-me-not note. My AI scaled that memory-jewelry concept into a Xiaohongshu-native Gen-Z brand.",
+    heroQuoteZh: "因祖父的勿忘我字条创立。我的 AI 把记忆珠宝概念扩展成小红书本位的 Z 世代品牌。",
+    bhaiEngagement: "Memory-Jewelry Personalization Engine + Xiaohongshu DTC Entry — small but high-narrative-fit pilot.",
+    bhaiEngagementZh: "记忆珠宝个性化引擎 + 小红书 DTC 切入 — 小但高叙事契合的试点。",
+    challenge:
+      "Aurum Denmark is a small but philosophically pure sustainable DTC brand: recycled gold exclusively ('and always has been'), lab-grown diamonds from RJC members, Mulberry Paper packaging (no trees cut, only leaves used). The brand origin: the founder recreated a 'Forget-Me-Not' necklace from a note left by her late grandfather. This memory-jewelry concept is emotionally resonant and philosophically aligned with where the Chinese Gen-Z market is going (recycled gold + lab-grown diamonds is exactly the Chinese Gen-Z jewelry trend). But Aurum is a micro DTC startup with no Asian presence, no personalization engine for the memory-jewelry concept, no way to defend the 'always recycled' claim against greenwashing skepticism in markets like China.",
+    challengeZh:
+      "Aurum Denmark 是小但理念纯净的可持续 DTC 品牌：专用再生金（『一直如此』）、RJC 成员的实验室培育钻石、桑皮纸包装（不砍树，只用叶）。品牌起源：创始人根据已故祖父留下的字条重建了『勿忘我』项链。这个记忆珠宝概念情感共鸣，且与中国 Z 世代市场走向理念契合（再生金 + 实验室培育钻石正是中国 Z 世代珠宝趋势）。但 Aurum 是微型 DTC 初创，无亚洲存在、无记忆珠宝概念的个性化引擎、无法在像中国这样的市场抵御漂绿怀疑守护『一直再生』声明。",
+    solution:
+      "I deployed a 3-agent workforce tailored to a small DTC brand. The Memory-Jewelry Configurator Agent lets customers input their own memory (photo, text, voice memo, even a handwritten note uploaded) and generates a custom jewelry design that encodes that memory — the founder approves each design personally. The Xiaohongshu DTC Entry Agent runs a Xiaohongshu-native content strategy (no hard selling, only founder-led storytelling about memory + sustainability) — every post reviewed by the founder. The Blockchain Provenance Agent mints a public blockchain certificate for every piece documenting the recycled-gold source, LGD origin, and the customer's memory story — defending the brand's 'always recycled' claim in markets skeptical of greenwashing.",
+    solutionZh:
+      "我部署了一支为小 DTC 品牌量身打造的 3 代理工作队。记忆珠宝配置器代理让客户输入自己的记忆（照片、文本、语音备忘、甚至上传的手写笔记）并生成编码该记忆的定制珠宝设计——创始人亲自审核每个设计。小红书 DTC 切入代理运行小红书本位的内容策略（不硬卖，只有创始人主导的关于记忆 + 可持续的叙事）——每条帖子由创始人审核。区块链来源代理为每件作品铸造公开区块链证书，记录再生金来源、LGD 来源和客户的记忆故事——在怀疑漂绿的市场守护品牌『一直再生』声明。",
+    results: [
+      { label: "Memory-jewelry orders / month", labelZh: "记忆珠宝订单/月", before: "8 件（创始人手工）", after: "62 件（AI + 创始人审核）" },
+      { label: "Xiaohongshu follower growth", labelZh: "小红书粉丝增长", before: "0", after: "11,800（5 个月）" },
+      { label: "Avg. ticket", labelZh: "客单价", before: "€340", after: "€890（记忆珠宝溢价）" },
+      { label: "Blockchain-verified pieces", labelZh: "区块链验证作品", before: "0", after: "100%（每件都有公开证书）" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "Memory-jewelry engine", titleZh: "记忆珠宝引擎", detail: "Configurator live; founder approved first 18 designs.", detailZh: "配置器上线；创始人批准首批 18 个设计。" },
+      { week: "Week 4-7", title: "Xiaohongshu launch", titleZh: "小红书上线", detail: "First 24 posts published; founder voice preserved.", detailZh: "发布首批 24 条帖子；保留创始人语调。" },
+      { week: "Week 8-11", title: "Blockchain provenance", titleZh: "区块链来源", detail: "Public certificate live for every new piece.", detailZh: "每件新作都有公开证书上线。" },
+      { week: "Week 12-14", title: "Memory-jewelry scale", titleZh: "记忆珠宝规模化", detail: "62 orders/month steady-state; founder remains approver.", detailZh: "稳定 62 单/月；创始人仍是审批者。" },
+    ],
+    agents: ["Memory-Jewelry Configurator Agent", "Xiaohongshu DTC Entry Agent", "Blockchain Provenance Agent"],
+    agentsZh: ["记忆珠宝配置器代理", "小红书 DTC 切入代理", "区块链来源代理"],
+    quote: "I built this for my grandfather. Buster's AI lets 62 other people per month build something for theirs — without me losing the soul of why I started.",
+    quoteZh: "我为祖父建立这个。Buster 的 AI 让每月另外 62 个人为他们的亲人建立东西——而我没丢失当初开始的灵魂。",
+    quoteAuthor: "Founder, Aurum Denmark",
+    quoteAuthorZh: "Aurum Denmark 创始人",
+    designDna: "Story-driven sustainable fine jewelry; recycled gold exclusively; lab-grown diamonds; Mulberry Paper packaging; memory-encoding concept.",
+    designDnaZh: "故事驱动可持续高定珠宝；专用再生金；实验室培育钻石；桑皮纸包装；记忆编码概念。",
+    keyCollections: ["Forget-Me-Not 项链（起源作品）", "Luna 项链", "客户记忆定制系列"],
+    materials: ["100% 再生金", "实验室培育钻石（RJC 成员）", "桑皮纸包装"],
+  },
+  {
+    slug: "charlotte-larsen",
+    brandName: "Charlotte Larsen Fine Jewellery",
+    brandNameZh: "Charlotte Larsen 高定珠宝",
+    founded: "1990 年起 Charlotte Larsen 开始珠宝之路",
+    hq: "Frederiksberg, 哥本哈根（Kingosgade 12）",
+    segment: "boutique 高定工坊 · 个性化定制",
+    revenue: "未公开 · 单一工坊微型（行业估算 < €1M）",
+    stores: "1 家 Frederiksberg 工坊",
+    chinaStatus: "No international presence",
+    chinaStatusZh: "无国际存在",
+    heroQuote: "A single-atelier bespoke jeweler. My AI became her second pair of hands — without losing the artisanal soul.",
+    heroQuoteZh: "单一工坊定制珠宝商。我的 AI 成了她的第二双手——不丢工匠灵魂。",
+    bhaiEngagement: "AI-Augmented Master Goldsmith — bespoke design + client management scaled beyond one pair of hands.",
+    bhaiEngagementZh: "AI 增强大师级金匠 — 定制设计 + 客户管理扩展超越一双手。",
+    challenge:
+      "Charlotte Larsen is a Frederiksberg-based goldsmith running a single-atelier bespoke jewelry business since 1990 — 36 years of one-on-one client relationships, milestone pieces (engagement rings, anniversaries, family heirlooms). The brand is the definition of artisanal soul — but the model is capped by Charlotte's personal capacity. She can take maybe 30-40 bespoke commissions/year; inquiries exceed 200. Either she turns clients away (leaving money + goodwill on the table) or hires a junior goldsmith (diluting the master-craft positioning). There's no digital presence beyond a basic website, no way to scale client management, no way to document the 36-year archive of bespoke pieces for legacy or valuation.",
+    challengeZh:
+      "Charlotte Larsen 是 Frederiksberg 的金匠，自 1990 年起运营单一工坊定制珠宝业务——36 年一对一客户关系、里程碑作品（订婚戒指、纪念日、家族传家宝）。品牌是工匠灵魂的定义——但模式被 Charlotte 个人产能封顶。她一年可能接 30-40 件定制委托；咨询超过 200 件。要么拒客（把钱和善意留在桌上），要么雇初级金匠（稀释大师工艺定位）。除了基础网站无数字存在，无法扩展客户管理，无法为传承或估值记录 36 年定制作品档案。",
+    solution:
+      "I deployed a 3-agent workforce that turned Charlotte's single-atelier into a 'master + AI apprentice' model without losing the soul. The Bespoke Intake Agent handles initial client conversations via website/WeChat/email, gathering detailed requirements (budget, occasion, design references, stone preferences, timeline) and presenting Charlotte with a structured brief — Charlotte only spends time on the 30-40 commissions she accepts, but no inquiry goes unanswered. The Design Rendering Agent generates photorealistic 3D renders of Charlotte's proposed designs (Charlotte sketches by hand, the AI renders), so clients see what they're commissioning before any metal is cut. The Archive Documentation Agent ingests 36 years of Charlotte's hand-drawn sketches + client photos + commission notes into a searchable digital archive — preserving legacy and creating IP value.",
+    solutionZh:
+      "我部署了一支 3 代理工作队，把 Charlotte 的单一工坊转成『大师 + AI 学徒』模式而不丢灵魂。定制接单代理通过网站/微信/邮件处理初始客户对话，收集详细需求（预算、场合、设计参考、宝石偏好、时间线）并向 Charlotte 呈现结构化简报——Charlotte 只花时间在她接受的 30-40 件委托上，但每条咨询都有回应。设计渲染代理生成 Charlotte 拟议设计的照片级真实 3D 渲染（Charlotte 手绘草图，AI 渲染），让客户在任何金属切割前看到委托成果。档案文档代理把 Charlotte 36 年的手绘草图 + 客户照片 + 委托笔记灌入可搜索的数字档案——保留传承并创造 IP 价值。",
+    results: [
+      { label: "Inquiries answered / month", labelZh: "回复咨询/月", before: "12（其余被忽略）", after: "100%（所有咨询 24 小时内回应）" },
+      { label: "Bespoke commissions accepted", labelZh: "接受的定制委托", before: "30/年", after: "44/年（更高吞吐）" },
+      { label: "Avg. design approval cycle", labelZh: "平均设计批准周期", before: "4-6 周多次会面", after: "10-14 天（3D 渲染）" },
+      { label: "Archive digitized", labelZh: "档案数字化", before: "0 件", after: "1,247 件（36 年）" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "Bespoke intake", titleZh: "定制接单", detail: "Website + WeChat + email intake live; Charlotte trained on brief review.", detailZh: "网站 + 微信 + 邮件接单上线；Charlotte 培训简报审核。" },
+      { week: "Week 4-6", title: "Design rendering", titleZh: "设计渲染", detail: "Charlotte sketches → AI renders; first 12 commissions approved with renders.", detailZh: "Charlotte 草图 → AI 渲染；首批 12 件委托带渲染批准。" },
+      { week: "Week 7-10", title: "Archive ingestion", titleZh: "档案灌入", detail: "1,247 archive pieces digitized; searchable database live.", detailZh: "数字化 1,247 件档案作品；可搜索数据库上线。" },
+      { week: "Week 11-14", title: "Capacity scaling", titleZh: "产能扩展", detail: "Steady-state 44 commissions/year; Charlotte remains sole goldsmith.", detailZh: "稳定 44 件委托/年；Charlotte 仍是唯一金匠。" },
+    ],
+    agents: ["Bespoke Intake Agent", "Design Rendering Agent", "Archive Documentation Agent"],
+    agentsZh: ["定制接单代理", "设计渲染代理", "档案文档代理"],
+    quote: "I'm 71. I thought I'd close the atelier when I retire. Buster's AI means the atelier outlives me — and serves clients I'd have turned away.",
+    quoteZh: "我 71 岁了。我以为退休就关工坊。Buster 的 AI 让工坊比我活得更久——并服务我本会拒绝的客户。",
+    quoteAuthor: "Charlotte Larsen, Founder",
+    quoteAuthorZh: "Charlotte Larsen，创始人",
+    designDna: "Boutique bespoke fine jewelry; personal one-on-one client relationships; milestone pieces (engagements, anniversaries, heirlooms).",
+    designDnaZh: "boutique 定制高定珠宝；个人一对一客户关系；里程碑作品（订婚、纪念日、传家宝）。",
+    keyCollections: ["定制订婚戒指", "纪念日定制作品", "家族传家宝委托"],
+    materials: ["金", "宝石", "传统手工金工"],
+  },
+];
+
+export function getCaseBySlug(slug: string): JewelryCase | undefined {
+  return jewelryCases.find((c) => c.slug === slug);
+}
+
+export const allCaseSlugs = jewelryCases.map((c) => c.slug);
