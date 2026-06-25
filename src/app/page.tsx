@@ -388,7 +388,6 @@ export default function Home() {
           </blockquote>
           <div className="flex items-center justify-center gap-4 text-sm">
             <div className="h-14 w-14 rounded-full overflow-hidden border-2 border-bhai-red">
-              { }
               <img
                 src="/buster-photo-1-thumb.webp"
                 alt="陆博明 / Buster ML Larsen — Better Human AI 创始人"
@@ -398,6 +397,14 @@ export default function Home() {
             <div className="text-left">
               <div className="text-foreground font-medium">陆博明 / Buster ML Larsen</div>
               <div className="text-bhai-muted text-xs">丹麦 AI 系统架构师 · 现转移方法到中国</div>
+            </div>
+            {/* BHAI steering wheel brand mark */}
+            <div className="ml-4 pl-4 border-l border-[#2A2A2A]">
+              <img
+                src="/bhai-mark-80.png"
+                alt="BHAI 舵轮 — Buster ved roret"
+                className="h-10 w-10 object-contain opacity-80"
+              />
             </div>
           </div>
         </div>

@@ -20,8 +20,12 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#1F1F1F] bg-black/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2" aria-label="Better Human AI 首页">
-          <span className="font-mono text-xs text-bhai-muted tracking-widest">[ BHAI ]</span>
+        <Link href="/" className="flex items-center gap-2.5" aria-label="Better Human AI 首页">
+          <img
+            src="/bhai-mark-40.png"
+            alt="BHAI 舵轮 logo"
+            className="h-8 w-8 object-contain"
+          />
           <span className="font-sans text-base font-bold tracking-tight">
             BETTER HUMAN<span className="text-bhai-red"> AI</span>
           </span>

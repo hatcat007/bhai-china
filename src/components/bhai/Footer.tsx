@@ -6,8 +6,12 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="font-mono text-xs text-bhai-muted tracking-widest">[ BHAI ]</span>
+            <div className="flex items-center gap-2.5 mb-3">
+              <img
+                src="/bhai-mark-40.png"
+                alt="BHAI 舵轮 logo"
+                className="h-7 w-7 object-contain"
+              />
               <span className="font-sans text-sm font-bold">
                 BETTER HUMAN<span className="text-bhai-red"> AI</span>
               </span>
