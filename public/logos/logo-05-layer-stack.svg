@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <!-- Logo 05: 3-Layer Stack — Design Memory / Bench Automation / Clienteling Agents -->
+  <rect width="400" height="120" fill="#000000"/>
+  <!-- 3 horizontal bars representing the 3 layers -->
+  <rect x="20" y="40" width="44" height="6" fill="#FFFFFF"/>
+  <rect x="20" y="54" width="44" height="6" fill="#E56910"/>
+  <rect x="20" y="68" width="44" height="6" fill="#6B7280"/>
+  <!-- Layer labels (tiny) -->
+  <text x="20" y="34" font-family="ui-monospace, monospace" font-size="6" fill="#6B7280" letter-spacing="1">MEMORY</text>
+  <text x="20" y="86" font-family="ui-monospace, monospace" font-size="6" fill="#6B7280" letter-spacing="1">CLIENTELING</text>
+  <text x="80" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">BETTER HUMAN<tspan fill="#E56910"> AI</tspan></text>
+  <text x="80" y="83" font-family="ui-monospace, monospace" font-size="9" fill="#6B7280" letter-spacing="2">3-LAYER ARCHITECTURE</text>
+</svg>

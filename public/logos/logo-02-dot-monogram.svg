@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <!-- Logo 02: Orange Dot Monogram — geometric mark + wordmark -->
+  <rect width="400" height="120" fill="#000000"/>
+  <circle cx="40" cy="60" r="18" fill="#E56910"/>
+  <circle cx="40" cy="60" r="6" fill="#000000"/>
+  <text x="80" y="68" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" letter-spacing="-0.3">BETTER HUMAN<tspan fill="#E56910"> AI</tspan></text>
+  <text x="80" y="88" font-family="ui-monospace, monospace" font-size="9" fill="#6B7280" letter-spacing="2">DANISH METHOD · CHINA DEPLOYMENT</text>
+</svg>

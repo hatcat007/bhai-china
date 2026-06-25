@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <!-- Logo 06: Inverted Hourglass — subvert competitor visual -->
+  <rect width="400" height="120" fill="#000000"/>
+  <!-- Inverted hourglass shape (top narrow, bottom wide) -->
+  <path d="M 25 40 L 55 40 L 40 60 L 55 80 L 25 80 L 40 60 Z" fill="none" stroke="#E56910" stroke-width="2"/>
+  <!-- Sand falling down (dots) -->
+  <circle cx="40" cy="68" r="1.5" fill="#FFFFFF"/>
+  <circle cx="40" cy="74" r="1" fill="#FFFFFF" opacity="0.6"/>
+  <text x="80" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">BETTER HUMAN<tspan fill="#E56910"> AI</tspan></text>
+  <text x="80" y="83" font-family="ui-monospace, monospace" font-size="9" fill="#6B7280" letter-spacing="2">14 DAYS · NOT 30 · NOT PPT</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <!-- Logo 09: Geometric Diamond — abstract jewelry reference -->
+  <rect width="400" height="120" fill="#000000"/>
+  <!-- Diamond shape -->
+  <g transform="translate(40 60)">
+    <path d="M 0 -22 L 18 -8 L 12 18 L -12 18 L -18 -8 Z" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+    <!-- Internal facet lines -->
+    <line x1="0" y1="-22" x2="-12" y2="18" stroke="#E56910" stroke-width="1"/>
+    <line x1="0" y1="-22" x2="12" y2="18" stroke="#E56910" stroke-width="1"/>
+    <line x1="-18" y1="-8" x2="18" y2="-8" stroke="#E56910" stroke-width="1"/>
+    <line x1="0" y1="-22" x2="0" y2="-8" stroke="#E56910" stroke-width="1"/>
+  </g>
+  <text x="80" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">BETTER HUMAN<tspan fill="#E56910"> AI</tspan></text>
+  <text x="80" y="83" font-family="ui-monospace, monospace" font-size="9" fill="#6B7280" letter-spacing="2">JEWELRY INDUSTRY · AI SPECIALIST</text>
+</svg>

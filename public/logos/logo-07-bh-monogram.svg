@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <!-- Logo 07: BH Monogram — interlocking B and H -->
+  <rect width="400" height="120" fill="#000000"/>
+  <g transform="translate(20 35)">
+    <!-- B -->
+    <path d="M 0 0 L 0 50 M 0 0 L 18 0 Q 28 0 28 10 Q 28 20 18 25 L 0 25 M 0 25 L 20 25 Q 30 25 30 35 Q 30 50 20 50 L 0 50" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="square"/>
+    <!-- H -->
+    <path d="M 42 0 L 42 50 M 42 25 L 65 25 M 65 0 L 65 50" fill="none" stroke="#E56910" stroke-width="3" stroke-linecap="square"/>
+  </g>
+  <text x="110" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">BETTER HUMAN<tspan fill="#E56910"> AI</tspan></text>
+  <text x="110" y="83" font-family="ui-monospace, monospace" font-size="9" fill="#6B7280" letter-spacing="2">BHAI · 陆博明 / BUSTER LARSEN</text>
+</svg>

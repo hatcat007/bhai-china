@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <!-- Logo 10: Danish Cross + AI Pulse — heritage meets AI -->
+  <rect width="400" height="120" fill="#000000"/>
+  <!-- Stylized Danish flag inspired cross (abstract, not literal) -->
+  <g transform="translate(40 60)">
+    <rect x="-22" y="-3" width="44" height="6" fill="#FFFFFF"/>
+    <rect x="-3" y="-22" width="6" height="44" fill="#FFFFFF"/>
+    <!-- Orange AI pulse overlay -->
+    <rect x="-22" y="-1" width="44" height="2" fill="#E56910"/>
+    <rect x="-1" y="-22" width="2" height="44" fill="#E56910"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="3" fill="#E56910"/>
+  </g>
+  <text x="80" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">BETTER HUMAN<tspan fill="#E56910"> AI</tspan></text>
+  <text x="80" y="83" font-family="ui-monospace, monospace" font-size="9" fill="#6B7280" letter-spacing="2">DANISH VERIFIED · CHINA DEPLOYED</text>
+</svg>
