@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
+import { PersonJsonLd } from "@/components/bhai/JsonLd";
 import { ArrowRight, Code2, Brain, ShieldCheck, Coffee, Plane, Mail, PlayCircle, Sparkles, Heart } from "lucide-react";
 
 export const metadata = {
@@ -11,6 +12,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <PageShell>
+      <PersonJsonLd />
       {/* HERO */}
       <section className="relative gradient-section pt-20 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />

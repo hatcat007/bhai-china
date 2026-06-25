@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
+import { ServiceJsonLd } from "@/components/bhai/JsonLd";
 import { ArrowRight, Eye, Sparkles, Diamond, TrendingUp, Cpu, ShieldCheck, Gauge, Wrench, MessageCircle, Boxes, FileCheck } from "lucide-react";
 
 export const metadata = {
@@ -167,6 +168,7 @@ const solutions = [
 export default function SolutionsPage() {
   return (
     <PageShell>
+      <ServiceJsonLd />
       {/* HERO */}
       <section className="relative gradient-section pt-20 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />

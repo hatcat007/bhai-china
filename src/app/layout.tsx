@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/bhai/JsonLd";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -69,6 +70,8 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${notoSansSC.variable} antialiased bg-background text-foreground`}
         style={{ fontFamily: "var(--font-noto-sans-sc), var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif" }}
       >
+        <OrganizationJsonLd />
+        <WebSiteJsonLd />
         {children}
         <Toaster />
       </body>

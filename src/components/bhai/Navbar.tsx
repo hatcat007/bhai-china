@@ -6,10 +6,11 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "首页" },
-  { href: "/cases", label: "丹麦案例" },
+  { href: "/cases", label: "案例" },
+  { href: "/ai-roadmap", label: "AI 路线图", highlight: true },
+  { href: "/pricing", label: "价格" },
   { href: "/solutions", label: "解决方案" },
   { href: "/method", label: "BHAI 方法" },
-  { href: "/denmark-insights", label: "丹麦洞察" },
   { href: "/about", label: "关于我" },
 ];
 
@@ -26,12 +27,16 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-7" aria-label="主导航">
+        <nav className="hidden md:flex items-center gap-6" aria-label="主导航">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-bhai-muted hover:text-foreground transition-colors"
+              className={`text-sm transition-colors ${
+                link.highlight
+                  ? "text-bhai-red hover:text-bhai-red-hover font-medium"
+                  : "text-bhai-muted hover:text-foreground"
+              }`}
             >
               {link.label}
             </Link>

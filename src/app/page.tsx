@@ -152,51 +152,112 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BHAI METHOD OVERVIEW */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section">
+      {/* 14-DAY GUARANTEE BANNER — placed prominently after problem */}
+      <section className="relative py-12 px-4 sm:px-6 lg:px-8 gradient-section">
+        <div className="mx-auto max-w-5xl">
+          <div className="rounded-2xl border border-bhai-red/40 bg-bhai-red/5 p-6 red-glow">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-bhai-red/20 border border-bhai-red flex items-center justify-center shrink-0">
+                <ShieldCheck className="h-6 w-6 text-bhai-red" />
+              </div>
+              <div className="flex-1">
+                <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-1">[ BHAI 14 天保证 ]</div>
+                <h2 className="font-sans text-lg sm:text-xl font-bold text-foreground leading-tight">
+                  首个 AI 代理在 14 天内上线跑生产。否则我继续工作，不收额外费用，直到它上线。
+                </h2>
+              </div>
+              <Link
+                href="/pricing"
+                className="cta-primary rounded-md px-5 py-2.5 text-sm font-medium text-white whitespace-nowrap"
+              >
+                看透明定价 →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BHAI 3-LAYER METHOD — beats Hourglass */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section-alt">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl mb-14">
-            <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 02 / BHAI 方法 ]</div>
+            <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 02 / BHAI 3 层方法 ]</div>
             <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6 leading-tight">
-              我一个人掌舵。<br />
-              AI 全员驱动。
+              不是 3 步流程。<br />
+              <span className="stat-highlight">是 3 层架构。</span>
             </h2>
             <p className="text-base sm:text-lg text-bhai-muted leading-relaxed">
-              我不是代理公司，也不是 SaaS。我是 Buster——一个人，给你部署一支 AI 工作队，然后教你（或你的中国区总经理）用控制中心驾驶它。
-              14 天首个代理上线。14 周整支工作队跑生产。每条决策都有审计链。
+              其他 AI 咨询公司卖你 3 步流程（评估 → 设计 → 部署）——这是线性的，部署完就结束。
+              BHAI 方法是 3 层架构：底层 Design Memory 永远在学，中层 Bench Automation 永远在跑，
+              顶层 Clienteling Agents 永远在跟你客户对话。3 层同时工作，永久在环。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <MethodStep
-              num="01"
-              title="构建上下文"
-              titleZh="BUILD THE CONTEXT"
-              desc="品牌语调包、决策规则、组织结构、预算边界、升级策略。没有这一步，AI 代理只是昂贵的自动补全。"
-              detail="品牌 DNA 编码 · 中国 CRM 审计 · 微信消息日志逆向工程 · 14 天需求预测模型"
+          <div className="space-y-6">
+            {/* Layer 1 — Design Memory */}
+            <LayerCard
+              layer="LAYER 01"
+              name="Design Memory"
+              nameZh="设计记忆层"
+              tagline="底层 · 永远在学习你的品牌 DNA"
+              desc="我把你的品牌语调、设计档案、决策规则、组织结构、客户历史编码成 AI 能消费的结构化上下文。这是其他公司跳过的步骤——没有这一层，AI 代理只是昂贵的自动补全。丹麦验证过：Jane Kønig 的 1,400 件档案 + 草图，6 周内训练成可用 DNA。"
+              details={[
+                "品牌语调包（14 天微信消息日志逆向工程）",
+                "设计 DNA 编码（档案 + 草图 + 工匠笔记）",
+                "决策规则文档（100+ 规则可版本化）",
+                "组织结构 + 预算边界 + 升级策略",
+              ]}
             />
-            <MethodStep
-              num="02"
-              title="部署代理"
-              titleZh="DEPLOY THE AGENTS"
-              desc="明确角色的代理：客户管理、防伪鉴真、设计生成、需求预测、合规审计。每个都有预算、经理、边界。1000+ 集成。"
-              detail="微信礼宾代理 · 小红书趋势代理 · AR 试戴代理 · 区块链来源代理 · 动态定价代理"
+
+            {/* Layer 2 — Bench Automation */}
+            <LayerCard
+              layer="LAYER 02"
+              name="Bench Automation"
+              nameZh="工坊自动化层"
+              tagline="中层 · 永远在跑你的工作流"
+              desc="基于 Design Memory，我部署工作流自动化：需求预测、动态定价、库存优化、防伪鉴真、PIPL 合规监控。这些代理不需要每次都跟客户对话——它们在后台 24/7 跑。丹麦验证过：Pandora 防伪代理月均自动下架 1,840+ 件假货。"
+              details={[
+                "AI 防伪鉴真（淘宝/抖音/拼多多/微信代销监控）",
+                "需求预测 + 动态定价（90 天 SKU 级 87% 准确率）",
+                "中国云基础设施（7 大云厂商 + 多云冗余）",
+                "PIPL + GDPR + EU AI Act 三重合规审计",
+              ]}
             />
-            <MethodStep
-              num="03"
-              title="掌舵不撒手"
-              titleZh="STAY AT THE WHEEL"
-              desc="人在环里。审核、批准、转向——通过一个控制中心完成。代理在你设计的结构里自主执行。从第一天起完整审计链。"
-              detail="中国区总经理审核 · 每条微信消息人类签字 · GDPR + EU AI Act 双合规 · 实时仪表盘"
+
+            {/* Layer 3 — Clienteling Agents */}
+            <LayerCard
+              layer="LAYER 03"
+              name="Clienteling Agents"
+              nameZh="客户互动层"
+              tagline="顶层 · 永远在跟你客户对话"
+              desc="最上层是直接跟客户对话的代理：微信 VIP 礼宾、小红书编辑、抖音直播辅助、AR 试戴、定制共创。每个代理在 Bench Automation 提供的边界内自主运行——人在环里签字关键决策。丹麦验证过：Sophie Bille Brahe 6 个月做到 €1.8M 中国营收，47,200 小红书粉丝。"
+              details={[
+                "普通话 VIP 礼宾（24/7 微信客户管理）",
+                "小红书 + 抖音内容代理（品牌语调翻译）",
+                "AR 试戴网络（94% 色彩还原）",
+                "高定共创代理（创始人 DNA 约束生成）",
+              ]}
             />
           </div>
 
-          <div className="mt-10 text-center">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Link
               href="/method"
-              className="inline-flex items-center gap-2 text-sm text-bhai-red hover:text-bhai-red-hover font-medium"
+              className="rounded-xl border border-[#2A2A2A] bg-bhai-card p-6 card-hover group"
             >
-              看 BHAI 方法的完整 14 周时间线 <ArrowRight className="h-4 w-4" />
+              <div className="font-mono text-[10px] text-bhai-muted tracking-widest mb-2">[ 深入了解 ]</div>
+              <div className="text-base font-bold text-foreground group-hover:text-bhai-red transition-colors">
+                看 3 层方法的完整 14 周部署时间线 →
+              </div>
+            </Link>
+            <Link
+              href="/ai-roadmap"
+              className="rounded-xl border border-bhai-red/30 bg-bhai-red/5 p-6 card-hover group"
+            >
+              <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-2">[ 个性化推荐 ]</div>
+              <div className="text-base font-bold text-foreground group-hover:text-bhai-red transition-colors">
+                5 分钟生成你的 AI 路线图（免费） →
+              </div>
             </Link>
           </div>
         </div>
@@ -342,6 +403,79 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PRICING PREVIEW + AI ROADMAP CTA — competitive advantage over Hourglass */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl mb-12">
+            <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 07 / 透明定价 + 免费路线图 ]</div>
+            <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4 leading-tight">
+              96% 的 AI 咨询公司<br />
+              <span className="stat-highlight">第一次通话才告诉你价格。</span>
+            </h2>
+            <p className="text-base text-bhai-muted leading-relaxed">
+              我把价格列在网上。¥15K 入门 AI 审计。¥40K 起完整 AI 构建。¥20K/月 托管。
+              14 天首个代理上线保证——否则我继续工作，不收额外费用。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Pricing card */}
+            <Link
+              href="/pricing"
+              className="group rounded-2xl border border-[#2A2A2A] bg-bhai-card p-8 card-hover"
+            >
+              <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-3">[ 透明定价 ]</div>
+              <h3 className="font-sans text-2xl font-bold text-foreground mb-4">3 个产品 · 任选组合</h3>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-baseline justify-between pb-2 border-b border-[#2A2A2A]">
+                  <span className="text-sm text-bhai-muted">AI 审计（入门）</span>
+                  <span className="font-mono text-sm text-foreground">¥15K - 50K</span>
+                </div>
+                <div className="flex items-baseline justify-between pb-2 border-b border-[#2A2A2A]">
+                  <span className="text-sm text-bhai-muted">AI 构建（主力）</span>
+                  <span className="font-mono text-sm text-foreground">¥40K - 150K</span>
+                </div>
+                <div className="flex items-baseline justify-between pb-2 border-b border-[#2A2A2A]">
+                  <span className="text-sm text-bhai-muted">AI 托管（长期）</span>
+                  <span className="font-mono text-sm text-foreground">¥20K/月起</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-bhai-red font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                  看完整定价 + 14 天保证 <ArrowRight className="h-4 w-4" />
+                </span>
+              </div>
+            </Link>
+
+            {/* AI Roadmap card */}
+            <Link
+              href="/ai-roadmap"
+              className="group rounded-2xl border-2 border-bhai-red bg-bhai-red/5 p-8 card-hover red-glow"
+            >
+              <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-3">[ 免费 · 5 分钟 ]</div>
+              <h3 className="font-sans text-2xl font-bold text-foreground mb-4">生成你的 AI 路线图</h3>
+              <p className="text-sm text-bhai-muted leading-relaxed mb-6">
+                回答 5 个问题，我用 BHAI 方法（丹麦 15 案例 + 中国珠韵验证）生成你的个性化 AI 路线图预览——
+                具体到第一个该上哪个代理、14 天后能看到什么数字、30 天 ROI 预测。
+              </p>
+              <div className="space-y-2 mb-6">
+                {["品牌名", "年营收区间", "品牌阶段", "最痛的痛点", "中国业务现状"].map((q, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs">
+                    <span className="font-mono text-bhai-red w-6">Q{i + 1}</span>
+                    <span className="text-bhai-text">{q}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-bhai-red font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                  开始 5 分钟生成路线图 <ArrowRight className="h-4 w-4" />
+                </span>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* FINAL CTA */}
       <CTASection />
     </PageShell>
@@ -376,21 +510,34 @@ function ProblemCard({
   );
 }
 
-function MethodStep({
-  num, title, titleZh, desc, detail,
-}: { num: string; title: string; titleZh: string; desc: string; detail: string }) {
+function LayerCard({
+  layer, name, nameZh, tagline, desc, details,
+}: { layer: string; name: string; nameZh: string; tagline: string; desc: string; details: string[] }) {
   return (
     <div className="rounded-2xl border border-[#2A2A2A] bg-bhai-card p-6 card-hover">
-      <div className="flex items-baseline gap-3 mb-4">
-        <span className="font-mono text-3xl font-bold text-bhai-red">{num}</span>
-        <div>
-          <div className="font-mono text-[10px] text-bhai-muted tracking-widest">{titleZh}</div>
-          <div className="text-lg font-bold text-foreground">{title}</div>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+        <div className="md:col-span-4">
+          <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-2">{layer}</div>
+          <h3 className="font-sans text-2xl font-bold text-foreground mb-1">{name}</h3>
+          <div className="text-sm text-bhai-muted mb-3">{nameZh}</div>
+          <div className="inline-block rounded-full border border-bhai-red/30 bg-bhai-red/5 px-3 py-1 text-[11px] font-mono text-bhai-red tracking-widest">
+            {tagline}
+          </div>
         </div>
-      </div>
-      <p className="text-sm text-bhai-muted leading-relaxed mb-4">{desc}</p>
-      <div className="pt-4 border-t border-[#2A2A2A] text-[11px] font-mono text-bhai-dim leading-relaxed">
-        {detail}
+        <div className="md:col-span-5">
+          <p className="text-sm text-bhai-muted leading-relaxed">{desc}</p>
+        </div>
+        <div className="md:col-span-3">
+          <div className="font-mono text-[10px] text-bhai-muted tracking-widest mb-3">[ 包含组件 ]</div>
+          <ul className="space-y-1.5">
+            {details.map((d, i) => (
+              <li key={i} className="text-xs text-bhai-text flex items-start gap-1.5">
+                <span className="text-bhai-red mt-0.5">→</span>
+                <span>{d}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
