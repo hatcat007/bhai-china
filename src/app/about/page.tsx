@@ -46,8 +46,13 @@ export default function AboutPage() {
             <div className="lg:col-span-5">
               <div className="rounded-2xl border border-[#2A2A2A] bg-bhai-card p-8 red-glow">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-bhai-red to-[#663008] flex items-center justify-center text-white text-2xl font-bold shrink-0">
-                    陆
+                  <div className="h-16 w-16 rounded-full overflow-hidden border-2 border-bhai-red shrink-0">
+                    { }
+                    <img
+                      src="/buster-photo-1-thumb.webp"
+                      alt="陆博明 / Buster ML Larsen"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                   <div>
                     <div className="text-lg font-bold text-foreground">陆博明 / Buster ML Larsen</div>
@@ -104,6 +109,73 @@ export default function AboutPage() {
                     </div>
                   </div>
                 </dl>
+
+                {/* WeChat QR code */}
+                <div className="mt-6 pt-6 border-t border-[#2A2A2A]">
+                  <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-3">[ 微信扫码加我 ]</div>
+                  <div className="flex items-center gap-4">
+                    <div className="h-24 w-24 rounded-lg overflow-hidden border border-[#2A2A2A] bg-white p-1.5 shrink-0">
+                      { }
+                      <img
+                        src="/wechat-qr.svg"
+                        alt="WeChat QR Code — 微信扫码加 Buster"
+                        className="h-full w-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-foreground mb-1">微信扫一扫</div>
+                      <div className="text-xs text-bhai-muted leading-relaxed">
+                        扫码添加好友<br />
+                        微信 ID：busterl1<br />
+                        备注：BHAI 珠宝 CEO
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BUSTER PHOTO GALLERY */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 gradient-section-alt">
+        <div className="mx-auto max-w-5xl">
+          <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 镜头后的 Buster ]</div>
+          <h2 className="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-foreground mb-8 leading-tight">
+            我在工作
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="rounded-2xl border border-[#2A2A2A] bg-bhai-card overflow-hidden">
+              <div className="aspect-square relative">
+                { }
+                <img
+                  src="/buster-photo-1.webp"
+                  alt="陆博明 / Buster 在办公室 — AI 系统架构师日常"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+              <div className="p-4 border-t border-[#2A2A2A]">
+                <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-1">[ PHOTO 01 ]</div>
+                <p className="text-xs text-bhai-muted leading-relaxed">
+                  Buster 在哥本哈根办公室控制中心，部署丹麦珠宝品牌的 AI 工作队。每天写代码，每天亲自驾船。
+                </p>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-[#2A2A2A] bg-bhai-card overflow-hidden">
+              <div className="aspect-[3/4] relative">
+                { }
+                <img
+                  src="/buster-photo-2.webp"
+                  alt="陆博明 / Buster — 丹麦 AI 系统架构师，现转移方法到中国"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+              <div className="p-4 border-t border-[#2A2A2A]">
+                <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-1">[ PHOTO 02 ]</div>
+                <p className="text-xs text-bhai-muted leading-relaxed">
+                  Buster 在丹麦验证了方法。现在搬到中国，把这套系统转移给中国珠宝 CEO。
+                </p>
               </div>
             </div>
           </div>

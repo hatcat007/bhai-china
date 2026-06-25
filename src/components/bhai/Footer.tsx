@@ -67,6 +67,26 @@ export function Footer() {
                 公众号 / 小红书 / 抖音：即将上线
               </li>
             </ul>
+            {/* WeChat QR — site-wide */}
+            <div className="mt-5 pt-5 border-t border-[#1A1A1A]">
+              <div className="flex items-center gap-3">
+                <div className="h-16 w-16 rounded overflow-hidden border border-[#2A2A2A] bg-white p-1 shrink-0">
+                  { }
+                  <img
+                    src="/wechat-qr.svg"
+                    alt="WeChat QR Code — 微信扫码加 Buster"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-0.5">[ 扫码加微信 ]</div>
+                  <div className="text-[11px] text-bhai-muted leading-tight">
+                    微信扫一扫<br />
+                    ID：busterl1
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="mt-4 flex gap-2 flex-wrap">
               <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">GDPR 合规</span>
               <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">EU AI ACT</span>

@@ -133,6 +133,27 @@ export default function BookPage() {
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </a>
 
+              {/* WeChat QR — large, prominent */}
+              <div className="rounded-lg border border-bhai-red/30 bg-bhai-red/5 p-5 flex items-center gap-5">
+                <div className="h-28 w-28 rounded-lg overflow-hidden border border-[#2A2A2A] bg-white p-2 shrink-0">
+                  { }
+                  <img
+                    src="/wechat-qr.svg"
+                    alt="WeChat QR Code — 微信扫码加 Buster"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-2">[ 或扫码加微信 ]</div>
+                  <div className="text-sm font-medium text-foreground mb-1">微信扫一扫</div>
+                  <div className="text-xs text-bhai-muted leading-relaxed">
+                    手机微信扫上方二维码<br />
+                    直接添加 Buster 为好友<br />
+                    备注：BHAI 珠宝 CEO
+                  </div>
+                </div>
+              </div>
+
               <a
                 href="https://cal.eu/betterhumanai/20min"
                 target="_blank"
