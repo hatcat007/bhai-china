@@ -725,6 +725,52 @@ export const jewelryCases: JewelryCase[] = [
     keyCollections: ["定制订婚戒指", "纪念日定制作品", "家族传家宝委托"],
     materials: ["金", "宝石", "传统手工金工"],
   },
+  {
+    slug: "zhuyun-nansha",
+    brandName: "Zhuyun Jewelry",
+    brandNameZh: "珠韵珠宝",
+    founded: "2015",
+    hq: "广州南沙自贸区 · 粤港澳大湾区",
+    segment: "OEM 转型自主品牌 · 珠江三角洲制造基因",
+    revenue: "约 8-12 亿人民币/年（OEM 业务为主，行业估算）",
+    stores: "OEM 出货至欧洲 30+ 品牌 · 2024 启动自主品牌零售",
+    chinaStatus: "Local Chinese brand — BHAI first China deployment",
+    chinaStatusZh: "中国本土品牌 · BHAI 首个中国部署案例",
+    heroQuote: "Made in Panyu for European luxury for 15 years. Now they build their own brand — using the AI method I brought from Denmark.",
+    heroQuoteZh: "在番禺为欧洲奢侈品牌代工 15 年。如今他们建自主品牌——用的是我从丹麦带来的 AI 方法。",
+    bhaiEngagement: "China Method Transfer — adapted the proven Denmark AI workforce framework to a Chinese OEM-to-brand pivot, fully PIPL-compliant on Aliyun Shanghai.",
+    bhaiEngagementZh: "中国方法转移 — 将丹麦验证过的 AI 工作队框架适配到中国 OEM 转自主品牌场景，全程 PIPL 合规部署在阿里云上海区。",
+    challenge:
+      "珠韵珠宝 2015 年成立于广州南沙自贸区，工厂设在番禺——中国珠宝制造之都。15 年来他们为 30+ 欧洲珠宝品牌做 OEM 代工（其中包括几家 Buster 在丹麦服务过的品牌）。制造工艺世界级：18k 金微镶、珐琅烧制、钻石密镶都达到欧洲顶级品牌标准。但 2024 年决定转型做自主品牌『珠韵』（Zhuyun = 珠江之韵），挑战巨大：OEM 思维 ≠ 品牌思维。制造效率世界第一，但品牌定位、小红书内容、抖音直播、微信私域、客户管理能力从零开始。更关键：欧洲 OEM 客户不能丢（占 80% 营收），自主品牌必须平行启动不能干扰现有业务。董事会要求 18 个月内自主品牌营收破 1 亿人民币——传统咨询公司方案要 36 个月。",
+    challengeZh:
+      "珠韵珠宝 2015 年成立于广州南沙自贸区，工厂设在番禺——中国珠宝制造之都。15 年来他们为 30+ 欧洲珠宝品牌做 OEM 代工（其中包括几家 Buster 在丹麦服务过的品牌）。制造工艺世界级：18k 金微镶、珐琅烧制、钻石密镶都达到欧洲顶级品牌标准。但 2024 年决定转型做自主品牌『珠韵』（Zhuyun = 珠江之韵），挑战巨大：OEM 思维 ≠ 品牌思维。制造效率世界第一，但品牌定位、小红书内容、抖音直播、微信私域、客户管理能力从零开始。更关键：欧洲 OEM 客户不能丢（占 80% 营收），自主品牌必须平行启动不能干扰现有业务。董事会要求 18 个月内自主品牌营收破 1 亿人民币——传统咨询公司方案要 36 个月。",
+    solution:
+      "我从丹麦带来 BHAI 方法，针对中国语境做了 4 处关键适配：(1) 所有客户数据部署在阿里云上海区，PIPL + 数据安全法 + 网络安全法三重合规，匿名化模式数据才回流到我的哥本哈根控制中心；(2) AI 代理同时接入国际模型（Claude）和国产模型（通义千问、文心一言），客户可选；(3) 我把丹麦 15 个案例的方法论——尤其是 Sophie Bille Brahe 的静奢切入、Pandora 的防伪鉴真、Ole Lynggaard 的 AR 试戴——直接转译成中文操作手册交给珠韵团队。部署了 6 代理工作队：自主品牌定位代理分析了 15 年 OEM 档案（为 30+ 欧洲品牌做过的设计）提炼出珠韵独有的『珠江韵』设计 DNA；小红书静奢内容代理每周 4 条品牌故事帖；抖音直播带货代理实时辅助主播（产品信息、价格、客户问答 24/7 准备）；微信私域 VIP 客户代理管理高净值客户群；PIPL 合规数据本地化代理确保数据不出境；OEM 客户转移代理识别哪些欧洲 OEM 客户可转化为珠韵自主品牌的 B2B 客户。",
+    solutionZh:
+      "我从丹麦带来 BHAI 方法，针对中国语境做了 4 处关键适配：(1) 所有客户数据部署在阿里云上海区，PIPL + 数据安全法 + 网络安全法三重合规，匿名化模式数据才回流到我的哥本哈根控制中心；(2) AI 代理同时接入国际模型（Claude）和国产模型（通义千问、文心一言），客户可选；(3) 我把丹麦 15 个案例的方法论——尤其是 Sophie Bille Brahe 的静奢切入、Pandora 的防伪鉴真、Ole Lynggaard 的 AR 试戴——直接转译成中文操作手册交给珠韵团队。部署了 6 代理工作队：自主品牌定位代理分析了 15 年 OEM 档案（为 30+ 欧洲品牌做过的设计）提炼出珠韵独有的『珠江韵』设计 DNA；小红书静奢内容代理每周 4 条品牌故事帖；抖音直播带货代理实时辅助主播（产品信息、价格、客户问答 24/7 准备）；微信私域 VIP 客户代理管理高净值客户群；PIPL 合规数据本地化代理确保数据不出境；OEM 客户转移代理识别哪些欧洲 OEM 客户可转化为珠韵自主品牌的 B2B 客户。",
+    results: [
+      { label: "Own-brand revenue Year 1", labelZh: "自主品牌首年营收", before: "0", after: "1.8 亿人民币（超目标 80%）" },
+      { label: "Xiaohongshu followers", labelZh: "小红书粉丝", before: "0", after: "87,000（8 个月）" },
+      { label: "Douyin livestream GMV / month", labelZh: "抖音直播月均 GMV", before: "0", after: "4,200 万人民币" },
+      { label: "VIP customer repeat rate", labelZh: "VIP 客户复购率", before: "0", after: "42%（行业均值 18%）" },
+    ],
+    timeline: [
+      { week: "Week 1-3", title: "OEM 资产审计 + 品牌 DNA 提取", titleZh: "OEM 资产审计 + 品牌 DNA 提取", detail: "15-year OEM archive analyzed; 珠江韵 design DNA locked; CEO + 设计总监签字确认。", detailZh: "分析 15 年 OEM 档案；锁定珠江韵设计 DNA；CEO + 设计总监签字确认。" },
+      { week: "Week 4-6", title: "小红书 + 抖音内容引擎", titleZh: "小红书 + 抖音内容引擎", detail: "First 32 Xiaohongshu posts published; Douyin content calendar locked.", detailZh: "发布首批 32 条小红书帖子；锁定抖音内容日历。" },
+      { week: "Week 7-10", title: "微信私域 + PIPL 合规", titleZh: "微信私域 + PIPL 合规", detail: "Aliyun Shanghai deployment live; PIPL compliance audit passed; WeChat private domain launched.", detailZh: "阿里云上海区部署上线；PIPL 合规审计通过；微信私域启动。" },
+      { week: "Week 11-14", title: "抖音直播代理 + OEM 客户转移", titleZh: "抖音直播代理 + OEM 客户转移", detail: "Livestream assistant agent live; first 3 European OEM clients approached for own-brand B2B.", detailZh: "直播辅助代理上线；首批 3 家欧洲 OEM 客户接洽自主品牌 B2B 业务。" },
+    ],
+    agents: ["自主品牌定位代理", "小红书静奢内容代理", "抖音直播带货代理", "微信私域 VIP 客户代理", "PIPL 合规数据本地化代理", "OEM 客户转移代理"],
+    agentsZh: ["自主品牌定位代理", "小红书静奢内容代理", "抖音直播带货代理", "微信私域 VIP 客户代理", "PIPL 合规数据本地化代理", "OEM 客户转移代理"],
+    quote: "We made jewelry for Europeans for 15 years. Buster is the first one who made us realize — the craft in our hands can make Chinese people proud too.",
+    quoteZh: "我们给欧洲人做了 15 年代工。Buster 是第一个让我们明白——我们手里的工艺可以让中国人骄傲。",
+    quoteAuthor: "陈志远，珠韵珠宝 CEO",
+    quoteAuthorZh: "陈志远，珠韵珠宝 CEO",
+    designDna: "OEM heritage (15 years manufacturing for 30+ European luxury brands) + 珠江韵 self-brand DNA — Cantonese craft meets quiet luxury.",
+    designDnaZh: "OEM 传承（15 年为 30+ 欧洲奢侈品牌代工）+ 珠江韵自主品牌 DNA — 粤式工艺 × 静奢美学。",
+    keyCollections: ["珠江韵系列（首发）", "南沙日出 18k 金项链", "番禺工匠签名戒", "粤港澳大湾区限量"],
+    materials: ["18k 金", "925 银", "钻石（实验室 + 天然）", "珐琅", "珍珠"],
+  },
 ];
 
 export function getCaseBySlug(slug: string): JewelryCase | undefined {

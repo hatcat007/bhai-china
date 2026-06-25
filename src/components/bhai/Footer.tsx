@@ -13,9 +13,9 @@ export function Footer() {
               </span>
             </div>
             <p className="text-xs text-bhai-muted leading-relaxed">
-              我一个人掌舵。<br />
-              AI 全员驱动。<br />
-              为中国珠宝 CEO 而生。
+              丹麦验证方法。<br />
+              中国本地部署。<br />
+              陆博明 / Buster 掌舵。
             </p>
             <p className="font-mono text-[10px] text-bhai-dim mt-4 tracking-wider">
               BUSTER VED RORET.<br />
@@ -43,23 +43,42 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">联系</h3>
+            <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">中国联系</h3>
             <ul className="space-y-2 text-sm text-bhai-text">
-              <li><a href="mailto:buster@betterhumanai.dk" className="hover:text-bhai-red transition-colors">buster@betterhumanai.dk</a></li>
-              <li><a href="https://cal.eu/betterhumanai/20min" target="_blank" rel="noopener noreferrer" className="hover:text-bhai-red transition-colors">cal.eu/betterhumanai/20min</a></li>
-              <li><a href="https://betterhumanai.dk" className="hover:text-bhai-red transition-colors">betterhumanai.dk</a></li>
+              <li>
+                <a href="weixin://add/busterl1" className="hover:text-bhai-red transition-colors flex items-center gap-2">
+                  <span className="font-mono text-[10px] text-bhai-red">[WeChat]</span>
+                  微信：busterl1
+                </a>
+              </li>
+              <li>
+                <a href="https://cal.eu/betterhumanai/20min" target="_blank" rel="noopener noreferrer" className="hover:text-bhai-red transition-colors flex items-center gap-2">
+                  <span className="font-mono text-[10px] text-bhai-red">[Cal]</span>
+                  cal.eu/betterhumanai/20min
+                </a>
+              </li>
+              <li>
+                <a href="mailto:buster@betterhumanai.dk" className="hover:text-bhai-red transition-colors flex items-center gap-2">
+                  <span className="font-mono text-[10px] text-bhai-red">[Mail]</span>
+                  buster@betterhumanai.dk
+                </a>
+              </li>
+              <li className="text-xs text-bhai-dim mt-3">
+                公众号 / 小红书 / 抖音：即将上线
+              </li>
             </ul>
             <div className="mt-4 flex gap-2 flex-wrap">
               <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">GDPR 合规</span>
-              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">EU AI ACT 就绪</span>
-              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">完整审计链</span>
+              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">EU AI ACT</span>
+              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">PIPL 合规</span>
+              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">数据本地化</span>
             </div>
           </div>
         </div>
 
         <div className="mt-10 pt-6 border-t border-[#1A1A1A] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-xs text-bhai-dim">
-            © 2026 Better Human AI · Buster ML Larsen · 在中国，卖到欧洲 CEO
+            © 2026 Better Human AI · 陆博明 / Buster ML Larsen · 丹麦验证，中国部署
           </p>
           <p className="font-mono text-[10px] text-bhai-dim tracking-wider">
             NO PITCH · NO COMMITMENTS · 20 MINUTES

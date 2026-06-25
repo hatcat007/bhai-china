@@ -193,8 +193,8 @@ export default function MethodPage() {
               />
               <MethodDetailCard
                 icon={FileCheck}
-                title="完整审计链"
-                desc="每条 AI 决策都被记录：哪个代理、什么时间、基于什么输入、调用了什么工具、产出什么、谁审批了。GDPR 合规 + EU AI Act 就绪。董事会问起来，30 秒调出任意一条决策的完整链路。"
+                title="完整审计链 + 数据本地化"
+                desc="每条 AI 决策都被记录：哪个代理、什么时间、基于什么输入、调用了什么工具、产出什么、谁审批了。GDPR + EU AI Act + 中国 PIPL + 数据安全法 + 网络安全法五重合规。中国客户数据严格部署在境内云（阿里云/腾讯云/华为云/AWS 中国/香港桥接），仅匿名化模式数据回流哥本哈根控制中心。董事会问起来，30 秒调出任意一条决策的完整链路。"
                 output="Audit Trail · GDPR 合规 · EU AI Act 就绪"
               />
               <MethodDetailCard
@@ -227,7 +227,7 @@ export default function MethodPage() {
               { num: "01", title: "人在环里", desc: "AI 不撒手自主运行。关键决策人类签字。这是底线，不是选项。" },
               { num: "02", title: "ROI 先于酷炫", desc: "每个代理上线前回答：30 天内能赚回成本吗？不能就不上。" },
               { num: "03", title: "审计链从第一天", desc: "不是后期补的。从第一个代理部署起，所有决策可追溯。" },
-              { num: "04", title: "GDPR + EU AI Act", desc: "不是事后合规模板。架构设计就内嵌合规。" },
+              { num: "04", title: "GDPR + EU AI Act + 中国 PIPL", desc: "不是事后合规模板。架构设计就内嵌欧盟 + 中国双合规。" },
               { num: "05", title: "我亲自参与", desc: "不是甩给初级顾问。每个客户我亲自驾船——这是我的方式。" },
             ].map((p) => (
               <div key={p.num} className="rounded-xl border border-[#2A2A2A] bg-bhai-card p-6 card-hover">

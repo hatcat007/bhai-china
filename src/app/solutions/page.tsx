@@ -4,8 +4,8 @@ import { CTASection } from "@/components/bhai/CTASection";
 import { ArrowRight, Eye, Sparkles, Diamond, TrendingUp, Cpu, ShieldCheck, Gauge, Wrench, MessageCircle, Boxes, FileCheck } from "lucide-react";
 
 export const metadata = {
-  title: "珠宝行业 AI 解决方案 · 8 类工作队 | Better Human AI",
-  description: "为珠宝品牌量身打造的 8 类 AI 工作队：防伪鉴真、高定共创、普通话 VIP 礼宾、需求预测、区块链来源、中国切入手册、AR 试戴、困境品牌 AI。",
+  title: "珠宝行业 AI 解决方案 · 9 类工作队 | Better Human AI",
+  description: "为珠宝品牌量身打造的 9 类 AI 工作队：防伪鉴真、高定共创、普通话 VIP 礼宾、需求预测、区块链来源、中国切入手册、AR 试戴、困境品牌 AI、中国云基础设施。",
 };
 
 const solutions = [
@@ -145,6 +145,23 @@ const solutions = [
     cases: ["pernille-corydon", "maanesten"],
     caseLabels: ["Pernille Corydon", "Maanesten"],
   },
+  {
+    id: "china-cloud",
+    icon: Cpu,
+    name: "中国云基础设施 + 数据本地化",
+    nameEn: "China Cloud Infrastructure + Data Localization",
+    pitch: "AWS China? 阿里云? 腾讯云? 华为云? 香港桥接? 我能部署到任何中国云——你的数据留在境内，模型推理在境内，PIPL + 数据安全法 + 网络安全法三重合规。",
+    pain: "中国《个人信息保护法》(PIPL)、《数据安全法》(DSL)、《网络安全法》(CSL) 三法合规是 AI 落地的硬门槛。跨境数据传输需经国家网信办审批（耗时数月）。同时，越来越多中国客户要求使用国产 AI 模型（通义千问、文心一言、豆包、DeepSeek）而非海外模型——尤其涉及敏感客户数据时。如果你的 AI 系统架构师不熟悉这套合规框架，你的项目在签约前就被法务卡死。",
+    solution: "我提供全栈中国云部署方案，覆盖所有主流选项：（1）AWS 中国（北京/宁夏区，由光环新网/西云数据运营）；（2）阿里云（杭州/上海/北京区，国内最大覆盖）；（3）腾讯云（深圳/上海/北京区，与微信生态深度集成）；（4）华为云（贵安/北京/上海区，国企客户首选）；（5）百度智能云（北京/广州区，文心一言原生支持）；（6）香港桥接方案（AWS/Azure 香港区作跨境桥梁，平衡合规与全球连通）；（7）多云冗余架构（关键业务双云部署，避免供应商锁定）。所有客户数据严格部署在中国境内，仅匿名化模式数据回流哥本哈根控制中心用于跨客户模式学习。AI 模型层支持国际（Claude/GPT）+ 国产（通义千问/文心一言/豆包/DeepSeek）双栈，客户按合规需求选择。",
+    results: [
+      "珠韵珠宝：阿里云上海区 100% PIPL 合规部署",
+      "数据本地化覆盖：7 大云厂商 + 多云冗余架构",
+      "AI 模型双栈：国际模型 + 国产模型（客户可选）",
+      "跨境数据：仅匿名化模式数据回流（PIPL 第 38 条合规）",
+    ],
+    cases: ["zhuyun-nansha"],
+    caseLabels: ["珠韵珠宝"],
+  },
 ];
 
 export default function SolutionsPage() {
@@ -155,14 +172,14 @@ export default function SolutionsPage() {
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
         <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-bhai-red/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative mx-auto max-w-7xl">
-          <div className="font-mono text-xs text-bhai-red tracking-widest mb-4">[ 8 类 AI 工作队 · 珠宝行业专属 ]</div>
+          <div className="font-mono text-xs text-bhai-red tracking-widest mb-4">[ 9 类 AI 工作队 · 珠宝行业专属 ]</div>
           <h1 className="font-sans text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground mb-6 leading-tight">
             不是通用 AI。<br />
             <span className="stat-highlight">是珠宝品牌专属 AI。</span>
           </h1>
           <p className="text-base sm:text-lg text-bhai-muted max-w-3xl leading-relaxed">
             每一支工作队都针对珠宝行业的真实痛点——防伪、定制、客户管理、设计、来源、库存、市场切入、合规。
-            下方是 8 类工作队，每一类都已在一个或多个丹麦珠宝品牌的生产环境部署过。
+            下方是 9 类工作队，每一类都已在一个或多个珠宝品牌的生产环境部署过（含中国广州珠韵珠宝）。
           </p>
         </div>
       </section>
@@ -178,7 +195,7 @@ export default function SolutionsPage() {
                   <div className="lg:col-span-5">
                     <div className="sticky top-20">
                       <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">
-                        [ SOLUTION {String(idx + 1).padStart(2, '0')} / 08 ]
+                        [ SOLUTION {String(idx + 1).padStart(2, '0')} / 09 ]
                       </div>
                       <div className="flex items-center gap-4 mb-4">
                         <div className="h-12 w-12 rounded-xl border border-bhai-red/30 bg-bhai-red/5 flex items-center justify-center">
@@ -249,7 +266,7 @@ export default function SolutionsPage() {
             <span className="text-bhai-muted">多个工作队 = 一支 AI 工作力</span>
           </h2>
           <p className="text-base text-bhai-muted leading-relaxed mb-12">
-            我不会卖给你 8 个工作队。我会听你 20 分钟，然后告诉你哪 2-3 个能解决你 80% 的问题。
+            我不会卖给你 9 个工作队。我会听你 20 分钟，然后告诉你哪 2-3 个能解决你 80% 的问题。
             其余的等 ROI 数字说话后再说。这是我的方式——不浪费你的钱，也不浪费我的时间。
           </p>
 

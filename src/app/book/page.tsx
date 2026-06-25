@@ -120,19 +120,32 @@ export default function BookPage() {
 
             <div className="space-y-3">
               <a
-                href="https://cal.eu/betterhumanai/20min"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="weixin://add/busterl1"
                 className="cta-primary rounded-lg p-5 text-white flex items-center justify-between group"
               >
                 <div className="flex items-center gap-4">
                   <Calendar className="h-5 w-5" />
                   <div>
-                    <div className="text-base font-medium">cal.eu/betterhumanai/20min</div>
-                    <div className="text-xs opacity-80">点击进入日历选择时间</div>
+                    <div className="text-base font-medium">微信：busterl1</div>
+                    <div className="text-xs opacity-80">中国客户首选 · 搜索添加，备注：BHAI 珠宝 CEO</div>
                   </div>
                 </div>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+
+              <a
+                href="https://cal.eu/betterhumanai/20min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-lg border border-[#2A2A2A] bg-bhai-bg p-5 hover:border-bhai-red transition-colors"
+              >
+                <div className="flex items-center gap-4">
+                  <Calendar className="h-5 w-5 text-bhai-red" />
+                  <div>
+                    <div className="text-base font-medium text-foreground">cal.eu/betterhumanai/20min</div>
+                    <div className="text-xs text-bhai-muted">国际客户日历预约</div>
+                  </div>
+                </div>
               </a>
 
               <a
@@ -143,7 +156,7 @@ export default function BookPage() {
                   <Mail className="h-5 w-5 text-bhai-red" />
                   <div>
                     <div className="text-base font-medium text-foreground">buster@betterhumanai.dk</div>
-                    <div className="text-xs text-bhai-muted">如果日历没合适时间，直接发邮件</div>
+                    <div className="text-xs text-bhai-muted">如果微信/日历没合适时间，直接发邮件</div>
                   </div>
                 </div>
               </a>

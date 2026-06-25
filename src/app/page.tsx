@@ -5,7 +5,10 @@ import { jewelryCases } from "@/lib/data/jewelry-cases";
 import { ArrowRight, ShieldCheck, Cpu, Gauge, Sparkles, Diamond, TrendingUp, AlertTriangle, Wrench, Eye, CheckCircle2, XCircle } from "lucide-react";
 
 export default function Home() {
-  const featuredCases = jewelryCases.slice(0, 6);
+  const featuredCases = [
+    ...jewelryCases.filter((c) => c.slug === "zhuyun-nansha"),
+    ...jewelryCases.filter((c) => c.slug !== "zhuyun-nansha").slice(0, 5),
+  ];
 
   return (
     <PageShell>
@@ -21,7 +24,7 @@ export default function Home() {
             <div className="ticker">
               {[0, 1].map((dup) => (
                 <div key={dup} className="flex items-center gap-8 px-4 shrink-0">
-                  {["PANDORA", "GEORG JENSEN", "OLE LYNGGAARD", "SHAMBALLA", "JANE KØNIG", "TROLLBEADS", "SOPHIE BILLE BRAHE", "MAANESTEN", "MARIA BLACK", "PILGRIM", "ENAMEL CPH", "HARTMANN'S", "AURUM", "PERNILLE CORYDON", "CHARLOTTE LARSEN"].map((brand) => (
+                  {["PANDORA", "GEORG JENSEN", "OLE LYNGGAARD", "SHAMBALLA", "JANE KØNIG", "TROLLBEADS", "SOPHIE BILLE BRAHE", "MAANESTEN", "MARIA BLACK", "PILGRIM", "ENAMEL CPH", "HARTMANN'S", "AURUM", "PERNILLE CORYDON", "CHARLOTTE LARSEN", "珠韵珠宝 NANSHA"].map((brand) => (
                     <span key={brand + dup} className="font-mono text-xs text-bhai-dim tracking-widest whitespace-nowrap">
                       {brand} <span className="text-bhai-red mx-2">/</span>
                     </span>
@@ -35,17 +38,23 @@ export default function Home() {
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-bhai-red/30 bg-bhai-red/5 px-4 py-1.5 mb-6">
                 <span className="h-1.5 w-1.5 rounded-full bg-bhai-red animate-pulse" />
-                <span className="font-mono text-[11px] tracking-widest text-bhai-red">15 家丹麦珠宝品牌 · 14 周落地 · 中国 CEO 视角</span>
+                <span className="font-mono text-[11px] tracking-widest text-bhai-red">16 家珠宝品牌案例 · 14 周落地 · 丹麦验证 → 中国部署</span>
               </div>
 
               <h1 className="font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.05] mb-6">
-                别再讨论 AI。<br />
-                <span className="stat-highlight">开始用它赚钱。</span>
+                丹麦验证的 AI 方法。<br />
+                <span className="stat-highlight">现在转移给中国珠宝 CEO。</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-bhai-muted mb-8 max-w-2xl leading-relaxed">
-                我叫 Buster。我一个人在哥本哈根，给中国珠宝 CEO 部署真正能跑生产的 AI 代理工作队——不是 PPT，不是 Demo。
-                我已经帮 <span className="text-foreground font-medium">潘多拉、乔治·杰生、Ole Lynggaard、Shamballa</span> 等 15 家丹麦顶级珠宝品牌落地了 AI 系统。下一个是你的品牌吗？
+              <p className="text-base sm:text-lg text-bhai-muted mb-6 max-w-2xl leading-relaxed">
+                我是 <span className="text-foreground font-medium">Buster Larsen（中文名：陆博明）</span>——
+                丹麦 AI 系统架构师。我在丹麦帮 <span className="text-foreground font-medium">潘多拉、乔治·杰生、Ole Lynggaard、Sophie Bille Brahe</span> 等 15 家欧洲顶级珠宝品牌部署了生产环境 AI 工作队。
+                现在我把这套经过欧盟验证的方法带到中国——包括广州珠韵珠宝的 OEM 转自主品牌案例。
+              </p>
+
+              <p className="text-sm text-bhai-dim mb-8 max-w-2xl leading-relaxed">
+                我不教中国 CEO 怎么做珠宝——中国珠宝有 5000 年历史。
+                我是 AI 专家，把丹麦验证过的系统转移给你。
               </p>
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
@@ -59,14 +68,15 @@ export default function Home() {
                   href="/cases"
                   className="rounded-md border border-[#333] bg-transparent px-7 py-3.5 text-base font-medium text-foreground hover:border-bhai-red hover:bg-[#0F0F0F] transition-colors"
                 >
-                  看 15 个丹麦案例
+                  看 16 个案例
                 </Link>
               </div>
 
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-mono text-bhai-muted">
                 <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> GDPR 合规</span>
                 <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> EU AI Act 就绪</span>
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> 完整审计链</span>
+                <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> 中国 PIPL 合规</span>
+                <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> 数据本地化</span>
                 <span className="text-bhai-dim">NO PITCH · NO COMMITMENTS · 20 MINUTES</span>
               </div>
             </div>
@@ -79,11 +89,11 @@ export default function Home() {
                   <span className="h-2 w-2 rounded-full bg-bhai-red animate-pulse" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <StatCard value="15" label="丹麦珠宝品牌案例" />
+                  <StatCard value="16" label="珠宝品牌案例（15 丹麦 + 1 中国）" />
                   <StatCard value="14 天" label="首个 AI 代理上线" />
                   <StatCard value="1000+" label="工具集成" />
                   <StatCard value="66%" label="平均 AI 成本下降" />
-                  <StatCard value="94%" label="中国客户咨询转化提升" />
+                  <StatCard value="1.8 亿¥" label="珠韵珠宝首年营收" />
                   <StatCard value="0" label="PPT 演示 · 全部生产环境" />
                 </div>
                 <div className="mt-6 pt-6 border-t border-[#2A2A2A]">
@@ -197,12 +207,12 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div className="max-w-2xl">
-              <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 03 / 15 个真实丹麦案例 ]</div>
+              <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 03 / 16 个真实案例 · 15 丹麦 + 1 中国 ]</div>
               <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4 leading-tight">
-                我帮丹麦顶级珠宝品牌做了什么
+                我帮丹麦顶级珠宝品牌 + 中国珠韵珠宝做了什么
               </h2>
               <p className="text-base text-bhai-muted leading-relaxed">
-                15 个真实案例。每一个都是 14 周内的生产环境部署，不是 PPT。
+                16 个真实案例——15 个丹麦 + 1 个中国广州南沙。每一个都是 14 周内的生产环境部署，不是 PPT。
                 点击查看每个品牌的完整挑战、AI 工作队配置、量化结果与时间线。
               </p>
             </div>
@@ -210,7 +220,7 @@ export default function Home() {
               href="/cases"
               className="inline-flex items-center gap-2 text-sm text-bhai-red hover:text-bhai-red-hover font-medium whitespace-nowrap"
             >
-              看全部 15 个案例 <ArrowRight className="h-4 w-4" />
+              看全部 16 个案例 <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
@@ -275,14 +285,14 @@ export default function Home() {
           <div className="max-w-3xl mb-12">
             <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 05 / 珠宝行业 AI 解决方案 ]</div>
             <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4 leading-tight">
-              我为珠宝品牌部署的 8 类 AI 工作队
+              我为珠宝品牌部署的 9 类 AI 工作队
             </h2>
             <p className="text-base text-bhai-muted leading-relaxed">
-              不是通用 AI。每一支工作队都针对珠宝行业的真实痛点——防伪、定制、客户管理、设计、来源、库存、市场切入、合规。
+              不是通用 AI。每一支工作队都针对珠宝行业的真实痛点——防伪、定制、客户管理、设计、来源、库存、市场切入、合规、中国云基础设施。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <SolutionPreviewCard icon={<Eye className="h-5 w-5" />} title="AI 防伪鉴真" desc="图像识别监控淘宝/抖音/拼多多/微信代销，自动下架假货。" caseCount="3 案例" />
             <SolutionPreviewCard icon={<Sparkles className="h-5 w-5" />} title="高定共创 AI" desc="在品牌 DNA 约束下生成定制设计，创始人审核。" caseCount="5 案例" />
             <SolutionPreviewCard icon={<Diamond className="h-5 w-5" />} title="普通话 VIP 礼宾" desc="24/7 微信客户管理 + 私享鉴赏预约 + 跨境物流。" caseCount="7 案例" />
@@ -291,6 +301,7 @@ export default function Home() {
             <SolutionPreviewCard icon={<ShieldCheck className="h-5 w-5" />} title="中国切入手册" desc="市场优先级 AI + KOL 匹配 + Xiaohongshu 编辑代理。" caseCount="6 案例" />
             <SolutionPreviewCard icon={<Gauge className="h-5 w-5" />} title="AR 试戴网络" desc="扫二维码在手机上 3D 试戴，94% 色彩还原。" caseCount="2 案例" />
             <SolutionPreviewCard icon={<Wrench className="h-5 w-5" />} title="困境品牌 AI" desc="清仓定价 + 档案估值 + 收购尽调，中国整合者视角。" caseCount="2 案例" />
+            <SolutionPreviewCard icon={<Cpu className="h-5 w-5" />} title="中国云基础设施" desc="AWS China / 阿里云 / 腾讯云 / 华为云 / 香港桥接，PIPL 合规。" caseCount="1 案例" />
           </div>
 
           <div className="mt-10 text-center">
@@ -312,15 +323,15 @@ export default function Home() {
           <blockquote className="font-sans text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground leading-tight mb-8">
             &ldquo;88% 的公司在用 AI。<br />
             大多数卡在 PPT 阶段。<br />
-            <span className="stat-highlight">我不做 PPT。我做生产。</span>&rdquo;
+            <span className="stat-highlight">我在丹麦证明了方法。现在转移给你。</span>&rdquo;
           </blockquote>
           <div className="flex items-center justify-center gap-4 text-sm">
             <div className="h-12 w-12 rounded-full bg-gradient-to-br from-bhai-red to-[#7F1D1D] flex items-center justify-center text-white font-bold">
               B
             </div>
             <div className="text-left">
-              <div className="text-foreground font-medium">Buster ML Larsen</div>
-              <div className="text-bhai-muted text-xs">Better Human AI 创始人 · 在中国，卖到欧洲 CEO</div>
+              <div className="text-foreground font-medium">陆博明 / Buster ML Larsen</div>
+              <div className="text-bhai-muted text-xs">丹麦 AI 系统架构师 · 现转移方法到中国</div>
             </div>
           </div>
         </div>
