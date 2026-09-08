@@ -8,16 +8,19 @@ import { useLang } from "@/lib/i18n";
 
 type NavLink = {
   href: string;
-  labelKey: "home" | "cases" | "tools" | "roadmap" | "pricing" | "solutions" | "method" | "about";
+  labelKey: "home" | "cases" | "tools" | "roadmap" | "pricing" | "solutions" | "method" | "about" | "ideas";
   highlight?: boolean;
   /** FREE AI TOOLS 胶囊按钮样式（橙色边框 + 脉冲点，仅 lg+ 桌面显示，避免 md 拥挤） */
   tools?: boolean;
+  /** 仅 lg+ 桌面显示（避免 md 断点拥挤） */
+  lgOnly?: boolean;
 };
 
 const navLinks: NavLink[] = [
   { href: "/", labelKey: "home" },
   { href: "/cases", labelKey: "cases" },
   { href: "/tools", labelKey: "tools", tools: true },
+  { href: "/ai-ideas", labelKey: "ideas", lgOnly: true },
   { href: "/ai-roadmap", labelKey: "roadmap", highlight: true },
   { href: "/pricing", labelKey: "pricing" },
   { href: "/solutions", labelKey: "solutions" },
@@ -112,6 +115,8 @@ export function Navbar() {
                 href={link.href}
                 aria-current={active ? "page" : undefined}
                 className={`group relative text-sm transition-colors ${
+                  link.lgOnly ? "hidden lg:inline-block " : ""
+                }${
                   link.highlight && !active
                     ? "text-bhai-red hover:text-bhai-red-hover font-medium"
                     : active
