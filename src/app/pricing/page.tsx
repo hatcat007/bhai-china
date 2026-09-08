@@ -3,11 +3,13 @@ import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
 import { FAQJsonLd, BreadcrumbJsonLd } from "@/components/bhai/JsonLd";
 import { ArrowRight, Check, X, ShieldCheck, Sparkles, Building2, Repeat } from "lucide-react";
+import { withOpenGraph } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "价格 · 透明定价 · 14 天保证 | Better Human AI",
-  description: "BHAI 透明定价：AI 审计（¥15K-50K 入门）、AI 构建（¥40K-150K 每项目）、AI 托管（¥20K+/月）。14 天首个代理上线保证——否则我继续工作直到上线。",
-};
+export const metadata = withOpenGraph(
+  { title: "价格 · 透明定价 · 14 天保证 | Better Human AI", description: "BHAI 透明定价：AI 审计（¥15K-50K 入门）、AI 构建（¥40K-150K 每项目）、AI 托管（¥20K+/月）。14 天首个代理上线保证——否则我继续工作直到上线。" },
+  "/pricing",
+  "/og-pricing.jpg"
+);
 
 export default function PricingPage() {
   return (

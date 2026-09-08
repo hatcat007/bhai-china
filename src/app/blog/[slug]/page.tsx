@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
+import { ReadingProgress } from "@/components/bhai/ReadingProgress";
+import { ShareButtons } from "@/components/bhai/ShareButtons";
 import { BreadcrumbJsonLd } from "@/components/bhai/JsonLd";
 import { blogPosts, getPostBySlug, type BlogSection } from "@/lib/data/blog-posts";
 import { ArrowRight, Calendar, Clock, ArrowLeft } from "lucide-react";
@@ -29,13 +31,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const prev = currentIdx > 0 ? blogPosts[currentIdx - 1] : undefined;
   const next = currentIdx < blogPosts.length - 1 ? blogPosts[currentIdx + 1] : undefined;
 
-  // Article JSON-LD
+  // Article JSON-LD（BlogPosting 语义）
   const articleJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://betterhumanai.dk/blog/${post.slug}`,
+    },
+    image: ["https://betterhumanai.dk/og-image.jpg"],
     author: {
       "@type": "Person",
       name: "Buster ML Larsen",
@@ -46,6 +53,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       "@type": "Organization",
       name: "Better Human AI",
       url: "https://betterhumanai.dk",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://betterhumanai.dk/bhai-mark-40.png",
+      },
     },
     keywords: post.tags.join(", "),
     articleSection: post.category,
@@ -54,6 +65,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <PageShell>
+      <ReadingProgress />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <BreadcrumbJsonLd items={[
         { name: "首页", url: "/" },
@@ -87,12 +99,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <p className="text-base sm:text-lg text-bhai-muted leading-relaxed mb-6">{post.excerpt}</p>
 
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span key={tag} className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted">
-                #{tag}
-              </span>
-            ))}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <span key={tag} className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+            <ShareButtons title={post.title} />
           </div>
         </div>
       </section>

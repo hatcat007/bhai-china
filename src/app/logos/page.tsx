@@ -2,11 +2,12 @@ import Link from "next/link";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
 import { ArrowRight, Download, Sparkles } from "lucide-react";
+import { withOpenGraph } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "20 Logo Designs · AI 生成 + 矢量 SVG | Better Human AI",
-  description: "20 个 BHAI logo 设计——10 个 z-ai AI 生成的 PNG + 10 个手工设计的矢量 SVG。每个都是不同方向。选你最喜欢的。",
-};
+export const metadata = withOpenGraph(
+  { title: "20 Logo Designs · AI 生成 + 矢量 SVG | Better Human AI", description: "20 个 BHAI logo 设计——10 个 z-ai AI 生成的 PNG + 10 个手工设计的矢量 SVG。每个都是不同方向。选你最喜欢的。" },
+  "/logos"
+);
 
 const aiLogos = [
   { file: "zai-logo-01-minimal-typography.png", name: "AI 01 · 极简文字", concept: "纯白无衬线 wordmark 在纯黑背景，单个橙色句点。最克制的瑞士设计风格。" },

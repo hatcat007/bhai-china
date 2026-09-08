@@ -3,11 +3,13 @@ import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
 import { PersonJsonLd } from "@/components/bhai/JsonLd";
 import { ArrowRight, Code2, Brain, ShieldCheck, Coffee, Plane, Mail, PlayCircle, Sparkles, Heart } from "lucide-react";
+import { withOpenGraph } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "关于陆博明 / Buster · 丹麦 AI 系统架构师，转移方法到中国 | Better Human AI",
-  description: "Buster ML Larsen（中文名：陆博明），丹麦 AI 系统架构师。在丹麦帮 15 家顶级珠宝品牌部署 AI 工作队。现在把验证过的系统转移给中国珠宝 CEO。",
-};
+export const metadata = withOpenGraph(
+  { title: "关于陆博明 / Buster · 丹麦 AI 系统架构师，转移方法到中国 | Better Human AI", description: "Buster ML Larsen（中文名：陆博明），丹麦 AI 系统架构师。过去五年在丹麦给 15 家珠宝品牌做 AI 落地（审计、架构、部署）。现在把验证过的系统转移给中国珠宝 CEO。" },
+  "/about",
+  "/og-about.jpg"
+);
 
 export default function AboutPage() {
   return (
@@ -26,14 +28,13 @@ export default function AboutPage() {
                 <span className="stat-highlight">现在转移给中国。</span>
               </h1>
               <p className="text-base sm:text-lg text-bhai-muted mb-6 leading-relaxed">
-                我是 <span className="text-foreground font-medium">Buster ML Larsen</span>——
-                丹麦 AI 系统架构师。中文名：<span className="text-foreground font-medium">陆博明</span>。
-                我在丹麦帮 15 家顶级珠宝品牌部署了生产环境 AI 工作队——潘多拉、乔治·杰生、Ole Lynggaard、Sophie Bille Brahe、Shamballa。
-                14 周，不是 PPT，是真正跑生产的系统。
+                我是 <span className="text-foreground font-medium">Buster ML Larsen</span>，丹麦人，做 AI 系统架构，中文名<span className="text-foreground font-medium">陆博明</span>。
+                过去五年我在丹麦做 AI 落地，客户里有 15 家珠宝品牌——潘多拉、乔治·杰生、Ole Lynggaard、Sophie Bille Brahe、Shamballa。
+                准确说，我的角色大多是给他们的数字团队做审计、搭架构、部署代理——不是替他们经营品牌。部署周期通常 14 周左右，跑的是生产环境，不是 PPT。
               </p>
               <p className="text-base text-bhai-muted mb-8 leading-relaxed">
-                现在我把这套经过欧盟验证的方法带到中国，给中国珠宝 CEO。我不是来教你怎么做珠宝的——
-                中国珠宝有 5000 年历史。我是 AI 专家，把丹麦验证过的系统转移给你。
+                现在我把这套方法带到中国。我不是来教你怎么做珠宝的——中国珠宝有 5000 年历史，轮不到我一个丹麦人插嘴。
+                我只做一件事：把 AI 系统架起来、跑起来、教给你们的人，然后撤到后排。
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link href="/book" className="cta-primary rounded-md px-6 py-3 text-sm font-medium text-white inline-flex items-center gap-2">
@@ -241,7 +242,7 @@ export default function AboutPage() {
                   <h3 className="text-base font-bold text-foreground mb-2">中国珠宝有 5000 年历史</h3>
                   <p className="text-sm text-bhai-muted leading-relaxed">
                     玉雕、花丝镶嵌、景泰蓝、点翠——中国珠宝工艺的深度和复杂度，超过任何欧洲传统。
-                    一个丹麦人想"教中国 CEO 怎么做珠宝"是荒谬的。这是文化傲慢，也是商业自殺。
+                    一个丹麦人想"教中国 CEO 怎么做珠宝"是荒谬的。这是文化傲慢，也是商业上的自找死路。
                     我尊重这条边界。
                   </p>
                 </div>
@@ -255,9 +256,10 @@ export default function AboutPage() {
                   <h3 className="text-base font-bold text-foreground mb-2">我是 AI 专家，不是珠宝专家</h3>
                   <p className="text-sm text-bhai-muted leading-relaxed">
                     我的专长是 AI 系统架构、代理编排、人机协同、双合规框架。
-                    我在丹麦验证这套方法在珠宝行业能赚回它自己的钱——
+                    我在丹麦验证了这套方法在珠宝行业能赚回它自己的钱——
                     现在我把这个<span className="text-foreground font-medium">方法</span>转移给你，
                     让你的工艺（无论是什么）在 AI 加持下放大。
+                    说白了：你不用信我懂珠宝，你只需要信我懂怎么让 AI 在生产环境里不闯祸。
                   </p>
                 </div>
               </div>
@@ -327,20 +329,18 @@ export default function AboutPage() {
             <div className="rounded-xl border border-bhai-red/30 bg-bhai-red/5 p-6">
               <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-3">[ 2025-2026 · 15 个丹麦珠宝品牌验证 ]</div>
               <p className="text-sm text-foreground leading-relaxed">
-                我在丹麦帮 15 家顶级珠宝品牌部署了 AI 工作队——潘多拉、乔治·杰生、Ole Lynggaard、Shamballa、Sophie Bille Brahe、Jane Kønig、Maanesten、Pilgrim 等。
-                每一个都是 14 周生产环境部署，不是 PPT。
-                每一个都有可量化 ROI——从潘多拉中国试点 +38% 同店增长，到 Sophie Bille Brahe 6 个月做到 €1.8M 中国营收。
-                这 15 个案例成为我方法的<span className="text-bhai-red font-medium">证明</span>。
+                我在丹麦帮 15 家珠宝品牌做过 AI 部署——潘多拉、乔治·杰生、Ole Lynggaard、Shamballa、Sophie Bille Brahe、Jane Kønig、Maanesten、Pilgrim 等。
+                每个都是生产环境部署。每个项目的成功都有一半功劳属于客户自己的团队——比如 Jane 的信任，比如 Sophie 亲自花 3 小时口述 KOL 打分标准。
+                要说清口径：潘多拉是 3 家店的试点，不是全集团转型；数字在案例页里我都写清了统计口径。
               </p>
             </div>
 
             <div className="rounded-xl border border-[#2A2A2A] bg-bhai-card p-6">
               <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-3">[ 2026 · 搬到中国 · 转移方法 ]</div>
               <p className="text-sm text-bhai-muted leading-relaxed">
-                2026 年我搬到中国。这不是偶然——这是战略。
-                我看到三个事实：（1）中国是全球最大珠宝消费市场；（2）中国本土品牌正在从 OEM 转自主品牌，急需 AI 加持；
-                （3）丹麦验证的方法在中国本土化后能放大 10x——因为中国市场的规模和数字化程度远超欧洲。
-                我开始用中文操作手册把丹麦方法论转移给中国 CEO。第一个中国案例：广州南沙珠韵珠宝，14 周内自主品牌营收破 1.8 亿人民币。
+                2026 年我搬到中国。这不是偶然——中国是全球最大珠宝消费市场，本土品牌正在从 OEM 转自主品牌，而中国市场的数字化程度远超欧洲，这套方法在这里有更大的实验场。
+                第一个中国案例是广州南沙的珠韵珠宝：我做的是方法转移——把丹麦验证过的框架翻成中文操作手册、培训他们的团队。
+                首年自主品牌营收 1.8 亿人民币，但要说清楚：工厂、供应链、工艺是他们本来就有的，我带来的是让判断流程跑得更快的那部分。
               </p>
             </div>
 

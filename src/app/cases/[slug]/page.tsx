@@ -3,17 +3,21 @@ import { notFound } from "next/navigation";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
 import { CaseNav } from "@/components/bhai/CaseNav";
+import { ReadingProgress } from "@/components/bhai/ReadingProgress";
 import { jewelryCases, getCaseBySlug } from "@/lib/data/jewelry-cases";
-import { ArrowRight, MapPin, Calendar, Building2, TrendingUp, Quote, CheckCircle2 } from "lucide-react";
+import { ArrowRight, MapPin, Calendar, Building2, TrendingUp, Quote, CheckCircle2, Wrench } from "lucide-react";
 
 export function generateStaticParams() {
   return jewelryCases.map((c) => ({ slug: c.slug }));
 }
 
-export function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const caseItem = getCaseBySlug(slug);
+  if (!caseItem) return { title: "案例未找到 | Better Human AI" };
   return {
-    title: "丹麦珠宝品牌 AI 案例 | Better Human AI",
-    description: "Better Human AI 帮助丹麦珠宝品牌用 AI 代理落地生产部署。",
+    title: `${caseItem.brandNameZh}（${caseItem.brandName}）AI 案例 | Better Human AI`,
+    description: `BHAI 为 ${caseItem.brandName} 部署 AI 工作队：${caseItem.bhaiEngagementZh.slice(0, 80)}`,
   };
 }
 
@@ -26,8 +30,41 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
   const prev = currentIdx > 0 ? jewelryCases[currentIdx - 1] : undefined;
   const next = currentIdx < jewelryCases.length - 1 ? jewelryCases[currentIdx + 1] : undefined;
 
+  // Article JSON-LD（案例页结构化数据）
+  const caseJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${caseItem.brandNameZh}（${caseItem.brandName}）AI 转型案例`,
+    description: caseItem.bhaiEngagementZh,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://betterhumanai.dk/cases/${caseItem.slug}`,
+    },
+    image: ["https://betterhumanai.dk/og-image.jpg"],
+    author: {
+      "@type": "Person",
+      name: "Buster ML Larsen",
+      alternateName: "陆博明",
+      url: "https://betterhumanai.dk/about",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Better Human AI",
+      url: "https://betterhumanai.dk",
+    },
+    about: {
+      "@type": "Organization",
+      name: caseItem.brandName,
+      foundingDate: caseItem.founded,
+      description: caseItem.challengeZh,
+    },
+    inLanguage: "zh-CN",
+  };
+
   return (
     <PageShell>
+      <ReadingProgress />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseJsonLd) }} />
       {/* HERO */}
       <section className="relative gradient-section pt-16 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
@@ -42,18 +79,25 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-7">
               <div className="font-mono text-xs text-bhai-red tracking-widest mb-4">
-                [ CASE {String(currentIdx + 1).padStart(2, '0')} / {String(jewelryCases.length).padStart(2, '0')} · 丹麦珠宝 ]
+                [ CASE {String(currentIdx + 1).padStart(2, '0')} / {String(jewelryCases.length).padStart(2, '0')} · {caseItem.slug === "zhuyun-nansha" ? "中国珠宝" : "丹麦珠宝"} ]
               </div>
               <h1 className="font-sans text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground mb-3 leading-tight">
                 {caseItem.brandNameZh}
               </h1>
               <div className="text-base text-bhai-muted mb-6">{caseItem.brandName}</div>
 
-              <blockquote className="border-l-2 border-bhai-red pl-6 py-2 mb-8">
+              <blockquote className="border-l-2 border-bhai-red pl-6 py-2 mb-6">
                 <p className="font-sans text-lg sm:text-xl text-foreground leading-relaxed italic">
                   &ldquo;{caseItem.heroQuoteZh}&rdquo;
                 </p>
               </blockquote>
+
+              {caseItem.myRole && (
+                <div className="mb-6">
+                  <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-1.5">[ 我的角色 ]</div>
+                  <p className="text-sm text-bhai-muted leading-relaxed max-w-2xl">{caseItem.myRole}</p>
+                </div>
+              )}
 
               <div className="rounded-xl border border-bhai-red/30 bg-bhai-red/5 p-5">
                 <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-2">[ BHAI 部署 ]</div>
@@ -161,9 +205,16 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
           <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-8 leading-tight">
             我部署了什么
           </h2>
-          <p className="text-base sm:text-lg text-bhai-muted leading-relaxed mb-12">
+          <p className="text-base sm:text-lg text-bhai-muted leading-relaxed mb-8">
             {caseItem.solutionZh}
           </p>
+
+          {caseItem.mechanics && (
+            <div className="rounded-xl border border-[#2A2A2A] bg-bhai-card p-6 sm:p-8 card-hover mb-12">
+              <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-4">[ 它是怎么跑起来的 ]</div>
+              <p className="text-sm sm:text-base text-bhai-text leading-relaxed">{caseItem.mechanics}</p>
+            </div>
+          )}
 
           {/* AI Workforce Cards */}
           <div className="font-mono text-xs text-bhai-muted tracking-widest mb-4">[ AI 工作队配置 ]</div>
@@ -224,6 +275,26 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               ))}
             </div>
           </div>
+
+          {caseItem.friction && (
+            <div className="mt-12 rounded-xl border border-bhai-red/30 bg-bhai-red/5 p-6 sm:p-8">
+              <div className="flex items-center gap-3 mb-5">
+                <Wrench className="h-4 w-4 text-bhai-red shrink-0" />
+                <div className="font-mono text-xs text-bhai-red tracking-widest">[ 哪里出了问题 · 怎么解决的 ]</div>
+              </div>
+              <div className="space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-5">
+                  <span className="font-mono text-[10px] text-bhai-muted tracking-widest shrink-0 sm:pt-0.5 sm:w-16">摩擦点</span>
+                  <p className="text-sm text-bhai-text leading-relaxed">{caseItem.friction.problem}</p>
+                </div>
+                <div className="h-px bg-bhai-red/20" />
+                <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-5">
+                  <span className="font-mono text-[10px] text-bhai-red tracking-widest shrink-0 sm:pt-0.5 sm:w-16">修复</span>
+                  <p className="text-sm text-bhai-text leading-relaxed">{caseItem.friction.fix}</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -264,7 +335,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               href="/cases"
               className="inline-flex items-center gap-2 text-sm text-bhai-red hover:text-bhai-red-hover font-medium"
             >
-              返回全部 15 个案例 <ArrowRight className="h-4 w-4 rotate-90" />
+              返回全部 16 个案例 <ArrowRight className="h-4 w-4 rotate-90" />
             </Link>
           </div>
         </div>

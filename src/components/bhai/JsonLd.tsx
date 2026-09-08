@@ -163,6 +163,30 @@ export function BreadcrumbJsonLd({ items }: { items: { name: string; url: string
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
 }
 
+/** 列表页结构化数据：帮助搜索引擎把 /blog、/cases 下的条目作为整体集合收录 */
+export function ItemListJsonLd({
+  listName,
+  items,
+}: {
+  listName: string;
+  items: { name: string; url: string }[];
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: listName,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: `https://betterhumanai.dk${item.url}`,
+    })),
+  };
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
+}
+
 export function WebSiteJsonLd() {
   const data = {
     "@context": "https://schema.org",

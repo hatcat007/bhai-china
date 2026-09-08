@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
-import { BreadcrumbJsonLd } from "@/components/bhai/JsonLd";
+import { BreadcrumbJsonLd, ItemListJsonLd } from "@/components/bhai/JsonLd";
 import { blogPosts } from "@/lib/data/blog-posts";
 import { ArrowRight, Clock, Calendar } from "lucide-react";
+import { withOpenGraph } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "博客 · 珠宝行业 AI 深度洞察 | Better Human AI",
-  description: "BHAI 博客：PIPL 合规指南、Pandora 中国溃败案例、2026 中国珠宝 AI 趋势等深度文章。基于 16 个真实案例的实战洞察，不是行业报告。",
-};
+export const metadata = withOpenGraph(
+  { title: "博客 · 珠宝行业 AI 深度洞察 | Better Human AI", description: "BHAI 博客：PIPL 合规指南、Pandora 中国溃败案例、2026 中国珠宝 AI 趋势等深度文章。基于 16 个真实案例的实战洞察，不是行业报告。" },
+  "/blog",
+  "/og-blog.jpg"
+);
 
 export default function BlogPage() {
   return (
@@ -17,6 +19,10 @@ export default function BlogPage() {
         { name: "首页", url: "/" },
         { name: "博客", url: "/blog" },
       ]} />
+      <ItemListJsonLd
+        listName="BHAI 博客 · 珠宝行业 AI 深度洞察"
+        items={blogPosts.map((p) => ({ name: p.title, url: `/blog/${p.slug}` }))}
+      />
 
       {/* HERO */}
       <section className="relative gradient-section pt-20 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">

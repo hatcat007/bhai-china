@@ -2,11 +2,13 @@ import Link from "next/link";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
 import { ArrowRight, Database, Cpu, ShieldCheck, FileCheck, CheckCircle2, AlertCircle } from "lucide-react";
+import { withOpenGraph } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "BHAI 方法 · 3 步从上下文到生产 | Better Human AI",
-  description: "BHAI 方法：构建上下文 → 部署代理 → 掌舵不撒手。14 天首个代理上线，14 周完整工作队生产，100% 审计链覆盖。",
-};
+export const metadata = withOpenGraph(
+  { title: "BHAI 方法 · 3 步从上下文到生产 | Better Human AI", description: "BHAI 方法：构建上下文 → 部署代理 → 掌舵不撒手。14 天首个代理上线，14 周完整工作队生产，100% 审计链覆盖。" },
+  "/method",
+  "/og-method.jpg"
+);
 
 export default function MethodPage() {
   return (
@@ -23,9 +25,8 @@ export default function MethodPage() {
             <span className="stat-highlight">掌舵不撒手。</span>
           </h1>
           <p className="text-base sm:text-lg text-bhai-muted max-w-3xl leading-relaxed">
-            88% 的公司在用 AI。大多数卡在 PPT 阶段。
-            我的方法不为 PPT 服务——为生产服务。3 步，14 周，完整审计链。
-            每一步都对应一个明确产出，每个产出都可在控制中心验证。
+            88% 的公司在用 AI，大多数卡在 PPT 阶段——不是因为他们笨，是因为没人愿意先做 6 周枯燥的上下文整理。
+            这套方法是被 16 个项目磨出来的：3 步，14 周，完整审计链。每一步对应一个明确产出，每个产出都能在控制中心验证。
           </p>
         </div>
       </section>
@@ -46,14 +47,15 @@ export default function MethodPage() {
                   </div>
                 </div>
                 <p className="text-base text-bhai-muted leading-relaxed mb-6">
+                  我跳过这一步的一次，代价是第 9 周全部返工——代理把一位 VIP 客户的名字拼错了，用的还是敬语。
                   没有 6 周上下文构建，AI 代理只是昂贵的自动补全。
-                  这一步把你的品牌 DNA、决策规则、组织结构、预算边界、升级策略全部文档化——
+                  这一步把你的品牌基因、决策规则、组织结构、预算边界、升级策略全部文档化——
                   不是 PowerPoint，是 AI 代理能直接消费的结构化数据。
                 </p>
                 <div className="rounded-xl border border-bhai-red/30 bg-bhai-red/5 p-5">
                   <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-2">[ 时长 ]</div>
                   <div className="text-2xl font-bold text-foreground">6 周</div>
-                  <div className="text-xs text-bhai-muted mt-1">通常 2-3 周可压缩，视品牌复杂度</div>
+                  <div className="text-xs text-bhai-muted mt-1">通常 2-3 周可压缩，视品牌复杂度——压缩的代价是后面还债，我不建议</div>
                 </div>
               </div>
             </div>
@@ -102,7 +104,7 @@ export default function MethodPage() {
                 </div>
                 <p className="text-base text-bhai-muted leading-relaxed mb-6">
                   上下文就绪后，开始部署代理。不是一次性全部上线——先上一个能赚回自己成本的代理，验证 ROI，再上下一个。
-                  14 天首个代理上线，14 周整支工作队跑生产。
+                  14 天是首个代理的标准承诺：最快的一个项目 11 天，最慢 24 天——那次是等客户的 CRM 数据导出审批，不是技术问题。
                 </p>
                 <div className="rounded-xl border border-bhai-red/30 bg-bhai-red/5 p-5">
                   <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-2">[ 时长 ]</div>
@@ -119,7 +121,7 @@ export default function MethodPage() {
                 <p className="text-sm text-bhai-muted leading-relaxed">
                   通常我会推荐先上 <span className="text-foreground font-medium">普通话 VIP 礼宾代理</span> 或 <span className="text-foreground font-medium">AI 防伪鉴真代理</span>——
                   两者都能在 30 天内产出可量化 ROI（响应时间从 48 小时降到 90 秒；月均 47 件假货下架升到 1,840 件）。
-                  第一个代理的成功证明给我和你看：这套方法有效。
+                  第一个代理跑通了，你和你的团队才会信这套方法——信，比技术重要。
                 </p>
               </div>
 
@@ -140,7 +142,8 @@ export default function MethodPage() {
                   </li>
                 </ul>
                 <p className="text-sm text-bhai-muted leading-relaxed mt-4">
-                  答案都是 yes 才上线。这条规则让我从没部署过失败的工作队。
+                  答案都是 yes 才上线。即便这样，我仍然拆过一个上线 3 周的代理——它解决的是『看起来很痛』而不是『真的痛』的问题。
+                  这条规则的价值不是不出错，是错得早、错得便宜。
                 </p>
               </div>
 
@@ -175,6 +178,7 @@ export default function MethodPage() {
                 <p className="text-base text-bhai-muted leading-relaxed mb-6">
                   这是大多数 AI 项目失败的地方。代理上线了，没人驾驶，6 个月后变成昂贵的烂尾。
                   我的方法要求：从第一天起人在环里。所有关键决策人类签字。所有 AI 行为有审计链。
+                  说白了，控制中心每天只需 15 分钟——但那 15 分钟必须是真人在看。
                 </p>
                 <div className="rounded-xl border border-bhai-red/30 bg-bhai-red/5 p-5">
                   <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-2">[ 持续 ]</div>
@@ -228,7 +232,7 @@ export default function MethodPage() {
               { num: "02", title: "ROI 先于酷炫", desc: "每个代理上线前回答：30 天内能赚回成本吗？不能就不上。" },
               { num: "03", title: "审计链从第一天", desc: "不是后期补的。从第一个代理部署起，所有决策可追溯。" },
               { num: "04", title: "GDPR + EU AI Act + 中国 PIPL", desc: "不是事后合规模板。架构设计就内嵌欧盟 + 中国双合规。" },
-              { num: "05", title: "我亲自参与", desc: "不是甩给初级顾问。每个客户我亲自驾船——这是我的方式。" },
+              { num: "05", title: "我亲自参与", desc: "不是甩给初级顾问。每个客户我亲自驾船——这是我选择的小生意模式，也意味着我一年只能接有限的客户。" },
             ].map((p) => (
               <div key={p.num} className="rounded-xl border border-[#2A2A2A] bg-bhai-card p-6 card-hover">
                 <div className="flex items-start gap-6">
