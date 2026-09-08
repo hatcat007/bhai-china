@@ -191,7 +191,7 @@ function CornerBrackets() {
 }
 
 export function ScanMonitor({ url, active, done, failed, stageLines, progress }: ScanMonitorProps) {
-  const { t } = useLang();
+  const { t, locale } = useLang();
   const s = t.scan;
   const rootRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
@@ -474,7 +474,8 @@ export function ScanMonitor({ url, active, done, failed, stageLines, progress }:
               {s.standbyTitle}
             </p>
             <p className="max-w-[280px] text-center text-xs text-bhai-dim leading-relaxed">
-              {t.scan.standbyHint}
+              {/* en 字典的 standbyHint 曾为中文占位 → 按 locale 取 standbyHintEn（两字典均含该键） */}
+              {locale === "en" ? s.standbyHintEn : s.standbyHint}
             </p>
           </div>
         )}

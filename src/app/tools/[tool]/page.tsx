@@ -8,7 +8,8 @@ import { AI_TOOLS, getToolBySlug } from "@/lib/data/ai-tools";
 
 /**
  * 工具详情页（server）
- * - metadata / OG 服务端生成（zh 主口径）
+ * - metadata / OG 服务端生成（20-e：title 双语化后缀；description/tagline 保持中文主口径 ——
+ *   server metadata 不随客户端 locale 切换，为已知限制）
  * - HERO 与「其他工具」由客户端组件渲染，随 locale 中英切换（i18n Round B）
  * - ToolRunner 接收 zh 主数据，内部自行本地化展示字段
  */
@@ -23,19 +24,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { tool } = await params;
   const t = getToolBySlug(tool);
-  if (!t) return { title: "工具未找到 | Better Human AI" };
+  if (!t) return { title: "工具未找到 · Tool not found | Better Human AI" };
   return {
-    title: `${t.name} · 免费 AI 工具 | Better Human AI`,
+    title: `${t.name} · 免费 AI 工具 / Free AI Tools | Better Human AI`,
     description: t.description,
     openGraph: {
-      title: `${t.name} · 免费 AI 工具 | Better Human AI`,
+      title: `${t.name} · 免费 AI 工具 / Free AI Tools | Better Human AI`,
       description: t.tagline,
       url: `/tools/${t.slug}`,
       images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: t.name }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${t.name} · 免费 AI 工具`,
+      title: `${t.name} · 免费 AI 工具 / Free AI Tools`,
       description: t.tagline,
       images: ["/og-image.jpg"],
     },

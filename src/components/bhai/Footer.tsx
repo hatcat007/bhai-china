@@ -7,6 +7,7 @@ import { useLang } from "@/lib/i18n";
 export function Footer() {
   const { t } = useLang();
   const f = t.footer;
+  const c = t.chrome;
   return (
     <footer className="mt-auto border-t border-[#1F1F1F] bg-black">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -15,7 +16,7 @@ export function Footer() {
             <div className="flex items-center gap-2.5 mb-3">
               <img
                 src="/bhai-mark-40.png"
-                alt="BHAI 舵轮 logo"
+                alt={c.logoAlt}
                 className="h-7 w-7 object-contain"
               />
               <span className="font-sans text-sm font-bold">
@@ -92,7 +93,7 @@ export function Footer() {
                   { }
                   <img
                     src="/wechat-qr.svg"
-                    alt="WeChat QR Code — 微信扫码加 Buster"
+                    alt={c.wechatQrAlt}
                     className="h-full w-full object-contain"
                   />
                 </div>
@@ -106,10 +107,14 @@ export function Footer() {
               </div>
             </div>
             <div className="mt-4 flex gap-2 flex-wrap">
-              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">GDPR 合规</span>
-              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">EU AI ACT</span>
-              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">PIPL 合规</span>
-              <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">数据本地化</span>
+              {c.complianceBadges.map((badge) => (
+                <span
+                  key={badge}
+                  className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider"
+                >
+                  {badge}
+                </span>
+              ))}
             </div>
             <FooterNewsletter />
           </div>

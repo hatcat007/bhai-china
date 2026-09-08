@@ -40,7 +40,9 @@ const notoSerifSC = Noto_Serif_SC({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://betterhumanai.dk"),
-  title: "Better Human AI | 为中国珠宝 CEO 量身打造的丹麦 AI 落地专家",
+  // 20-e：title 双语化（浏览器标签页对 EN 用户也友好）；description 保持中文主市场口径
+  // —— server metadata 不随客户端 locale 切换（已知限制，见 worklog）
+  title: "Better Human AI | 丹麦AI方法，落地中国珠宝 · AI for Chinese Jewelry CEOs",
   description:
     "Better Human AI 帮助中国珠宝品牌 CEO 用 AI 代理在 14 天内完成生产部署。16 个真实案例：15 丹麦顶级珠宝品牌 + 中国广州珠韵珠宝。",
   keywords: [
@@ -68,7 +70,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon-32.png",
   },
   openGraph: {
-    title: "Better Human AI | 为中国珠宝 CEO 量身打造的丹麦 AI 落地专家",
+    title: "Better Human AI | 丹麦AI方法，落地中国珠宝 · AI for Chinese Jewelry CEOs",
     description:
       "16 个真实珠宝品牌 AI 转型案例（15 丹麦 + 1 中国），专为中国珠宝 CEO 打造。Buster 一个人掌舵，AI 全员驱动。",
     url: "https://betterhumanai.dk",
@@ -86,7 +88,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Better Human AI | 丹麦 AI 落地专家",
+    title: "Better Human AI | 丹麦 AI 落地专家 · AI for Chinese jewelry CEOs",
     description: "Buster 掌舵。AI 驱动。为中国珠宝 CEO 而生。",
     images: ["/og-image.jpg"],
   },

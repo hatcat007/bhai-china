@@ -14,6 +14,7 @@ import { TOOL_ICONS, FREE_RUNS_PER_TOOL, AI_TOOLS } from "@/lib/data/ai-tools";
 export function ToolsIndexBody() {
   const { t, locale } = useLang();
   const ti = t.toolsIndex;
+  const tp = t.toolsPages;
 
   const analyzerTool = AI_TOOLS.find((x) => x.isAnalyzer) ?? AI_TOOLS[0];
   const analyzer = localizeTool(analyzerTool, locale);
@@ -60,7 +61,7 @@ export function ToolsIndexBody() {
           {/* Featured: website analyzer */}
           <Link
             href={`/tools/${analyzer.slug}`}
-            data-cursor="运行 AI"
+            data-cursor={tp.cursorRun}
             className="card-sheen group relative block overflow-hidden rounded-xl border border-bhai-red/30 bg-bhai-card card-hover p-6 sm:p-8 transition-shadow hover:shadow-[0_0_40px_rgba(229,105,16,0.12)]"
           >
             <span className="pointer-events-none absolute right-4 top-3 font-mono text-[10px] tracking-widest text-bhai-dim/70">
@@ -107,7 +108,7 @@ export function ToolsIndexBody() {
                 <Link
                   key={tool.slug}
                   href={`/tools/${tool.slug}`}
-                  data-cursor="运行 AI"
+                  data-cursor={tp.cursorRun}
                   className="group relative flex flex-col overflow-hidden rounded-xl border border-[#2A2A2A] bg-bhai-card card-hover p-6 transition-colors hover:border-bhai-red/40"
                 >
                   {/* 顶部强调线：hover 时点亮 */}
