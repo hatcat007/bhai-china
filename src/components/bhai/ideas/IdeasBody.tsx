@@ -112,14 +112,15 @@ export function IdeasBody() {
     [active]
   );
 
-  const stripTools = useMemo(
+  type StripItem = { slug: string; name: string; href: string };
+  const stripTools = useMemo<StripItem[]>(
     () =>
-      STRIP_SLUGS.map((slug) => {
+      STRIP_SLUGS.map((slug): StripItem | null => {
         const tool = AI_TOOLS.find((t) => t.slug === slug);
         return tool
           ? { slug, name: localizeTool(tool, locale).name, href: `/tools/${slug}` }
           : null;
-      }).filter((x): x is { slug: string; name: string; href: string } => x !== null),
+      }).filter((x): x is StripItem => x !== null),
     [locale]
   );
 

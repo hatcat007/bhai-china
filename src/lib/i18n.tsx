@@ -9,6 +9,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
+import { zhExt, enExt } from "./i18n/dicts/extensions";
 
 /**
  * BHAI i18n Round A（界面框架层中英双语）
@@ -312,9 +313,11 @@ const zh = {
   },
 };
 
-type Dict = typeof zh;
+/** 合并领域扩展字典（dicts/ 下各文件拥有独立顶层命名空间）后的完整字典类型 */
+const zhMerged = { ...zh, ...zhExt };
+type Dict = typeof zhMerged;
 
-const en: Dict = {
+const enBase = {
   nav: {
     home: "Home",
     cases: "Cases",
@@ -611,7 +614,8 @@ const en: Dict = {
   },
 };
 
-const DICTS: Record<Locale, Dict> = { zh, en };
+const en: Dict = { ...enBase, ...enExt };
+const DICTS: Record<Locale, Dict> = { zh: zhMerged, en };
 
 type LangContextValue = {
   locale: Locale;

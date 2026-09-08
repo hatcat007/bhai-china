@@ -122,7 +122,7 @@ export const AI_TOOLS: AITool[] = [
       },
       {
         id: "brand",
-        label: "品牌名（可选）",
+        label: "品牌名",
         placeholder: "例：某某珠宝",
         optional: true,
         maxLength: 80,
@@ -149,7 +149,7 @@ export const AI_TOOLS: AITool[] = [
       },
       {
         id: "origin",
-        label: "工坊 / 产地细节（可选）",
+        label: "工坊 / 产地细节",
         placeholder: "例：深圳自有工坊，12 年金工师傅手工镶嵌",
         optional: true,
         maxLength: 300,

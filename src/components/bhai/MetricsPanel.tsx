@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
+import { useLang } from "@/lib/i18n";
 
 /**
  * [ BHAI // LIVE METRICS ] 面板 — 高端服务器终端质感（Phase 3 · Quiet Luxury）
@@ -10,6 +11,7 @@ import { useLayoutEffect, useRef, useState } from "react";
  * - 右上角 LIVE：8px 绿点 box-shadow 脉冲（livePulse 2s ease-in-out infinite）
  * - prefers-reduced-motion：跳过全部动画，直接渲染最终态
  * - SSR / 首帧渲染最终态（hydration 安全），layout effect 在绘制前重置再播放，无闪跳
+ * - i18n（Task 20-a）：aria-label 走 t.homeSec.metricsAria（数值/标签由调用方 HomeHero 传入，已随 locale）
  */
 
 export type MetricStat = {
@@ -38,6 +40,7 @@ function splitValue(value: string) {
 }
 
 export function MetricsPanel({ stats }: { stats: MetricStat[] }) {
+  const { t } = useLang();
   const PANEL_HEADER = "[ BHAI // LIVE METRICS ]";
 
   // null = 最终静态态（SSR 首帧 / reduced-motion / 动画完成后保持最后进度）
@@ -96,7 +99,7 @@ export function MetricsPanel({ stats }: { stats: MetricStat[] }) {
     <div
       className="metrics-terminal rounded-2xl border border-[#2A2A2A] bg-bhai-card p-6 red-glow"
       role="group"
-      aria-label="BHAI 实时指标"
+      aria-label={t.homeSec.metricsAria}
     >
       {/* Header row：mono 标题（打字机） + LIVE 绿点脉冲 */}
       <div className="flex items-center justify-between mb-6">
