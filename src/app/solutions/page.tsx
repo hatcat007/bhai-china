@@ -3,11 +3,12 @@ import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
 import { ServiceJsonLd } from "@/components/bhai/JsonLd";
 import { ArrowRight, Eye, Sparkles, Diamond, TrendingUp, Cpu, ShieldCheck, Gauge, Wrench, MessageCircle, Boxes, FileCheck } from "lucide-react";
+import { withOpenGraph } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "珠宝行业 AI 解决方案 · 9 类工作队 | Better Human AI",
-  description: "为珠宝品牌量身打造的 9 类 AI 工作队：防伪鉴真、高定共创、普通话 VIP 礼宾、需求预测、区块链来源、中国切入手册、AR 试戴、困境品牌 AI、中国云基础设施。",
-};
+export const metadata = withOpenGraph(
+  { title: "珠宝行业 AI 解决方案 · 9 类工作队 | Better Human AI", description: "为珠宝品牌量身打造的 9 类 AI 工作队：防伪鉴真、高定共创、普通话 VIP 礼宾、需求预测、区块链来源、中国切入手册、AR 试戴、困境品牌 AI、中国云基础设施。" },
+  "/solutions"
+);
 
 const solutions = [
   {
@@ -101,7 +102,7 @@ const solutions = [
     name: "中国切入手册",
     nameEn: "China Market Entry Playbook",
     pitch: "Sophie Bille Brahe 拒了 12 家中国代理因为不懂静奢。我的 AI 第一天就懂——4,200 个 KOL 在 14 维度匹配，23 个被 Sophie 亲批。",
-    pain: "丹麦品牌想进中国却找不到对的合作方。Sophie Bille Brahe 拒了 12 家中国代理因为不懂品牌静奢 DNA。Maria Black 想从东京扩到上海但不知道选址。Aurum Denmark 微型初创无中国存在但理念契合 Z 世代 ESG 趋势。Pandora 在中国从 9% 跌到 1% 是反例：盲目扩张代价惨重。",
+    pain: "丹麦品牌想进中国却找不到对的合作方。Sophie Bille Brahe 拒了 12 家中国代理因为不懂品牌静奢 DNA。Maria Black 想从东京扩到上海但不知道选址。Aurum Denmark 微型初创无中国存在但理念契合 Z 世代 ESG 趋势。潘多拉的教训也在这里：不是中国消费者不买珠宝，而是很多欧洲品牌低估了本地数字生态的复杂性。",
     solution: "中国切入手册包含 4 个代理。静奢 KOL 匹配代理在 14 维度分析 4,200 个 KOL，创始人亲批每个。小红书编辑代理每周 3 条以品牌语调发帖（翻译而非生成）。天猫奢品馆礼宾代理 24/7 处理咨询。高定候补名单 AI 透明管理限量配额。上海选址代理在 18 维度建模选址。",
     results: [
       "Sophie Bille Brahe: 0 → 47,200 小红书粉丝（6 个月）",
@@ -152,7 +153,7 @@ const solutions = [
     name: "中国云基础设施 + 数据本地化",
     nameEn: "China Cloud Infrastructure + Data Localization",
     pitch: "AWS China? 阿里云? 腾讯云? 华为云? 香港桥接? 我能部署到任何中国云——你的数据留在境内，模型推理在境内，PIPL + 数据安全法 + 网络安全法三重合规。",
-    pain: "中国《个人信息保护法》(PIPL)、《数据安全法》(DSL)、《网络安全法》(CSL) 三法合规是 AI 落地的硬门槛。跨境数据传输需经国家网信办审批（耗时数月）。同时，越来越多中国客户要求使用国产 AI 模型（通义千问、文心一言、豆包、DeepSeek）而非海外模型——尤其涉及敏感客户数据时。如果你的 AI 系统架构师不熟悉这套合规框架，你的项目在签约前就被法务卡死。",
+    pain: "中国《个人信息保护法》(PIPL)、《数据安全法》(DSL)、《网络安全法》(CSL) 三法合规是 AI 落地绕不开的前提。跨境数据传输需经国家网信办审批（耗时数月）。同时，越来越多中国客户要求使用国产 AI 模型（通义千问、文心一言、豆包、DeepSeek）而非海外模型——尤其涉及敏感客户数据时。我的经验是：法务越早介入越省时间，架构设计阶段就把合规考虑进去，比事后返工快得多。",
     solution: "我提供全栈中国云部署方案，覆盖所有主流选项：（1）AWS 中国（北京/宁夏区，由光环新网/西云数据运营）；（2）阿里云（杭州/上海/北京区，国内最大覆盖）；（3）腾讯云（深圳/上海/北京区，与微信生态深度集成）；（4）华为云（贵安/北京/上海区，国企客户首选）；（5）百度智能云（北京/广州区，文心一言原生支持）；（6）香港桥接方案（AWS/Azure 香港区作跨境桥梁，平衡合规与全球连通）；（7）多云冗余架构（关键业务双云部署，避免供应商锁定）。所有客户数据严格部署在中国境内，仅匿名化模式数据回流哥本哈根控制中心用于跨客户模式学习。AI 模型层支持国际（Claude/GPT）+ 国产（通义千问/文心一言/豆包/DeepSeek）双栈，客户按合规需求选择。",
     results: [
       "珠韵珠宝：阿里云上海区 100% PIPL 合规部署",

@@ -1,0 +1,741 @@
+     1→"use client";
+     2→
+     3→import { useCallback, useEffect, useRef, useState } from "react";
+     4→import Markdown from "react-markdown";
+     5→import remarkGfm from "remark-gfm";
+     6→import { Check, Copy, History, ChevronDown, Loader2, Trash2 } from "lucide-react";
+     7→import {
+     8→  Dialog,
+     9→  DialogContent,
+    10→  DialogDescription,
+    11→  DialogHeader,
+    12→  DialogTitle,
+    13→} from "@/components/ui/dialog";
+    14→import { useToast } from "@/hooks/use-toast";
+    15→import { ScanMonitor } from "@/components/bhai/tools/ScanMonitor";
+    16→import { track } from "@/lib/track";
+    17→import { useLang, tpl } from "@/lib/i18n";
+    18→import {
+    19→  TOOL_ICONS,
+    20→  FREE_RUNS_PER_TOOL,
+    21→  type AITool,
+    22→} from "@/lib/data/ai-tools";
+    23→
+    24→/**
+    25→ * 免费 AI 工具执行器（客户端）
+    26→ * - 表单 → SSE 流式输出到终端风格面板（事件形状与 ai-roadmap 一致）
+    27→ * - 门控：localStorage 记账，每工具 2 次免费；第 3 次弹解锁 Dialog
+    28→ * - 解锁：留邮箱 → POST /api/leads (source:"tools")，被拒则回落 /api/tools/unlock
+    29→ * - 支持 ?url= 预填 + 自动执行（首页 ToolsTeaser 进入路径）
+    30→ */
+    31→
+    32→const USAGE_KEY = "bhai_tool_usage";
+    33→const UNLOCKED_KEY = "bhai_tool_unlocked";
+    34→const HISTORY_KEY = "bhai_tool_history";
+    35→const HISTORY_CAP = 5; // 每工具保留最近 5 次生成
+    36→const HISTORY_OUTPUT_CAP = 8000; // 单条输出最多入库字数（控 localStorage 体积）
+    37→
+    38→type UsageMap = Record<string, number>;
+    39→type UnlockedMap = Record<string, boolean>;
+    40→
+    41→type HistoryEntry = {
+    42→  ts: number; // 完成时间戳
+    43→  values: Record<string, string>; // 当时的表单输入
+    44→  output: string; // 完整输出（截断至 8000 字）
+    45→  chars: number; // 原始字数
+    46→};
+    47→
+    48→function readJsonMap<T>(key: string): Record<string, T> {
+    49→  if (typeof window === "undefined") return {};
+    50→  try {
+    51→    const raw = window.localStorage.getItem(key);
+    52→    if (!raw) return {};
+    53→    const parsed: unknown = JSON.parse(raw);
+    54→    return parsed && typeof parsed === "object"
+    55→      ? (parsed as Record<string, T>)
+    56→      : {};
+    57→  } catch {
+    58→    return {};
+    59→  }
+    60→}
+    61→
+    62→function writeJsonMap(key: string, map: Record<string, unknown>): void {
+    63→  try {
+    64→    window.localStorage.setItem(key, JSON.stringify(map));
+    65→  } catch {
+    66→    /* 私密模式等场景静默失败 */
+    67→  }
+    68→}
+    69→
+    70→function readHistory(slug: string): HistoryEntry[] {
+    71→  const map = readJsonMap<HistoryEntry[]>(HISTORY_KEY);
+    72→  const list = map[slug];
+    73→  return Array.isArray(list) ? list : [];
+    74→}
+    75→
+    76→function appendHistory(slug: string, entry: HistoryEntry): HistoryEntry[] {
+    77→  const map = readJsonMap<HistoryEntry[]>(HISTORY_KEY);
+    78→  const list = [entry, ...(map[slug] ?? [])].slice(0, HISTORY_CAP);
+    79→  map[slug] = list;
+    80→  writeJsonMap(HISTORY_KEY, map);
+    81→  return list;
+    82→}
+    83→
+    84→function clearHistory(slug: string): HistoryEntry[] {
+    85→  const map = readJsonMap<HistoryEntry[]>(HISTORY_KEY);
+    86→  delete map[slug];
+    87→  writeJsonMap(HISTORY_KEY, map);
+    88→  return [];
+    89→}
+    90→
+    91→function fmtTime(ts: number): string {
+    92→  const d = new Date(ts);
+    93→  const p = (n: number) => String(n).padStart(2, "0");
+    94→  return `${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+    95→}
+    96→
+    97→function normalizeUrl(raw: string): string {
+    98→  const s = raw.trim();
+    99→  if (!s) return s;
+   100→  return /^https?:\/\//i.test(s) ? s : `https://${s}`;
+   101→}
+   102→
+   103→function isValidUrl(raw: string): boolean {
+   104→  try {
+   105→    const u = new URL(raw);
+   106→    return (u.protocol === "http:" || u.protocol === "https:") && !!u.hostname;
+   107→  } catch {
+   108→    return false;
+   109→  }
+   110→}
+   111→
+   112→export function ToolRunner({ tool }: { tool: AITool }) {
+   113→  const { toast } = useToast();
+   114→  const { t } = useLang();
+   115→  const r = t.runner;
+   116→  const Icon = TOOL_ICONS[tool.icon] ?? TOOL_ICONS.ScanSearch;
+   117→
+   118→  const [values, setValues] = useState<Record<string, string>>(() =>
+   119→    Object.fromEntries(tool.fields.map((f) => [f.id, ""]))
+   120→  );
+   121→  const [usage, setUsage] = useState<UsageMap | null>(null); // null = localStorage 未读
+   122→  const [unlocked, setUnlocked] = useState(false);
+   123→  const [output, setOutput] = useState<string | null>(null);
+   124→  const [streaming, setStreaming] = useState(false);
+   125→  const [error, setError] = useState<string | null>(null);
+   126→  const [inlineError, setInlineError] = useState<string | null>(null);
+   127→  const [copied, setCopied] = useState(false);
+   128→
+   129→  // 扫描监视器状态（仅分析器使用）：阶段日志 / 进度 / 轮次号（重挂载用）
+   130→  const [stageLines, setStageLines] = useState<string[]>([]);
+   131→  const [progress, setProgress] = useState(0);
+   132→  const [runId, setRunId] = useState(0);
+   133→  // 提交时冻结的目标 URL：避免输入过程中实时触发截图预加载/回退链空转
+   134→  const [scanUrl, setScanUrl] = useState<string | null>(null);
+   135→  // 本工具最近生成记录（localStorage，最多 5 条）
+   136→  const [history, setHistory] = useState<HistoryEntry[]>([]);
+   137→  const [historyOpen, setHistoryOpen] = useState(false);
+   138→
+   139→  // 解锁弹窗
+   140→  const [dialogOpen, setDialogOpen] = useState(false);
+   141→  const [unlockEmail, setUnlockEmail] = useState("");
+   142→  const [unlockSubmitting, setUnlockSubmitting] = useState(false);
+   143→  const pendingRunRef = useRef<Record<string, string> | null>(null);
+   144→  const autoStartedRef = useRef(false);
+   145→
+   146→  /* ---------- SSE 流式执行 ---------- */
+   147→  const runInput = useCallback(
+   148→    async (payload: Record<string, string>) => {
+   149→      setStreaming(true);
+   150→      setError(null);
+   151→      setInlineError(null);
+   152→      setOutput("");
+   153→      setRunId((n) => n + 1);
+   154→      setStageLines([]);
+   155→      setProgress(5);
+   156→      setScanUrl(tool.isAnalyzer ? (payload.url ?? "").trim() || null : null);
+   157→      track(tool.isAnalyzer ? "scan_start" : "tool_start", { tool: tool.slug });
+   158→      let prog = 5;
+   159→      try {
+   160→        const res = await fetch(tool.endpoint, {
+   161→          method: "POST",
+   162→          headers: { "Content-Type": "application/json" },
+   163→          body: JSON.stringify(
+   164→            tool.isAnalyzer ? { url: payload.url } : { input: payload }
+   165→          ),
+   166→        });
+   167→
+   168→        if (!res.ok) {
+   169→          let msg = r.runFailed;
+   170→          try {
+   171→            const j = await res.json();
+   172→            if (j?.error) msg = j.error;
+   173→          } catch {
+   174→            /* 非 JSON 错误体 */
+   175→          }
+   176→          throw new Error(msg);
+   177→        }
+   178→
+   179→        const reader = res.body?.getReader();
+   180→        if (!reader) throw new Error(r.streamUnsupported);
+   181→
+   182→        const decoder = new TextDecoder();
+   183→        let buf = "";
+   184→        let acc = "";
+   185→
+   186→        for (;;) {
+   187→          const { done, value } = await reader.read();
+   188→          if (done) break;
+   189→          buf += decoder.decode(value, { stream: true });
+   190→          const parts = buf.split("\n\n");
+   191→          buf = parts.pop() ?? "";
+   192→          for (const part of parts) {
+   193→            const line = part.trim();
+   194→            if (!line.startsWith("data:")) continue;
+   195→            let evt: {
+   196→              type?: string;
+   197→              text?: string;
+   198→              error?: string;
+   199→              message?: string;
+   200→              progress?: number;
+   201→            };
+   202→            try {
+   203→              evt = JSON.parse(line.slice(5).trim());
+   204→            } catch {
+   205→              continue; // 半包 JSON，跳过
+   206→            }
+   207→            if (evt.type === "stage" && evt.message) {
+   208→              // 扫描阶段事件（/api/analyze）：驱动 ScanMonitor 日志与进度
+   209→              prog = typeof evt.progress === "number" ? evt.progress : prog;
+   210→              setProgress(prog);
+   211→              setStageLines((lines) => [...lines, evt.message as string]);
+   212→            } else if (evt.type === "delta" && evt.text) {
+   213→              if (prog < 72) {
+   214→                prog = 72; // 正文开始流出 → 进度推进到推理阶段
+   215→                setProgress(prog);
+   216→              }
+   217→              acc += evt.text;
+   218→              setOutput(acc);
+   219→            } else if (evt.type === "error") {
+   220→              throw new Error(evt.error || r.interrupted);
+   221→            }
+   222→          }
+   223→        }
+   224→
+   225→        if (acc.trim().length === 0) {
+   226→          setOutput(null);
+   227→          throw new Error(r.incomplete);
+   228→        }
+   229→        setProgress(100);
+   230→        // 完成记录：埋点 + 本地历史（历史容量与输出截断防止 localStorage 膨胀）
+   231→        track(tool.isAnalyzer ? "scan_complete" : "tool_complete", {
+   232→          tool: tool.slug,
+   233→          meta: `${acc.length} 字`,
+   234→        });
+   235→        setHistory(
+   236→          appendHistory(tool.slug, {
+   237→            ts: Date.now(),
+   238→            values: payload,
+   239→            output: acc.slice(0, HISTORY_OUTPUT_CAP),
+   240→            chars: acc.length,
+   241→          })
+   242→        );
+   243→      } catch (err) {
+   244→        const msg =
+   245→          err instanceof Error ? err.message : r.runFailed;
+   246→        track(tool.isAnalyzer ? "scan_fail" : "tool_error", {
+   247→          tool: tool.slug,
+   248→          meta: msg.slice(0, 80),
+   249→        });
+   250→        setError(msg);
+   251→        setOutput((prev) =>
+   252→          prev !== null && prev.trim().length >= 100 ? prev : null
+   253→        );
+   254→      } finally {
+   255→        setStreaming(false);
+   256→      }
+   257→    },
+   258→    [tool.endpoint, tool.isAnalyzer, r]
+   259→  );
+   260→
+   261→  /* ---------- 门控执行：localStorage 记账 ---------- */
+   262→  const runWithGate = useCallback(
+   263→    (payload: Record<string, string>) => {
+   264→      const unlockedMap = readJsonMap<boolean>(UNLOCKED_KEY);
+   265→      if (unlockedMap[tool.slug]) {
+   266→        setUnlocked(true);
+   267→        void runInput(payload);
+   268→        return;
+   269→      }
+   270→      const usageMap = readJsonMap<number>(USAGE_KEY);
+   271→      setUsage(usageMap);
+   272→      setUnlocked(false);
+   273→      const count = usageMap[tool.slug] ?? 0;
+   274→      if (count >= FREE_RUNS_PER_TOOL) {
+   275→        // 第 3 次：弹解锁弹窗，解锁成功后自动续跑
+   276→        track("unlock_modal", { tool: tool.slug });
+   277→        pendingRunRef.current = payload;
+   278→        setDialogOpen(true);
+   279→        return;
+   280→      }
+   281→      const next: UsageMap = { ...usageMap, [tool.slug]: count + 1 };
+   282→      writeJsonMap(USAGE_KEY, next);
+   283→      setUsage(next);
+   284→      void runInput(payload);
+   285→    },
+   286→    [tool.slug, runInput]
+   287→  );
+   288→
+   289→  /* ---------- 挂载：读 localStorage + ?url= 预填/自动跑 ---------- */
+   290→  useEffect(() => {
+   291→    if (autoStartedRef.current) return;
+   292→    autoStartedRef.current = true;
+   293→
+   294→    setUsage(readJsonMap<number>(USAGE_KEY));
+   295→    setUnlocked(!!readJsonMap<boolean>(UNLOCKED_KEY)[tool.slug]);
+   296→    setHistory(readHistory(tool.slug));
+   297→
+   298→    const url = new URLSearchParams(window.location.search).get("url");
+   299→    if (!tool.isAnalyzer || !url) return;
+   300→
+   301→    const norm = normalizeUrl(url);
+   302→    if (isValidUrl(norm)) {
+   303→      setValues((v) => ({ ...v, url: norm }));
+   304→      runWithGate({ url: norm });
+   305→    } else {
+   306→      setValues((v) => ({ ...v, url }));
+   307→    }
+   308→  }, [tool.slug, tool.isAnalyzer, runWithGate]);
+   309→
+   310→  /* ---------- 提交 ---------- */
+   311→  const startRun = () => {
+   312→    if (streaming) return;
+   313→    const missing = tool.fields.filter(
+   314→      (f) => !f.optional && !(values[f.id] ?? "").trim()
+   315→    );
+   316→    if (missing.length > 0) {
+   317→      setInlineError(r.fillRequired);
+   318→      return;
+   319→    }
+   320→
+   321→    let payload: Record<string, string> = Object.fromEntries(
+   322→      tool.fields.map((f) => [f.id, (values[f.id] ?? "").trim()])
+   323→    );
+   324→    if (tool.isAnalyzer) {
+   325→      const norm = normalizeUrl(payload.url);
+   326→      if (!isValidUrl(norm)) {
+   327→        setInlineError(r.invalidUrl);
+   328→        return;
+   329→      }
+   330→      payload = { url: norm };
+   331→      setValues((v) => ({ ...v, url: norm }));
+   332→    }
+   333→    runWithGate(payload);
+   334→  };
+   335→
+   336→  /* ---------- 解锁提交 ---------- */
+   337→  const handleUnlockSubmit = async (e: React.FormEvent) => {
+   338→    e.preventDefault();
+   339→    if (unlockSubmitting) return;
+   340→    const email = unlockEmail.trim();
+   341→    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+   342→      toast({
+   343→        title: r.emailInvalid,
+   344→        description: r.emailInvalidDesc,
+   345→        variant: "destructive",
+   346→      });
+   347→      return;
+   348→    }
+   349→
+   350→    setUnlockSubmitting(true);
+   351→    try {
+   352→      // 首选公共线索接口（source: "tools"）；若枚举校验拒绝 → 回落专用解锁接口
+   353→      const leadBody = {
+   354→        name: r.unlockLeadName,
+   355→        contact: email,
+   356→        source: "tools",
+   357→        message: tpl(r.unlockLeadMsg, { slug: tool.slug }),
+   358→      };
+   359→      let ok = false;
+   360→      try {
+   361→        const res = await fetch("/api/leads", {
+   362→          method: "POST",
+   363→          headers: { "Content-Type": "application/json" },
+   364→          body: JSON.stringify(leadBody),
+   365→        });
+   366→        ok = res.ok;
+   367→      } catch {
+   368→        /* 网络错误 → 走回落 */
+   369→      }
+   370→      if (!ok) {
+   371→        const res2 = await fetch("/api/tools/unlock", {
+   372→          method: "POST",
+   373→          headers: { "Content-Type": "application/json" },
+   374→          body: JSON.stringify({ email, slug: tool.slug }),
+   375→        });
+   376→        if (!res2.ok) {
+   377→          let msg = r.submitFail;
+   378→          try {
+   379→            const j = await res2.json();
+   380→            if (j?.error) msg = j.error;
+   381→          } catch {
+   382→            /* 非 JSON 错误体 */
+   383→          }
+   384→          throw new Error(msg);
+   385→        }
+   386→      }
+   387→
+   388→      const map = readJsonMap<boolean>(UNLOCKED_KEY);
+   389→      map[tool.slug] = true;
+   390→      writeJsonMap(UNLOCKED_KEY, map);
+   391→      setUnlocked(true);
+   392→      track("unlock_success", { tool: tool.slug });
+   393→      toast({
+   394→        title: r.toastUnlocked,
+   395→        description: r.toastUnlockedDesc,
+   396→      });
+   397→      setDialogOpen(false);
+   398→      setUnlockEmail("");
+   399→      const pending = pendingRunRef.current;
+   400→      pendingRunRef.current = null;
+   401→      if (pending) void runInput(pending);
+   402→    } catch (err) {
+   403→      toast({
+   404→        title: r.unlockFail,
+   405→        description:
+   406→          err instanceof Error
+   407→            ? err.message
+   408→            : r.unlockFailHint,
+   409→        variant: "destructive",
+   410→      });
+   411→    } finally {
+   412→      setUnlockSubmitting(false);
+   413→    }
+   414→  };
+   415→
+   416→  /* ---------- 复制结果 ---------- */
+   417→  const copyOutput = async () => {
+   418→    if (!output) return;
+   419→    try {
+   420→      await navigator.clipboard.writeText(output);
+   421→      setCopied(true);
+   422→      toast({
+   423→        title: tool.isAnalyzer ? r.copiedAnalysisToast : r.copiedResultToast,
+   424→        description: r.copyHint,
+   425→      });
+   426→      setTimeout(() => setCopied(false), 2000);
+   427→    } catch {
+   428→      toast({
+   429→        title: r.copyFail,
+   430→        description: r.copyFailHint,
+   431→        variant: "destructive",
+   432→      });
+   433→    }
+   434→  };
+   435→
+   436→  const freeCount = usage?.[tool.slug] ?? 0;
+   437→  const remaining = Math.max(0, FREE_RUNS_PER_TOOL - freeCount);
+   438→  const outputLabel = tool.isAnalyzer ? r.copyAnalysis : r.copyResult;
+   439→
+   440→  return (
+   441→    <div>
+   442→      {/* 输入表单 */}
+   443→      <form
+   444→        onSubmit={(e) => {
+   445→          e.preventDefault();
+   446→          startRun();
+   447→        }}
+   448→        className="rounded-2xl border border-[#2A2A2A] bg-bhai-card p-6 sm:p-8 space-y-5"
+   449→      >
+   450→        {tool.fields.map((field) => (
+   451→          <div key={field.id}>
+   452→            <label
+   453→              htmlFor={`tool-${field.id}`}
+   454→              className="block text-sm font-medium text-foreground mb-2"
+   455→            >
+   456→              {field.label}
+   457→              {field.optional && (
+   458→                <span className="ml-1.5 font-normal text-bhai-dim">{r.optional}</span>
+   459→              )}
+   460→            </label>
+   461→            <input
+   462→              id={`tool-${field.id}`}
+   463→              name={field.id}
+   464→              type={field.type === "url" ? "url" : "text"}
+   465→              placeholder={field.placeholder}
+   466→              maxLength={field.maxLength}
+   467→              value={values[field.id] ?? ""}
+   468→              onChange={(e) =>
+   469→                setValues((v) => ({ ...v, [field.id]: e.target.value }))
+   470→              }
+   471→              disabled={streaming}
+   472→              autoComplete={field.type === "url" ? "url" : "off"}
+   473→              className="w-full rounded-lg border border-[#2A2A2A] bg-bhai-bg px-4 py-3 text-base text-foreground placeholder:text-bhai-dim input-focus disabled:opacity-50"
+   474→            />
+   475→          </div>
+   476→        ))}
+   477→
+   478→        {inlineError && (
+   479→          <p role="alert" className="text-xs text-red-400">
+   480→            {inlineError}
+   481→          </p>
+   482→        )}
+   483→
+   484→        <div className="pt-1 space-y-3">
+   485→          <button
+   486→            type="submit"
+   487→            disabled={streaming}
+   488→            className="cta-primary w-full rounded-md px-6 py-3 text-sm font-medium text-white inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-wait"
+   489→          >
+   490→            {streaming ? (
+   491→              <>
+   492→                <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+   493→                {tool.isAnalyzer ? r.scanning : r.generating}
+   494→              </>
+   495→            ) : (
+   496→              <>
+   497→                <Icon className="h-4 w-4" aria-hidden="true" />
+   498→                {tool.ctaText}
+   499→              </>
+   500→            )}
+   501→          </button>
+   502→
+   503→          <div className="flex flex-wrap items-center justify-between gap-2">
+   504→            <p className="font-mono text-[10px] text-bhai-dim tracking-wider">
+   505→              {tool.outputHint}
+   506→            </p>
+   507→            {unlocked ? (
+   508→              <span className="inline-flex items-center gap-1 rounded-full border border-bhai-red/40 bg-bhai-red/10 px-2.5 py-0.5 font-mono text-[10px] text-bhai-red shrink-0">
+   509→                {r.unlockedBadge}
+   510→              </span>
+   511→            ) : (
+   512→              usage !== null && (
+   513→                <span className="font-mono text-[10px] text-bhai-dim shrink-0">
+   514→                  {remaining > 0
+   515→                    ? tpl(r.runsLeft, { n: remaining })
+   516→                    : r.quotaUsed}
+   517→                </span>
+   518→              )
+   519→            )}
+   520→          </div>
+   521→        </div>
+   522→      </form>
+   523→
+   524→      {/* 扫描监视器（仅网站分析器）：目标站截图 + 向下滚动 + 扫描线动画 + 阶段日志 */}
+   525→      {tool.isAnalyzer && (
+   526→        <div className="mt-6">
+   527→          <ScanMonitor
+   528→            key={runId}
+   529→            url={scanUrl}
+   530→            active={streaming}
+   531→            done={!streaming && output !== null && !error}
+   532→            failed={!streaming && error !== null}
+   533→            stageLines={stageLines}
+   534→            progress={progress}
+   535→          />
+   536→        </div>
+   537→      )}
+   538→
+   539→      {/* 错误提示（保留部分输出时与面板并存） */}
+   540→      {error && (
+   541→        <div
+   542→          role="alert"
+   543→          className="mt-4 rounded-lg border border-red-500/30 bg-red-500/5 px-4 py-3 text-sm text-red-400"
+   544→        >
+   545→          {error}
+   546→        </div>
+   547→      )}
+   548→
+   549→      {/* 终端风格输出面板 */}
+   550→      {(output !== null || streaming) && (
+   551→        <div
+   552→          id="tool-output"
+   553→          className={`mt-4 rounded-lg border border-[#2A2A2A] bg-black overflow-hidden ${
+   554→            streaming ? "red-glow" : ""
+   555→          }`}
+   556→        >
+   557→          {/* 假终端栏 */}
+   558→          <div className="flex items-center gap-2 border-b border-[#2A2A2A] bg-[#111110] px-4 py-2.5">
+   559→            <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" aria-hidden="true" />
+   560→            <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" aria-hidden="true" />
+   561→            <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" aria-hidden="true" />
+   562→            <span
+   563→              className="ml-3 font-mono text-xs text-bhai-dim truncate"
+   564→              aria-hidden="true"
+   565→            >
+   566→              {tool.isAnalyzer
+   567→                ? values.url || "https://…"
+   568→                : `bhai://tools/${tool.slug}`}
+   569→            </span>
+   570→            <span
+   571→              className="ml-auto shrink-0 font-mono text-[10px] text-bhai-muted tabular-nums"
+   572→              aria-live="polite"
+   573→            >
+   574→              {streaming
+   575→                ? `${output?.length ?? 0}${r.charUnit} · ${r.generatingTag}`
+   576→                : `${output?.length ?? 0}${r.charUnit}`}
+   577→            </span>
+   578→            {!streaming && output && (
+   579→              <button
+   580→                type="button"
+   581→                onClick={() => void copyOutput()}
+   582→                className="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-[#2A2A2A] bg-bhai-card px-2.5 py-1 text-[11px] text-bhai-muted transition-colors hover:border-bhai-red hover:text-bhai-red"
+   583→                aria-label={outputLabel}
+   584→              >
+   585→                {copied ? (
+   586→                  <Check className="h-3.5 w-3.5 text-bhai-red" aria-hidden="true" />
+   587→                ) : (
+   588→                  <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+   589→                )}
+   590→                {copied ? r.copied : outputLabel}
+   591→              </button>
+   592→            )}
+   593→          </div>
+   594→
+   595→          {/* 流式 Markdown 输出 */}
+   596→          <div
+   597→            className="p-4 font-mono text-sm max-h-[560px] overflow-y-auto admin-scrollbar"
+   598→            role="log"
+   599→            aria-label={r.outputAria}
+   600→          >
+   601→            <div className="roadmap-markdown">
+   602→              <Markdown remarkPlugins={[remarkGfm]}>{output ?? ""}</Markdown>
+   603→              {streaming && <span className="stream-cursor" aria-hidden="true" />}
+   604→            </div>
+   605→          </div>
+   606→        </div>
+   607→      )}
+   608→
+   609→      {/* 最近生成（本地历史，最多 5 条）：点击回填输入与输出 */}
+   610→      {history.length > 0 && (
+   611→        <div className="mt-4 rounded-lg border border-[#2A2A2A] bg-bhai-card overflow-hidden">
+   612→          <button
+   613→            type="button"
+   614→            onClick={() => setHistoryOpen((o) => !o)}
+   615→            aria-expanded={historyOpen}
+   616→            className="w-full flex items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.03]"
+   617→          >
+   618→            <History className="h-3.5 w-3.5 text-bhai-red" aria-hidden="true" />
+   619→            <span className="font-mono text-[11px] tracking-widest text-bhai-dim">
+   620→              {r.history} · {history.length}
+   621→            </span>
+   622→            <ChevronDown
+   623→              className={`ml-auto h-3.5 w-3.5 text-bhai-dim transition-transform ${historyOpen ? "rotate-180" : ""}`}
+   624→              aria-hidden="true"
+   625→            />
+   626→          </button>
+   627→          {historyOpen && (
+   628→            <ul className="border-t border-[#2A2A2A] divide-y divide-[#1F1F1F] max-h-72 overflow-y-auto admin-scrollbar">
+   629→              {history.map((h) => {
+   630→                const primary =
+   631→                  h.values.url ||
+   632→                  Object.values(h.values).find((v) => v.trim()) ||
+   633→                  r.historyEmpty;
+   634→                return (
+   635→                  <li key={h.ts}>
+   636→                    <button
+   637→                      type="button"
+   638→                      onClick={() => {
+   639→                        setValues((v) => ({ ...v, ...h.values }));
+   640→                        setOutput(h.output);
+   641→                        setError(null);
+   642→                        setHistoryOpen(false);
+   643→                        window.scrollTo({
+   644→                          top: (document.getElementById("tool-output")?.offsetTop ?? 0) - 80,
+   645→                          behavior: "smooth",
+   646→                        });
+   647→                      }}
+   648→                      className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.04]"
+   649→                    >
+   650→                      <span className="font-mono text-[10px] text-bhai-dim tabular-nums shrink-0">
+   651→                        {fmtTime(h.ts)}
+   652→                      </span>
+   653→                      <span className="text-xs text-bhai-muted truncate flex-1">
+   654→                        {primary}
+   655→                      </span>
+   656→                      <span className="font-mono text-[10px] text-bhai-dim tabular-nums shrink-0">
+   657→                        {h.chars}{r.charUnit}
+   658→                      </span>
+   659→                    </button>
+   660→                  </li>
+   661→                );
+   662→              })}
+   663→              <li>
+   664→                <button
+   665→                  type="button"
+   666→                  onClick={() => setHistory(clearHistory(tool.slug))}
+   667→                  className="w-full flex items-center gap-2 px-4 py-2 text-left text-[11px] text-bhai-dim transition-colors hover:text-red-400"
+   668→                >
+   669→                  <Trash2 className="h-3 w-3" aria-hidden="true" /> {r.clearHistory}
+   670→                </button>
+   671→              </li>
+   672→            </ul>
+   673→          )}
+   674→        </div>
+   675→      )}
+   676→
+   677→      {/* 解锁弹窗（第 3 次运行触发） */}
+   678→      <Dialog
+   679→        open={dialogOpen}
+   680→        onOpenChange={(open) => {
+   681→          if (!unlockSubmitting) setDialogOpen(open);
+   682→        }}
+   683→      >
+   684→        <DialogContent className="bg-bhai-card border-[#2A2A2A] sm:max-w-md">
+   685→          <DialogHeader>
+   686→            <div className="font-mono text-[10px] tracking-widest text-bhai-red">
+   687→              {r.gateKicker}
+   688→            </div>
+   689→            <DialogTitle className="text-xl font-bold text-foreground text-left">
+   690→              {r.gateTitle}
+   691→            </DialogTitle>
+   692→            <DialogDescription className="text-sm text-bhai-muted text-left">
+   693→              {r.gateDesc}
+   694→            </DialogDescription>
+   695→          </DialogHeader>
+   696→          <form
+   697→            onSubmit={(e) => void handleUnlockSubmit(e)}
+   698→            className="space-y-4"
+   699→          >
+   700→            <div>
+   701→              <label
+   702→                htmlFor="unlock-email"
+   703→                className="block text-sm font-medium text-foreground mb-2"
+   704→              >
+   705→                {r.emailLabel}
+   706→              </label>
+   707→              <input
+   708→                id="unlock-email"
+   709→                type="email"
+   710→                required
+   711→                placeholder="ceo@yourbrand.com"
+   712→                autoComplete="email"
+   713→                value={unlockEmail}
+   714→                onChange={(e) => setUnlockEmail(e.target.value)}
+   715→                className="w-full rounded-lg border border-[#2A2A2A] bg-bhai-bg px-4 py-3 text-base text-foreground placeholder:text-bhai-dim input-focus"
+   716→              />
+   717→            </div>
+   718→            <button
+   719→              type="submit"
+   720→              disabled={unlockSubmitting}
+   721→              className="cta-primary w-full rounded-md px-6 py-3 text-sm font-medium text-white inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-wait"
+   722→            >
+   723→              {unlockSubmitting ? (
+   724→                <>
+   725→                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+   726→                  {r.submitting}
+   727→                </>
+   728→              ) : (
+   729→                r.gateSubmit
+   730→              )}
+   731→            </button>
+   732→            <p className="text-[11px] text-bhai-dim leading-relaxed">
+   733→              {r.gateConsent}
+   734→            </p>
+   735→          </form>
+   736→        </DialogContent>
+   737→      </Dialog>
+   738→    </div>
+   739→  );
+   740→}
+   741→

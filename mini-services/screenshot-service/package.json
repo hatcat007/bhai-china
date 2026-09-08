@@ -1,0 +1,11 @@
+{
+  "name": "bhai-screenshot-service",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "One-shot Playwright screenshot runner (auto cookie-banner dismiss). Invoked per-request by src/app/api/scan-shot — not a daemon.",
+  "scripts": {
+    "dev": "bun shot-one.ts",
+    "shot": "bun shot-one.ts"
+  }
+}

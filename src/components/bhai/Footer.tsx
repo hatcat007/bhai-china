@@ -1,6 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { FooterNewsletter } from "@/components/bhai/FooterNewsletter";
+import { useLang } from "@/lib/i18n";
 
 export function Footer() {
+  const { t } = useLang();
+  const f = t.footer;
   return (
     <footer className="mt-auto border-t border-[#1F1F1F] bg-black">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -17,42 +23,49 @@ export function Footer() {
               </span>
             </div>
             <p className="text-xs text-bhai-muted leading-relaxed">
-              丹麦验证方法。<br />
-              中国本地部署。<br />
-              陆博明 / Buster 掌舵。
+              {f.tagline.map((line) => (
+                <span key={line}>
+                  {line}
+                  <br />
+                </span>
+              ))}
             </p>
             <p className="font-mono text-[10px] text-bhai-dim mt-4 tracking-wider">
-              BUSTER VED RORET.<br />
-              DREVET AF AI.
+              {f.motto.map((line) => (
+                <span key={line}>
+                  {line}
+                  <br />
+                </span>
+              ))}
             </p>
           </div>
 
           <div>
-            <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">导航</h3>
+            <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">{f.colNav}</h3>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">首页</Link></li>
-              <li><Link href="/cases" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">丹麦案例</Link></li>
-              <li><Link href="/solutions" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">解决方案</Link></li>
-              <li><Link href="/method" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">BHAI 方法</Link></li>
+              <li><Link href="/" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.navHome}</Link></li>
+              <li><Link href="/cases" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.navCases}</Link></li>
+              <li><Link href="/solutions" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.navSolutions}</Link></li>
+              <li><Link href="/method" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.navMethod}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">洞察</h3>
+            <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">{f.colInsights}</h3>
             <ul className="space-y-2">
-              <li><Link href="/denmark-insights" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">丹麦洞察</Link></li>
-              <li><Link href="/about" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">关于我</Link></li>
-              <li><Link href="/book" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">预约 20 分钟</Link></li>
+              <li><Link href="/denmark-insights" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.insDenmark}</Link></li>
+              <li><Link href="/about" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.insAbout}</Link></li>
+              <li><Link href="/book" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.insBook}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">中国联系</h3>
+            <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">{f.colContact}</h3>
             <ul className="space-y-2 text-sm text-bhai-text">
               <li>
                 <a href="weixin://add/busterl1" className="hover:text-bhai-red transition-colors flex items-center gap-2">
                   <span className="font-mono text-[10px] text-bhai-red">[WeChat]</span>
-                  微信：busterl1
+                  {f.wechat}
                 </a>
               </li>
               <li>
@@ -68,7 +81,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="text-xs text-bhai-dim mt-3">
-                公众号 / 小红书 / 抖音：即将上线
+                {f.comingSoon}
               </li>
             </ul>
             {/* WeChat QR — site-wide */}
@@ -83,9 +96,9 @@ export function Footer() {
                   />
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-0.5">[ 扫码加微信 ]</div>
+                  <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-0.5">[ {f.colContact} ]</div>
                   <div className="text-[11px] text-bhai-muted leading-tight">
-                    微信扫一扫<br />
+                    WeChat<br />
                     ID：busterl1
                   </div>
                 </div>
@@ -97,12 +110,13 @@ export function Footer() {
               <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">PIPL 合规</span>
               <span className="rounded border border-[#2A2A2A] px-2 py-0.5 text-[10px] font-mono text-bhai-muted tracking-wider">数据本地化</span>
             </div>
+            <FooterNewsletter />
           </div>
         </div>
 
         <div className="mt-10 pt-6 border-t border-[#1A1A1A] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-xs text-bhai-dim">
-            © 2026 Better Human AI · 陆博明 / Buster ML Larsen · 丹麦验证，中国部署
+            {f.rights}
           </p>
           <p className="font-mono text-[10px] text-bhai-dim tracking-wider">
             NO PITCH · NO COMMITMENTS · 20 MINUTES

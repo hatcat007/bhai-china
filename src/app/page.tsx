@@ -1,8 +1,16 @@
 import Link from "next/link";
 import { PageShell } from "@/components/bhai/PageShell";
+import { Reveal } from "@/components/bhai/Reveal";
 import { CTASection } from "@/components/bhai/CTASection";
+import { HomeHero } from "@/components/bhai/HomeHero";
+import { ToolsTeaser } from "@/components/bhai/ToolsTeaser";
 import { jewelryCases } from "@/lib/data/jewelry-cases";
 import { ArrowRight, ShieldCheck, Cpu, Gauge, Sparkles, Diamond, TrendingUp, AlertTriangle, Wrench, Eye, CheckCircle2, XCircle } from "lucide-react";
+
+/**
+ * 首页（server）
+ * - i18n Round D-1：Hero 区委托 HomeHero（client，双语）；其余 section 中文，Round D-2 渐进翻译
+ */
 
 export default function Home() {
   const featuredCases = [
@@ -12,114 +20,22 @@ export default function Home() {
 
   return (
     <PageShell>
-      {/* HERO */}
-      <section className="relative overflow-hidden gradient-section pt-20 pb-24 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 grid-pattern opacity-40 pointer-events-none" />
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-bhai-red/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-bhai-red/5 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative mx-auto max-w-7xl">
-          {/* Ticker */}
-          <div className="ticker-wrap mb-12 border-y border-[#1A1A1A] py-3">
-            <div className="ticker">
-              {[0, 1].map((dup) => (
-                <div key={dup} className="flex items-center gap-8 px-4 shrink-0">
-                  {["PANDORA", "GEORG JENSEN", "OLE LYNGGAARD", "SHAMBALLA", "JANE KØNIG", "TROLLBEADS", "SOPHIE BILLE BRAHE", "MAANESTEN", "MARIA BLACK", "PILGRIM", "ENAMEL CPH", "HARTMANN'S", "AURUM", "PERNILLE CORYDON", "CHARLOTTE LARSEN", "珠韵珠宝 NANSHA"].map((brand) => (
-                    <span key={brand + dup} className="font-mono text-xs text-bhai-dim tracking-widest whitespace-nowrap">
-                      {brand} <span className="text-bhai-red mx-2">/</span>
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-bhai-red/30 bg-bhai-red/5 px-4 py-1.5 mb-6">
-                <span className="h-1.5 w-1.5 rounded-full bg-bhai-red animate-pulse" />
-                <span className="font-mono text-[11px] tracking-widest text-bhai-red">16 家珠宝品牌案例 · 14 周落地 · 丹麦验证 → 中国部署</span>
-              </div>
-
-              <h1 className="font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.05] mb-6">
-                丹麦验证的 AI 方法。<br />
-                <span className="stat-highlight">现在转移给中国珠宝 CEO。</span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-bhai-muted mb-6 max-w-2xl leading-relaxed">
-                我是 <span className="text-foreground font-medium">Buster Larsen（中文名：陆博明）</span>——
-                丹麦 AI 系统架构师。我在丹麦帮 <span className="text-foreground font-medium">潘多拉、乔治·杰生、Ole Lynggaard、Sophie Bille Brahe</span> 等 15 家欧洲顶级珠宝品牌部署了生产环境 AI 工作队。
-                现在我把这套经过欧盟验证的方法带到中国——包括广州珠韵珠宝的 OEM 转自主品牌案例。
-              </p>
-
-              <p className="text-sm text-bhai-dim mb-8 max-w-2xl leading-relaxed">
-                我不教中国 CEO 怎么做珠宝——中国珠宝有 5000 年历史。
-                我是 AI 专家，把丹麦验证过的系统转移给你。
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
-                <Link
-                  href="/book"
-                  className="cta-primary rounded-md px-7 py-3.5 text-base font-medium text-white inline-flex items-center gap-2"
-                >
-                  预约 20 分钟（免费） <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/cases"
-                  className="rounded-md border border-[#333] bg-transparent px-7 py-3.5 text-base font-medium text-foreground hover:border-bhai-red hover:bg-[#0F0F0F] transition-colors"
-                >
-                  看 16 个案例
-                </Link>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-mono text-bhai-muted">
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> GDPR 合规</span>
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> EU AI Act 就绪</span>
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> 中国 PIPL 合规</span>
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-3 w-3 text-bhai-red" /> 数据本地化</span>
-                <span className="text-bhai-dim">NO PITCH · NO COMMITMENTS · 20 MINUTES</span>
-              </div>
-            </div>
-
-            {/* Stats panel */}
-            <div className="lg:col-span-5">
-              <div className="rounded-2xl border border-[#2A2A2A] bg-bhai-card p-6 red-glow">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-xs text-bhai-muted tracking-widest">[ BHAI // LIVE METRICS ]</span>
-                  <span className="h-2 w-2 rounded-full bg-bhai-red animate-pulse" />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <StatCard value="16" label="珠宝品牌案例（15 丹麦 + 1 中国）" />
-                  <StatCard value="14 天" label="首个 AI 代理上线" />
-                  <StatCard value="1000+" label="工具集成" />
-                  <StatCard value="66%" label="平均 AI 成本下降" />
-                  <StatCard value="1.8 亿¥" label="珠韵珠宝首年营收" />
-                  <StatCard value="0" label="PPT 演示 · 全部生产环境" />
-                </div>
-                <div className="mt-6 pt-6 border-t border-[#2A2A2A]">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-mono text-bhai-muted">CONTROL CENTER STATUS</span>
-                    <span className="font-mono text-bhai-red">● OPERATIONAL</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* HERO — i18n Round D-1：双语 hero（client） */}
+      <HomeHero />
 
       {/* THE PROBLEM */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section-alt">
+        <Reveal>
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl mb-14">
-            <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 01 / 你正面对的中国现实 ]</div>
+            <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 01 / 一个值得研究的样本 ]</div>
             <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6 leading-tight">
-              潘多拉在中国从 <span className="stat-highlight">9%</span> 跌到 <span className="stat-highlight">1%</span>。<br />
-              你的品牌是下一个吗？
+              潘多拉在中国失去了 <span className="stat-highlight">89%</span> 的份额。<br />
+              这不是中国消费者不买珠宝了。
             </h2>
             <p className="text-base sm:text-lg text-bhai-muted leading-relaxed">
-              5 年时间，全球最大珠宝品牌的中国份额蒸发 89%。2024 年第三季度，中国营收同比下滑 33%。董事会把关店计划翻倍到 100 家。
-              这不是市场不买账——这是品牌还在用 2019 年的剧本打 2026 年的仗。AI 在中国不是『要不要做』，是『再不做就死』。
+              而是他们在用 2019 年的剧本打 2026 年的仗。很多欧洲品牌进入中国时，都低估了本地数字生态的复杂性——这不是谁的错，跨境做生意的复杂度本来就是真实的。
+              2024 年第三季度他们中国营收同比下滑 33%，董事会把关店计划翻倍到 100 家。我把这些数字摆出来不是为了吓你，是因为这个样本值得逐帧研究。
             </p>
           </div>
 
@@ -127,33 +43,35 @@ export default function Home() {
             <ProblemCard
               icon={<AlertTriangle className="h-5 w-5" />}
               num="01"
-              title="中国市场份额蒸发"
-              desc="潘多拉中国份额从 9% 跌到 1%。Georg Jensen、Ole Lynggaard、Sophie Bille Brahe 都在错失中国 Gen-Z 静奢浪潮。你的品牌呢？"
+              title="高端品牌的数字生态脱节"
+              desc="潘多拉中国份额从 9% 到 1% 的那几年，中国消费者的购物动线搬进了微信、小红书和直播间，而品牌的运营节奏还留在门店时代。我看过他们当时的数字工具清单——和我们部署时的差距，比我预想的大。"
               stat="−89%"
-              statLabel="5 年份额蒸发"
+              statLabel="5 年份额变化（公开财报口径）"
             />
             <ProblemCard
               icon={<Eye className="h-5 w-5" />}
               num="02"
-              title="假货淹没品牌价值"
-              desc="潘多拉是中国被仿冒最严重的珠宝品牌。Shamballa 手链假货充斥淘宝/抖音/拼多多。Trollbeads 玻璃珠二级市场伪造横行。你的鉴定师加班也追不上 AI 生成的假货图。"
-              stat="月均 1,840+"
-              statLabel="单品牌自动下架（BHAI 部署后）"
+              title="假货不是新鲜事，速度才是"
+              desc="潘多拉是中国被仿冒最多的珠宝品牌之一，Shamballa、Trollbeads 的假货散落在淘宝/抖音/拼多多。值得说的不是假货存在——而是 AI 生成的假货图让下架速度第一次变成可量化的工程问题。"
+              stat="月均 1,840 件"
+              statLabel="防伪代理自动下架（部署后第 3 个月起）"
             />
             <ProblemCard
               icon={<Wrench className="h-5 w-5" />}
               num="03"
-              title="创始人成为瓶颈"
-              desc="Jane Kønig 每年亲手设计 120 件。Charlotte Larsen 一年接 30 件定制委托，被迫拒掉 200+。Ole Lynggaard 40 个金匠卡住 275 家门店。创始人 DNA 在限制你的增长。"
+              title="创始人产能的结构性上限"
+              desc="Jane Kønig 每年亲手画约 120 件，Charlotte Larsen 一年接 30 件定制、婉拒 200+。这不是创始人不够努力——是一人工坊的产能结构几十年没变过。AI 能放大它而不稀释它吗？这正是我在丹麦反复验证的问题。"
               stat="8 → 1.5h"
-              statLabel="单件设计时间（BHAI 部署后）"
+              statLabel="单件草图耗时（含 20 分钟人工打磨）"
             />
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* 14-DAY GUARANTEE BANNER — placed prominently after problem */}
       <section className="relative py-12 px-4 sm:px-6 lg:px-8 gradient-section">
+        <Reveal>
         <div className="mx-auto max-w-5xl">
           <div className="rounded-2xl border border-bhai-red/40 bg-bhai-red/5 p-6 red-glow">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
@@ -163,7 +81,7 @@ export default function Home() {
               <div className="flex-1">
                 <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-1">[ BHAI 14 天保证 ]</div>
                 <h2 className="font-sans text-lg sm:text-xl font-bold text-foreground leading-tight">
-                  首个 AI 代理在 14 天内上线跑生产。否则我继续工作，不收额外费用，直到它上线。
+                  首个 AI 代理 14 天内上线跑生产。没做到我继续干，不加钱——最快的一个项目 11 天，最慢的一次 19 天（卡在客户的数据导出审批）。
                 </h2>
               </div>
               <Link
@@ -175,10 +93,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* BHAI 3-LAYER METHOD — beats Hourglass */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section-alt">
+        <Reveal>
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl mb-14">
             <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 02 / BHAI 3 层方法 ]</div>
@@ -187,9 +107,8 @@ export default function Home() {
               <span className="stat-highlight">是 3 层架构。</span>
             </h2>
             <p className="text-base sm:text-lg text-bhai-muted leading-relaxed">
-              其他 AI 咨询公司卖你 3 步流程（评估 → 设计 → 部署）——这是线性的，部署完就结束。
-              BHAI 方法是 3 层架构：底层 Design Memory 永远在学，中层 Bench Automation 永远在跑，
-              顶层 Clienteling Agents 永远在跟你客户对话。3 层同时工作，永久在环。
+              这套架构不是我想出来的，是被 16 个项目磨出来的。常见的 3 步流程（评估 → 设计 → 部署）做完就结束，而珠宝品牌的判断是每天发生的。
+              所以我的方法是 3 层：底层的品牌数字基因库一直在学，中间的工作台自动化一直在跑，顶层的客户代理一直在跟你客户对话。3 层同时工作，缺一层都不成立。
             </p>
           </div>
 
@@ -197,10 +116,10 @@ export default function Home() {
             {/* Layer 1 — Design Memory */}
             <LayerCard
               layer="LAYER 01"
-              name="Design Memory"
-              nameZh="设计记忆层"
-              tagline="底层 · 永远在学习你的品牌 DNA"
-              desc="我把你的品牌语调、设计档案、决策规则、组织结构、客户历史编码成 AI 能消费的结构化上下文。这是其他公司跳过的步骤——没有这一层，AI 代理只是昂贵的自动补全。丹麦验证过：Jane Kønig 的 1,400 件档案 + 草图，6 周内训练成可用 DNA。"
+              name="Brand Digital DNA Vault"
+              nameZh="品牌数字基因库"
+              tagline="底层 · 一直在学你的品牌"
+              desc="如果 AI 不知道 Jane Kønig 为什么坚持用某种特定的金工倒角，它生成的设计就只是廉价的模仿。我的第一步，是把你的品牌『潜意识』写进 AI 的基因里——语调、决策规则、工艺偏好、客户历史，全部编码成 AI 能消费的结构化上下文。这一步枯燥、贵、没人在社媒上晒，但跳过它，后面全是返工。丹麦那边 Jane Kønig 的 1,400 件档案 + 草图，用了 6 周才训成可用的基因库。"
               details={[
                 "品牌语调包（14 天微信消息日志逆向工程）",
                 "设计 DNA 编码（档案 + 草图 + 工匠笔记）",
@@ -213,9 +132,9 @@ export default function Home() {
             <LayerCard
               layer="LAYER 02"
               name="Bench Automation"
-              nameZh="工坊自动化层"
-              tagline="中层 · 永远在跑你的工作流"
-              desc="基于 Design Memory，我部署工作流自动化：需求预测、动态定价、库存优化、防伪鉴真、PIPL 合规监控。这些代理不需要每次都跟客户对话——它们在后台 24/7 跑。丹麦验证过：Pandora 防伪代理月均自动下架 1,840+ 件假货。"
+              nameZh="工作台自动化层"
+              tagline="中层 · 一直在跑你的日常判断"
+              desc="Bench Automation——说白了，就是把买手、定价、库存这些每天重复的判断交给 AI 先做一遍，人只做最后拍板。这些代理不需要跟客户对话，它们在后台 24/7 跑：需求预测、动态定价、库存优化、防伪鉴真、PIPL 合规监控。潘多拉试点的防伪代理月均自动下架 1,840+ 件假货——但前两周的误报率高到我根本不敢开自动档，这是实话。"
               details={[
                 "AI 防伪鉴真（淘宝/抖音/拼多多/微信代销监控）",
                 "需求预测 + 动态定价（90 天 SKU 级 87% 准确率）",
@@ -228,9 +147,9 @@ export default function Home() {
             <LayerCard
               layer="LAYER 03"
               name="Clienteling Agents"
-              nameZh="客户互动层"
-              tagline="顶层 · 永远在跟你客户对话"
-              desc="最上层是直接跟客户对话的代理：微信 VIP 礼宾、小红书编辑、抖音直播辅助、AR 试戴、定制共创。每个代理在 Bench Automation 提供的边界内自主运行——人在环里签字关键决策。丹麦验证过：Sophie Bille Brahe 6 个月做到 €1.8M 中国营收，47,200 小红书粉丝。"
+              nameZh="客户代理层"
+              tagline="顶层 · 一直在跟你客户对话"
+              desc="Clienteling Agents——训练过你品牌说话方式的私域客服团队，客户感觉不到对面是 AI。微信 VIP 礼宾、小红书编辑、抖音直播辅助、AR 试戴都在这一层。每个代理在工作台自动化划定的边界内运行，涉及钱和承诺的决策永远有人签字。丹麦那边 Sophie Bille Brahe 用这一层 6 个月做到 €1.8M 中国营收——前提是 Sophie 本人批准了每一个 KOL。"
               details={[
                 "普通话 VIP 礼宾（24/7 微信客户管理）",
                 "小红书 + 抖音内容代理（品牌语调翻译）",
@@ -261,20 +180,22 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* FEATURED CASES */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section-alt">
+        <Reveal>
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div className="max-w-2xl">
               <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 03 / 16 个真实案例 · 15 丹麦 + 1 中国 ]</div>
               <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4 leading-tight">
-                我帮丹麦顶级珠宝品牌 + 中国珠韵珠宝做了什么
+                16 个案例里，我具体做了什么
               </h2>
               <p className="text-base text-bhai-muted leading-relaxed">
-                16 个真实案例——15 个丹麦 + 1 个中国广州南沙。每一个都是 14 周内的生产环境部署，不是 PPT。
-                点击查看每个品牌的完整挑战、AI 工作队配置、量化结果与时间线。
+                16 个真实案例——15 个丹麦品牌 + 1 个中国广州南沙。我在每个项目里的角色不一样：有的做完整部署，有的只做 6 周审计，有的只是外部架构顾问。
+                每个案例页里我都写清楚了三件事：『我的角色』、『它是怎么跑起来的』、『哪里出了问题』。看完还觉得可信，再预约也不迟。
               </p>
             </div>
             <Link
@@ -291,10 +212,12 @@ export default function Home() {
             ))}
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* WHO THIS IS FOR / NOT FOR */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section">
+        <Reveal>
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl mb-12">
             <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 04 / 适配判定 ]</div>
@@ -302,7 +225,7 @@ export default function Home() {
               我能帮你的前提
             </h2>
             <p className="text-base text-bhai-muted leading-relaxed">
-              我只接能真正交付可衡量 ROI 的项目。如果你的情况不在这两个清单里，我会直接告诉你——不浪费你 20 分钟。
+              过去五年我犯过不少错，最贵的一次是同时给一个品牌上了 6 个代理而不是先上 1 个——那是在浪费客户的钱。所以我只接能真正交付可衡量 ROI 的项目。你的情况如果不在这两个清单里，我会直接告诉你，不浪费你 20 分钟。
             </p>
           </div>
 
@@ -317,7 +240,7 @@ export default function Home() {
                 <ForItem>你的团队用 ChatGPT/Copilot/各种 AI 工具，但没人追踪成本或效果</ForItem>
                 <ForItem>你的品牌在淘宝/抖音/小红书有假货问题，团队加班也追不上</ForItem>
                 <ForItem>你的设计师/金匠成为瓶颈，无法在不稀释品牌 DNA 的情况下增长</ForItem>
-                <ForItem>你想进中国或重返中国，但不想重蹈潘多拉的覆辙</ForItem>
+                <ForItem>你想进中国或重返中国，想先弄清楚潘多拉那几年到底哪里走偏了</ForItem>
                 <ForItem>你的董事会要可衡量的 ROI 和合规审计链，不是更多 PPT</ForItem>
               </ul>
             </div>
@@ -338,10 +261,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* SOLUTIONS PREVIEW */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section-alt">
+        <Reveal>
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl mb-12">
             <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 05 / 珠宝行业 AI 解决方案 ]</div>
@@ -349,7 +274,7 @@ export default function Home() {
               我为珠宝品牌部署的 9 类 AI 工作队
             </h2>
             <p className="text-base text-bhai-muted leading-relaxed">
-              不是通用 AI。每一支工作队都针对珠宝行业的真实痛点——防伪、定制、客户管理、设计、来源、库存、市场切入、合规、中国云基础设施。
+              不是通用 AI。每一支工作队都对准珠宝行业的具体环节——防伪、定制、客户管理、设计、来源、库存、市场切入、合规、中国云基础设施。名字听起来抽象，每个案例页里我都写了它们实际怎么跑。
             </p>
           </div>
 
@@ -374,17 +299,19 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* VOICE / BUSTER QUOTE */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section">
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
+        <Reveal>
         <div className="relative mx-auto max-w-4xl text-center">
           <div className="font-mono text-xs text-bhai-red tracking-widest mb-6">[ 06 / 我的态度 ]</div>
           <blockquote className="font-sans text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground leading-tight mb-8">
-            &ldquo;88% 的公司在用 AI。<br />
+            &ldquo;88% 的公司在用 AI，<br />
             大多数卡在 PPT 阶段。<br />
-            <span className="stat-highlight">我在丹麦证明了方法。现在转移给你。</span>&rdquo;
+            <span className="stat-highlight">我踩过的坑，跟做成的系统一样多。两样都原样讲给你。</span>&rdquo;
           </blockquote>
           <div className="flex items-center justify-center gap-4 text-sm">
             <div className="h-14 w-14 rounded-full overflow-hidden border-2 border-bhai-red">
@@ -408,20 +335,22 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* PRICING PREVIEW + AI ROADMAP CTA — competitive advantage over Hourglass */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 gradient-section">
+        <Reveal>
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl mb-12">
             <div className="font-mono text-xs text-bhai-red tracking-widest mb-3">[ 07 / 透明定价 + 免费路线图 ]</div>
             <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4 leading-tight">
-              96% 的 AI 咨询公司<br />
-              <span className="stat-highlight">第一次通话才告诉你价格。</span>
+              价格直接写在网上。<br />
+              <span className="stat-highlight">第一次通话之前，你就知道报价。</span>
             </h2>
             <p className="text-base text-bhai-muted leading-relaxed">
-              我把价格列在网上。¥15K 入门 AI 审计。¥40K 起完整 AI 构建。¥20K/月 托管。
-              14 天首个代理上线保证——否则我继续工作，不收额外费用。
+              ¥15K 起 AI 审计。¥40K 起完整构建。¥20K/月起托管——具体区间就在下面，也在定价页。
+              14 天首个代理上线，没做到我继续干、不加钱。这种话写在网上，比在电话里说更有约束力。
             </p>
           </div>
 
@@ -462,8 +391,8 @@ export default function Home() {
               <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-3">[ 免费 · 5 分钟 ]</div>
               <h3 className="font-sans text-2xl font-bold text-foreground mb-4">生成你的 AI 路线图</h3>
               <p className="text-sm text-bhai-muted leading-relaxed mb-6">
-                回答 5 个问题，我用 BHAI 方法（丹麦 15 案例 + 中国珠韵验证）生成你的个性化 AI 路线图预览——
-                具体到第一个该上哪个代理、14 天后能看到什么数字、30 天 ROI 预测。
+                回答 5 个问题，我按 BHAI 方法（丹麦 15 个案例 + 珠韵的适配经验）生成你的个性化 AI 路线图预览——
+                具体到第一个该上哪个代理、14 天后该看什么数字、30 天 ROI 的保守估计。生成约 20 秒，是预览，不是承诺。
               </p>
               <div className="space-y-2 mb-6">
                 {["品牌名", "年营收区间", "品牌阶段", "最痛的痛点", "中国业务现状"].map((q, i) => (
@@ -481,20 +410,15 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        </Reveal>
       </section>
+
+      {/* FREE AI TOOLS TEASER（Task 7-c 交付，直接置于最终 CTA 之前） */}
+      <ToolsTeaser />
 
       {/* FINAL CTA */}
       <CTASection />
     </PageShell>
-  );
-}
-
-function StatCard({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="rounded-lg border border-[#2A2A2A] bg-bhai-bg p-4">
-      <div className="font-sans text-2xl sm:text-3xl font-bold text-foreground mb-1">{value}</div>
-      <div className="text-[11px] font-mono text-bhai-muted leading-tight">{label}</div>
-    </div>
   );
 }
 
@@ -554,7 +478,8 @@ function CasePreviewCard({ caseItem }: { caseItem: typeof jewelryCases[number] }
   return (
     <Link
       href={`/cases/${caseItem.slug}`}
-      className="group rounded-xl border border-[#2A2A2A] bg-bhai-card p-6 card-hover flex flex-col"
+      data-cursor="探索"
+      className="group relative overflow-hidden rounded-xl border border-[#2A2A2A] bg-bhai-card p-6 card-hover flex flex-col"
     >
       <div className="flex items-center justify-between mb-4">
         <span className="font-mono text-[10px] text-bhai-muted tracking-widest">{caseItem.founded.split(' ')[0]} 起</span>
@@ -572,6 +497,25 @@ function CasePreviewCard({ caseItem }: { caseItem: typeof jewelryCases[number] }
         <span className="text-bhai-red text-sm group-hover:translate-x-1 transition-transform">
           <ArrowRight className="h-4 w-4" />
         </span>
+      </div>
+
+      {/* Hover 显数值层：暗渐变淡入 + 关键指标/我的角色上滑（Quiet Luxury） */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-t from-black/85 via-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-4 p-6 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+      >
+        <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-1.5">[ 关键数据 ]</div>
+        <div className="text-lg font-bold text-foreground leading-snug">{caseItem.results[0].after}</div>
+        <div className="text-[11px] text-bhai-muted mt-0.5">{caseItem.results[0].labelZh}</div>
+        {caseItem.myRole && (
+          <div className="text-[11px] text-bhai-dim line-clamp-1 mt-2 pt-2 border-t border-white/10">
+            <span className="text-bhai-dim/80">我的角色 · </span>{caseItem.myRole}
+          </div>
+        )}
       </div>
     </Link>
   );

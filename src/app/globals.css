@@ -50,6 +50,8 @@
 }
 
 :root {
+  /* 深色主题：让原生控件（滚动条/表单/下拉）跟随暗色渲染 */
+  color-scheme: dark;
   --background: 0 0% 0%;
   --foreground: 0 0% 100%;
   --card: 0 0% 0%;
@@ -92,38 +94,78 @@
   box-shadow: 0 0 60px rgba(229, 105, 16, 0.15), 0 0 120px rgba(229, 105, 16, 0.05);
 }
 .card-hover {
+  position: relative;
   transition: all 0.3s ease;
+}
+.card-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(229, 105, 16, 0.7), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 .card-hover:hover {
   border-color: #E56910;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(229, 105, 16, 0.12), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.card-hover:hover::before {
+  opacity: 1;
 }
 .stat-highlight {
-  background: linear-gradient(135deg, #E56910 0%, #A04A0B 100%);
+  background: linear-gradient(135deg, #E56910 0%, #F38B3F 45%, #A04A0B 100%);
+  background-size: 200% 200%;
+  animation: statShift 8s ease-in-out infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+@keyframes statShift {
+  0%, 100% { background-position: 0% 30%; }
+  50% { background-position: 100% 70%; }
 }
 .scroll-line {
   width: 1px;
   height: 60px;
   background: linear-gradient(180deg, #E56910 0%, transparent 100%);
 }
+/* 液态金 shimmer（Phase 3）：#A04A0B → #E56910 → #F38B3F，200% 底图 6s 缓移常驻，hover 加速至 0.9s */
 .cta-primary {
-  background: #E56910;
-  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(110deg, #A04A0B 0%, #E56910 30%, #F38B3F 50%, #E56910 70%, #A04A0B 100%);
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  animation: liquidGold 6s ease-in-out infinite;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  /* 白字在最亮的 #F38B3F 扫过时保持可读（AA 辅助） */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+@keyframes liquidGold {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 .cta-primary:hover {
-  background: #F38B3F;
-  box-shadow: 0 0 30px rgba(229, 105, 16, 0.4);
+  animation-duration: 0.9s;
+  box-shadow: 0 0 36px rgba(229, 105, 16, 0.5), 0 4px 20px rgba(229, 105, 16, 0.28);
   transform: translateY(-1px);
 }
 @keyframes ticker {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-.ticker-wrap { overflow: hidden; }
+.ticker-wrap {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
 .ticker { display: flex; animation: ticker 30s linear infinite; }
+.ticker-wrap:hover .ticker { animation-play-state: paused; }
 .timeline-dot {
   width: 12px; height: 12px; border-radius: 50%; background: #E56910; position: relative;
 }
@@ -188,4 +230,519 @@
   outline: none;
   border-color: #E56910;
   box-shadow: 0 0 0 3px rgba(229, 105, 16, 0.15);
+}
+
+/* ============ Admin / 长列表自定义滚动条 ============ */
+.admin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.admin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-scrollbar::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 3px;
+}
+.admin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #E56910;
+}
+
+/* ============ 文本选中色（品牌橙） ============ */
+::selection {
+  background: rgba(229, 105, 16, 0.35);
+  color: #FFFFFF;
+}
+
+/* ============ 键盘焦点可见性 ============ */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #E56910;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============ 路线图 Markdown 渲染样式 ============ */
+.roadmap-markdown {
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: #d1d5db;
+}
+.roadmap-markdown h1,
+.roadmap-markdown h2 {
+  font-family: var(--font-space-grotesk), var(--font-noto-sans-sc), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #F8F7F4;
+  margin: 1.5rem 0 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid #E56910;
+}
+.roadmap-markdown h1:first-child,
+.roadmap-markdown h2:first-child {
+  margin-top: 0;
+}
+.roadmap-markdown h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #F8F7F4;
+  margin: 1.25rem 0 0.5rem;
+}
+.roadmap-markdown p {
+  margin: 0.5rem 0;
+}
+.roadmap-markdown strong {
+  color: #F8F7F4;
+  font-weight: 600;
+}
+.roadmap-markdown ul,
+.roadmap-markdown ol {
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
+}
+.roadmap-markdown ul {
+  list-style: disc;
+}
+.roadmap-markdown ol {
+  list-style: decimal;
+}
+.roadmap-markdown li {
+  margin: 0.3rem 0;
+}
+.roadmap-markdown li::marker {
+  color: #E56910;
+}
+.roadmap-markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  font-size: 0.8rem;
+}
+.roadmap-markdown th {
+  background: rgba(229, 105, 16, 0.12);
+  color: #F8F7F4;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid #2A2A2A;
+}
+.roadmap-markdown td {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid #1F1F1F;
+  vertical-align: top;
+}
+.roadmap-markdown tr:hover td {
+  background: rgba(229, 105, 16, 0.04);
+}
+.roadmap-markdown hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E56910, transparent);
+  margin: 1.25rem 0;
+}
+.roadmap-markdown code {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.8em;
+  background: #1A1A1A;
+  border: 1px solid #2A2A2A;
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  color: #F38B3F;
+}
+.roadmap-markdown blockquote {
+  border-left: 3px solid #E56910;
+  padding-left: 0.75rem;
+  margin: 0.75rem 0;
+  color: #9CA3AF;
+}
+
+/* ============ 滚动浮现动画（Scroll Reveal） ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* 无 JS 环境（noscript）：内容直接可见 */
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
+/* 打印：全部内容可见，去动画 */
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .ticker {
+    animation: none;
+  }
+  .stat-highlight {
+    animation: none;
+  }
+  .orb-float,
+  .orb-float-slow {
+    animation: none;
+  }
+}
+
+/* ============ 全局暗色滚动条 ============ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 5px;
+  border: 2px solid #0A0A0A;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E56910;
+}
+html {
+  scrollbar-color: #2A2A2A #0A0A0A;
+  scrollbar-width: thin;
+}
+
+/* ============ 首页 hero 光球缓浮动画 ============ */
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-30px, 25px) scale(1.08); }
+}
+.orb-float {
+  animation: orbFloat 14s ease-in-out infinite;
+}
+.orb-float-slow {
+  animation: orbFloat 20s ease-in-out infinite reverse;
+}
+
+/* ============ 阅读进度条 ============ */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, #A04A0B, #E56910 55%, #F38B3F);
+  box-shadow: 0 0 12px rgba(229, 105, 16, 0.55);
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* ============ 返回顶部按钮 ============ */
+.back-to-top {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+.back-to-top.back-to-top-show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ============ 登录失败抖动 ============ */
+@keyframes shakeX {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+.shake {
+  animation: shakeX 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* ============ AI 流式输出光标 ============ */
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.stream-cursor {
+  display: inline-block;
+  width: 9px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  background: #E56910;
+  box-shadow: 0 0 10px rgba(229, 105, 16, 0.7);
+  animation: cursorBlink 0.85s steps(2, start) infinite;
+}
+
+/* ============ 管理台迷你趋势图 ============ */
+.trend-bar {
+  background: linear-gradient(to top, rgba(229, 105, 16, 0.25), #E56910);
+  border-radius: 3px 3px 0 0;
+  min-height: 3px;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.trend-bar:hover {
+  filter: brightness(1.35);
+}
+
+/* ============ 管理台分布条 ============ */
+.dist-bar-track {
+  height: 8px;
+  border-radius: 999px;
+  background: #1F1F1F;
+  overflow: hidden;
+}
+.dist-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #A04A0B, #E56910);
+  box-shadow: 0 0 8px rgba(229, 105, 16, 0.35);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============ FAQ 手风琴主题 ============ */
+.faq-accordion [data-slot="accordion-trigger"] svg {
+  color: #E56910;
+  transition: transform 0.25s ease;
+}
+.faq-accordion [data-slot="accordion-trigger"][data-state="open"] svg {
+  transform: rotate(180deg);
+}
+.faq-accordion [data-slot="accordion-trigger"][data-state="open"] {
+  color: #E56910;
+}
+
+/* ============================================================
+   Phase 3 · Quiet Luxury meets Deep Tech
+   ============================================================ */
+
+/* —— 衬线展示标题：作用于营销页（PageShell 根节点挂 .font-display-scope）——
+   说明：Tailwind v4 中未分层规则优先于 @layer utilities，
+   因此用作用域类而非全局 h1/h2 选择器，确保 /admin（不在作用域内）保持 sans。
+   next/font 缺失时自动回落到本地衬线栈（Georgia / Noto Serif SC / Songti）。 */
+.font-display-scope h1,
+.font-display-scope h2 {
+  font-family: var(--font-display-latin), var(--font-display-cn), Georgia,
+    "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+}
+
+/* —— LIVE 指示点（LIVE METRICS 面板）：8px 绿点 + box-shadow 脉冲 —— */
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45); opacity: 1; }
+  50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); opacity: 0.75; }
+}
+.live-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #22c55e;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+/* —— 终端质感：顶部渐变发丝线 + 极淡扫描线（纯 CSS，静态） —— */
+.metrics-terminal {
+  position: relative;
+}
+.metrics-terminal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: 1;
+  background: linear-gradient(90deg, transparent 0%, rgba(229, 105, 16, 0.75) 50%, transparent 100%);
+  pointer-events: none;
+}
+.metrics-terminal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.022) 0px,
+    rgba(255, 255, 255, 0.022) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* —— 打字机光标（复用 cursorBlink 关键帧） —— */
+.metrics-caret {
+  display: inline-block;
+  width: 7px;
+  height: 0.9em;
+  margin-left: 4px;
+  vertical-align: text-bottom;
+  background: rgba(229, 105, 16, 0.85);
+  animation: cursorBlink 0.85s steps(2, start) infinite;
+}
+
+/* —— 金环自定义光标：label 淡入由组件 JS 控制 opacity —— */
+.cursor-ring {
+  will-change: transform;
+}
+.cursor-ring-label {
+  will-change: opacity;
+}
+
+/* —— Phase 3 动画的 reduced-motion 降级 —— */
+@media (prefers-reduced-motion: reduce) {
+  .cta-primary {
+    animation: none;
+  }
+  .live-dot {
+    animation: none;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+  }
+  .metrics-caret {
+    animation: none;
+  }
+  .cursor-ring,
+  .cursor-ring-label,
+  .metrics-card-reveal {
+    transition: none !important;
+  }
+}
+
+/* —— Task 8: 网站扫描监视器（截图滚动 + 扫描线动画覆盖层） —— */
+
+/* 扫描网格：极淡橙色方格，叠在目标网站截图上 */
+.scan-grid {
+  background-image:
+    linear-gradient(rgba(229, 105, 16, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229, 105, 16, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* 扫描线：横向光带（顶部亮核 + 上下渐隐 + 双层辉光） */
+.scanline {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(229, 105, 16, 0.12) 38%,
+    rgba(243, 139, 63, 0.55) 50%,
+    rgba(229, 105, 16, 0.12) 62%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 24px rgba(229, 105, 16, 0.35),
+    0 0 64px rgba(229, 105, 16, 0.15);
+}
+
+/* 视口暗角：四周轻微压暗，聚焦中部截图 */
+.scan-vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 58%,
+    rgba(0, 0, 0, 0.42) 100%
+  );
+}
+
+/* 进度数字 / 阶段日志末尾的闪烁光标 */
+.scan-caret {
+  display: inline-block;
+  color: #e56910;
+  animation: cursorBlink 0.85s steps(2, start) infinite;
+}
+
+/* —— Task 8 reduced-motion 降级 —— */
+@media (prefers-reduced-motion: reduce) {
+  .scan-caret {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* —— Task 13 · /tools 卡片 hover 扫光（静奢细节） —— */
+/* 仅在支持 hover 的指针设备启用，避免移动端粘滞高亮 */
+.card-sheen {
+  position: relative;
+  isolation: isolate;
+}
+.card-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(229, 105, 16, 0.07) 50%,
+    transparent 58%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@media (hover: hover) {
+  .card-sheen:hover::after {
+    transform: translateX(120%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-sheen::after {
+    transition: none;
+    transform: none;
+    opacity: 0;
+  }
+}
+
+/* ---------- 路线图报告打印支持（CEO 可直接存 PDF / 纸质带走） ----------
+   经典单元素打印法：打印时只显示 [data-print-area]，并强制浅色（省墨 + 可读） */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  [data-print-area],
+  [data-print-area] * {
+    visibility: visible !important;
+  }
+  [data-print-area] {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border: none !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+  }
+  [data-print-area] * {
+    color: #111111 !important;
+    background: transparent !important;
+    border-color: #cccccc !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  [data-print-area] .no-print {
+    display: none !important;
+  }
+  [data-print-area] .roadmap-markdown table {
+    border-collapse: collapse !important;
+  }
+  [data-print-area] .roadmap-markdown th,
+  [data-print-area] .roadmap-markdown td {
+    border: 1px solid #999 !important;
+    padding: 4px 8px !important;
+  }
 }

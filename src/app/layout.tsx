@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Noto_Sans_SC, Playfair_Display, Noto_Serif_SC } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/bhai/JsonLd";
@@ -23,7 +23,23 @@ const notoSansSC = Noto_Sans_SC({
   display: "swap",
 });
 
+// Phase 3 · Quiet Luxury：高对比衬线展示字体（拉丁 Playfair / 中文 Noto Serif SC）
+const playfairDisplay = Playfair_Display({
+  variable: "--font-display-latin",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const notoSerifSC = Noto_Serif_SC({
+  variable: "--font-display-cn",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://betterhumanai.dk"),
   title: "Better Human AI | 为中国珠宝 CEO 量身打造的丹麦 AI 落地专家",
   description:
     "Better Human AI 帮助中国珠宝品牌 CEO 用 AI 代理在 14 天内完成生产部署。16 个真实案例：15 丹麦顶级珠宝品牌 + 中国广州珠韵珠宝。",
@@ -82,9 +98,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html lang="zh-CN" className="no-js" suppressHydrationWarning>
+      <head>
+        {/* JS 可用时立即移除 no-js：reveal 动画生效；无 JS 时内容保持可见（SEO/打印/降级安全） */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.remove('no-js');",
+          }}
+        />
+      </head>
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${notoSansSC.variable} antialiased bg-background text-foreground`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${notoSansSC.variable} ${playfairDisplay.variable} ${notoSerifSC.variable} antialiased bg-background text-foreground`}
         style={{ fontFamily: "var(--font-noto-sans-sc), var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif" }}
       >
         <OrganizationJsonLd />

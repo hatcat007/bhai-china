@@ -2,16 +2,23 @@ import Link from "next/link";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
 import { jewelryCases } from "@/lib/data/jewelry-cases";
+import { ItemListJsonLd } from "@/components/bhai/JsonLd";
 import { ArrowRight, MapPin, Calendar, Building2, TrendingUp } from "lucide-react";
+import { withOpenGraph } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "丹麦珠宝品牌 AI 案例 · 15 个真实部署 | Better Human AI",
-  description: "15 个真实丹麦珠宝品牌的 AI 落地案例：Pandora、Georg Jensen、Ole Lynggaard、Shamballa、Sophie Bille Brahe 等。每个案例包含挑战、AI 工作队配置、量化结果与 14 周时间线。",
-};
+export const metadata = withOpenGraph(
+  { title: "丹麦珠宝品牌 AI 案例 · 15 个真实部署 | Better Human AI", description: "15 个真实丹麦珠宝品牌的 AI 落地案例：Pandora、Georg Jensen、Ole Lynggaard、Shamballa、Sophie Bille Brahe 等。每个案例包含挑战、AI 工作队配置、量化结果与 14 周时间线。" },
+  "/cases",
+  "/og-cases.jpg"
+);
 
 export default function CasesPage() {
   return (
     <PageShell>
+      <ItemListJsonLd
+        listName="BHAI 丹麦珠宝品牌 AI 落地案例"
+        items={jewelryCases.map((c) => ({ name: `${c.brandNameZh} ${c.brandName}`, url: `/cases/${c.slug}` }))}
+      />
       {/* HERO */}
       <section className="relative gradient-section pt-20 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
@@ -102,7 +109,8 @@ function CaseCard({ caseItem, index }: { caseItem: typeof jewelryCases[number]; 
   return (
     <Link
       href={`/cases/${caseItem.slug}`}
-      className="group rounded-xl border border-[#2A2A2A] bg-bhai-card p-6 card-hover flex flex-col h-full"
+      data-cursor="探索"
+      className="group relative overflow-hidden rounded-xl border border-[#2A2A2A] bg-bhai-card p-6 card-hover flex flex-col h-full"
     >
       <div className="flex items-center justify-between mb-4">
         <span className="font-mono text-[10px] text-bhai-muted tracking-widest">
@@ -136,6 +144,25 @@ function CaseCard({ caseItem, index }: { caseItem: typeof jewelryCases[number]; 
 
       <div className="mt-5 flex items-center justify-end gap-1 text-xs text-bhai-red group-hover:gap-2 transition-all">
         阅读完整案例 <ArrowRight className="h-3 w-3" />
+      </div>
+
+      {/* Hover 显数值层：暗渐变淡入 + 关键指标/我的角色上滑（Quiet Luxury） */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-t from-black/85 via-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-4 p-6 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+      >
+        <div className="font-mono text-[10px] text-bhai-red tracking-widest mb-1.5">[ 关键数据 ]</div>
+        <div className="text-lg font-bold text-foreground leading-snug">{caseItem.results[0].after}</div>
+        <div className="text-[11px] text-bhai-muted mt-0.5">{caseItem.results[0].labelZh}</div>
+        {caseItem.myRole && (
+          <div className="text-[11px] text-bhai-dim line-clamp-1 mt-2 pt-2 border-t border-white/10">
+            <span className="text-bhai-dim/80">我的角色 · </span>{caseItem.myRole}
+          </div>
+        )}
       </div>
     </Link>
   );

@@ -2,25 +2,27 @@ import Link from "next/link";
 import { PageShell } from "@/components/bhai/PageShell";
 import { CTASection } from "@/components/bhai/CTASection";
 import { ArrowRight, TrendingDown, TrendingUp, AlertTriangle, Sparkles, Building2, Globe2 } from "lucide-react";
+import { withOpenGraph } from "@/lib/page-metadata";
 
-export const metadata = {
-  title: "丹麦珠宝洞察 · 为什么中国 CEO 该看丹麦 | Better Human AI",
-  description: "丹麦珠宝行业的 5 个洞察专为中国 CEO 而写：潘多拉中国溃败的教训、丹麦工艺 + 中国市场的杠杆、可持续溢价、家族传承危机、AI 落地滞后。",
-};
+export const metadata = withOpenGraph(
+  { title: "丹麦珠宝洞察 · 为什么中国 CEO 该看丹麦 | Better Human AI", description: "丹麦珠宝行业的 5 个洞察专为中国 CEO 而写：潘多拉中国溃败的教训、丹麦工艺 + 中国市场的杠杆、可持续溢价、家族传承危机、AI 落地滞后。" },
+  "/denmark-insights",
+  "/og-insights.jpg"
+);
 
 const insights = [
   {
     num: "01",
     icon: TrendingDown,
-    title: "潘多拉的中国溃败是给你的免费教案",
-    summary: "5 年内从 9% 跌到 1%。董事会翻倍关店。这是教科书级的市场误判——你应该学习，不是嘲笑。",
+    title: "潘多拉的中国困境，是一份值得研究的免费教案",
+    summary: "5 年内失去了 89% 的份额。这不是中国消费者不买珠宝了，而是他们在用 2019 年的剧本打 2026 年的仗。值得学习，不是嘲笑。",
     body: [
       "潘多拉 2019 年中国营收占集团 9%。2024 年这个数字是 1%。2024 年第三季度中国营收同比下滑 33%。董事会原计划关 50 家中国门店，2024 年翻倍到 100 家。这不是市场不买账——这是品牌还在用 2019 年的剧本打 2026 年的仗。",
       "潘多拉的失误在哪里？三个核心问题：第一，没有为 Gen-Z 中国消费者重新设计品牌叙事，串饰手链的故事被本土竞争者（周大福的『传承』系列、老凤祥的『国潮』）抢占。第二，没有在抖音/小红书建立 KOL 矩阵，潘多拉在中国社交媒体上的存在感严重弱化。第三，没有防伪鉴真体系——潘多拉是中国被仿冒最严重的珠宝品牌，假货充斥电商直接侵蚀品牌信任。",
       "我帮潘多拉中国试点部署了 6 代理工作队，14 周内试点门店同店增长 +38%。但更大的价值是给中国珠宝 CEO 的免费教案：不要重蹈覆辙。你的品牌进中国前，先把这三件事做好——品牌叙事本地化、KOL 矩阵、防伪体系。我都能帮你部署。",
     ],
-    stat: "9% → 1%",
-    statLabel: "5 年中国份额蒸发",
+    stat: "-89%",
+    statLabel: "5 年中国份额变化",
     caseSlug: "pandora",
     caseLabel: "看潘多拉案例详情",
   },
