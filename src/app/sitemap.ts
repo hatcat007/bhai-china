@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/denmark-insights", priority: 0.6, changeFrequency: "monthly" as const },
     { path: "/logos", priority: 0.3, changeFrequency: "yearly" as const },
     { path: "/tools", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/ai-ideas", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/tools/website-analyzer", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/tools/red-copywriter", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/tools/objection-handler", priority: 0.7, changeFrequency: "monthly" as const },

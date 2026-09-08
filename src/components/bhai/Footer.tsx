@@ -54,6 +54,7 @@ export function Footer() {
             <h3 className="text-xs font-mono tracking-widest text-bhai-muted mb-4">{f.colInsights}</h3>
             <ul className="space-y-2">
               <li><Link href="/denmark-insights" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.insDenmark}</Link></li>
+              <li><Link href="/ai-ideas" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.insIdeas}</Link></li>
               <li><Link href="/about" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.insAbout}</Link></li>
               <li><Link href="/book" className="text-sm text-bhai-text hover:text-bhai-red transition-colors">{f.insBook}</Link></li>
             </ul>
